@@ -88,8 +88,8 @@ int main (int argc, char** argv)
           // delta_x = WHEEL_RADIUS * delta_left * cos(fi);
           // delta_y = WHEEL_RADIUS * delta_left * sin(fi);
 
-          x += delta_s * cos(x + (delta_theta / 2.0));
-          y += delta_s * sin(y + (delta_theta / 2.0));
+          x += delta_s * cos(th + (delta_theta / 2.0));
+          y += delta_s * sin(th + (delta_theta / 2.0));
           th += delta_theta;
 
           // x += delta_x;
@@ -111,8 +111,8 @@ int main (int argc, char** argv)
           odom_trans.header.frame_id = "odom";
           odom_trans.child_frame_id = "base_footprint";
 
-          odom_trans.transform.translation.x = -x;
-          odom_trans.transform.translation.y = -y;
+          odom_trans.transform.translation.x = x;
+          odom_trans.transform.translation.y = y;
           odom_trans.transform.translation.z = 0.0;
           odom_trans.transform.rotation = odom_quat;
 
@@ -133,7 +133,7 @@ int main (int argc, char** argv)
           //set the velocity
           odom.child_frame_id = "base_footprint";
           odom.twist.twist.linear.x = vx;
-          odom.twist.twist.linear.y = vy;
+          odom.twist.twist.linear.y = 0.0;
           odom.twist.twist.angular.z = vth;
 
           //publish the message
