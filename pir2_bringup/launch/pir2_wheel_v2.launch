@@ -25,6 +25,6 @@
         radius_of_wheel: 0.105            <!--default value is set by reference of TB3-->
     </rosparam>
   </node>
-   
+  <node name="odom_publisher" pkg="pir2_control" type="odom_publisher" /> 
 
 </launch>
