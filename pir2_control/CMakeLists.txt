@@ -155,6 +155,9 @@ include_directories(
 add_executable(odom_publisher src/odom_publisher.cpp)
 target_link_libraries(odom_publisher ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
 
+add_executable(cmd_odom_publisher src/cmd_odom_publisher.cpp)
+target_link_libraries(cmd_odom_publisher ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
+
 #############
 ## Install ##
 #############
