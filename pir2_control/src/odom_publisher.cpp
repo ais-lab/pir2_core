@@ -16,29 +16,12 @@ double last_y = 0;
 double current_left, current_right;
 double last_left = 0;
 double last_right = 0;
-//
-// void initOdom(void)
-// {
-//   init_encoder = true;
-//
-//   for (int index = 0; index < 3; index++)
-//   {
-//     odom_pose[index] = 0.0;
-//     odom_vel[index]  = 0.0;
-//   }
-//
-//   odom.pose.pose.position.x = 0.0;
-//   odom.pose.pose.position.y = 0.0;
-//   odom.pose.pose.position.z = 0.0;
-//
-//   odom.pose.pose.orientation.x = 0.0;
-//   odom.pose.pose.orientation.y = 0.0;
-//   odom.pose.pose.orientation.z = 0.0;
-//   odom.pose.pose.orientation.w = 0.0;
-//
-//   odom.twist.twist.linear.x  = 0.0;
-//   odom.twist.twist.angular.z = 0.0;
-// }
+
+double delta_s = 0;
+double theta = 0;
+double delta_theta = 0;
+double last_theta = 0;
+
 
 void OdomCallback(const sensor_msgs::JointState::ConstPtr& msg)
 {
@@ -91,24 +74,34 @@ int main (int argc, char** argv)
 
           double dt = (current_time - last_time).toSec();
 
-          current_fi = -WHEEL_RADIUS * (delta_right - delta_left) / WHEELS_DISTANCE;
-          fi += current_fi;
-          current_fi = 0;
-          ROS_INFO("yaw %f", fi);
+          // current_fi = -WHEEL_RADIUS * (delta_right - delta_left) / WHEELS_DISTANCE;
 
-          delta_x = WHEEL_RADIUS * delta_left * cos(fi);
-          delta_y = WHEEL_RADIUS * delta_left * sin(fi);
+          delta_s = WHEEL_RADIUS * (delta_right + delta_left) / 2.0;
+          theta = WHEEL_RADIUS * (delta_right - delta_left) / WHEELS_DISTANCE;
 
+          delta_theta = theta - last_theta;
 
-          x += delta_x;
-          y += delta_y;
-          th = fi;
+          // fi += current_fi;
+          // current_fi = 0;
+          // ROS_INFO("yaw %f", fi);
+          //
+          // delta_x = WHEEL_RADIUS * delta_left * cos(fi);
+          // delta_y = WHEEL_RADIUS * delta_left * sin(fi);
 
-          vx = delta_x / dt;
-          vy = delta_y / dt;
+          x += delta_s * cos(x + (delta_theta / 2.0));
+          y += delta_s * sin(y + (delta_theta / 2.0));
+          th += delta_theta;
 
-          vth = current_fi / dt;
-
+          // x += delta_x;
+          // y += delta_y;
+          // th = fi;
+          //
+          // vx = delta_x / dt;
+          // vy = delta_y / dt;
+          //
+          // vth = current_fi / dt;
+          vx = delta_s / dt;
+          vth = delta_theta / dt;
 
           //since all odometry is 6DOF we'll need a quaternion created from yaw
           geometry_msgs::Quaternion odom_quat = tf::createQuaternionMsgFromYaw(th);
@@ -147,6 +140,7 @@ int main (int argc, char** argv)
           odom_pub.publish(odom);
 
           last_time = current_time;
+          last_theta = theta;
           r.sleep();
           count++;
     }
