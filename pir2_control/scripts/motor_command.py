@@ -35,8 +35,8 @@ class Server(Publishsers):
         self.left_velocity = 0.0
         self.right_velocity = 0.0
         self.current_linear = 0.0
-        self.rate = rospy.Rate(100) # 100hz
-        self.rate_time = 0.01
+        self.rate = rospy.Rate(10) # 100hz
+        self.rate_time = 0.1
         self.tf_listener = tf.TransformListener()
         self.odom_frame = '/odom'
         self.lidar_flag = 0
@@ -152,7 +152,7 @@ class Server(Publishsers):
         else:
             print "else"
 
-        return AddMotorResponse(result)
+        return MotorCommandResponse(result)
 
 
     def constrain(self, left_velocity, right_velocity, MIN_VELOCITY, MAX_VELOCITY):

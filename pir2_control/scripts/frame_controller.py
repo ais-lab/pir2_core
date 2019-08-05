@@ -11,7 +11,7 @@ from subprocess import call, Popen
 from time import sleep
 import rospkg
 
-from pir2_control.srv import *
+from pir2_msgs.srv import *
 from geometry_msgs.msg import Twist
 
 
@@ -73,7 +73,7 @@ class TextfileController(object):
             command = command_param_set[0]
 
 
-            req = AddMotorRequest()
+            req = MotorCommandRequest()
             if command == "acceleration":
                 acc = float(command_param_set[1])
                 # acc = acc / 1000
