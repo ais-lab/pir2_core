@@ -17,9 +17,9 @@ double current_left, current_right;
 double last_left = 0;
 double last_right = 0;
 
-double delta_s = 0;
-double theta = 0;
-double delta_theta = 0;
+// double delta_s = 0;
+// double theta = 0;
+// double delta_theta = 0;
 double last_theta = 0;
 
 
@@ -58,48 +58,61 @@ int main (int argc, char** argv)
     double x = 0;
     double y = 0;
     double th = 0;
-    double vx, vy, vth;
+    // double vx = 0;
+    // double vy = 0;
+    // double vth = 0;
 
     int count = 0;
     while(n.ok())
     {
           ros::spinOnce();  //sub joint_states
           current_time = ros::Time::now();
+          double delta_left = delta_right = 0.0;
+          double delta_s = 0.0;
+          double delta_theta = 0.0;
+          double theta = 0.0;
+          double vx = 0.0;
+          double vth = 0.0;
 
           delta_left = current_left - last_left;
           delta_right = current_right - last_right;
-
           last_left = current_left;
           last_right = current_right;
+          if (std::isnan(delta_left))
+            delta_left = 0.0;
 
-          double dt = (current_time - last_time).toSec();
+          if (std::isnan(delta_right))
+            delta_right = 0.0;
 
-          // current_fi = -WHEEL_RADIUS * (delta_right - delta_left) / WHEELS_DISTANCE;
 
           delta_s = WHEEL_RADIUS * (delta_right + delta_left) / 2.0;
           theta = WHEEL_RADIUS * (delta_right - delta_left) / WHEELS_DISTANCE;
+          // ROS_INFO("theta %f", theta);
 
-          delta_theta = theta - last_theta;
+          delta_theta = theta;
+          // ROS_INFO("theta %f", delta_theta);
 
-          // fi += current_fi;
-          // current_fi = 0;
-          // ROS_INFO("yaw %f", fi);
-          //
-          // delta_x = WHEEL_RADIUS * delta_left * cos(fi);
-          // delta_y = WHEEL_RADIUS * delta_left * sin(fi);
+          double dt = (current_time - last_time).toSec();
+          if (dt == 0)
+            return false;
+          // if (dt < 0.00001)
+          //   return false; // Interval too small to integrate with
 
           x += delta_s * cos(th + (delta_theta / 2.0));
           y += delta_s * sin(th + (delta_theta / 2.0));
           th += delta_theta;
+          // ROS_INFO("yaw %f", th);
 
-          // x += delta_x;
-          // y += delta_y;
-          // th = fi;
-          //
-          // vx = delta_x / dt;
-          // vy = delta_y / dt;
-          //
-          // vth = current_fi / dt;
+          ///////////////////////////////////////////////
+          // double dt = (current_time - last_time).toSec();
+          // if (dt == 0)
+          //   return false;
+          // x += (vx * cos(th)) * dt;
+          // y += (vx * sin(th)) * dt;
+          // th += vth * dt;
+          ///////////////////////////////////////////////
+
+
           vx = delta_s / dt;
           vth = delta_theta / dt;
 
@@ -141,6 +154,7 @@ int main (int argc, char** argv)
 
           last_time = current_time;
           last_theta = theta;
+
           r.sleep();
           count++;
     }
