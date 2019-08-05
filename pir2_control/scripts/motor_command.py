@@ -11,8 +11,8 @@ import tf
 from std_msgs.msg import String, Int64, Float64, Bool
 from geometry_msgs.msg import Twist, Point, Quaternion
 from nav_msgs.msg import Odometry
-from pir2_control.srv import MotorCommand
-from pir2_control.srv import MotorCommandResponse
+from pir2_msgs.srv import MotorCommand
+from pir2_msgs.srv import MotorCommandResponse
 
 class Publishsers():
 
