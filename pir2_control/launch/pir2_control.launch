@@ -6,5 +6,5 @@
         <param name="file_name" value="$(arg file)"/>
     </node>
     <!--node pkg="pir_control" name="lidar" type="detect_obs.py" output="screen"/-->
-    <node pkg="pir2_control" name="mimic_spt_to_cmd" type="mimic_spt_to_cmd" output="screen"/>
+    <node pkg="pir2_control" name="mimic_spt_to_cmd" type="mimic_spt" output="screen"/>
 </launch>
