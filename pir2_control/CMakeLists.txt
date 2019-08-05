@@ -158,6 +158,9 @@ target_link_libraries(odom_publisher ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
 add_executable(cmd_odom_publisher src/cmd_odom_publisher.cpp)
 target_link_libraries(cmd_odom_publisher ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
 
+add_executable(mimic_spt src/mimic_spt_to_cmd.cpp)
+target_link_libraries(mimic_spt ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
+
 #############
 ## Install ##
 #############
