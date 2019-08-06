@@ -20,8 +20,8 @@
       publish_period: 0.010
       dxl_read_period: 0.010
       dxl_write_period: 0.010
-      mobile_robot_config:                
-        seperation_between_wheels: 0.160
+      mobile_robot_config:
+        seperation_between_wheels: 0.56
         radius_of_wheel: 0.105
     </rosparam>
     <remap from="dynamixel_workbench/cmd_vel" to="cmd_vel" />
