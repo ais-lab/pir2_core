@@ -1,6 +1,6 @@
 <launch>
 
-  <include file="$(find pir2pir2_bringup)/launch/pir2_model.launch"/>
-  <include file="$(find pir2pir2_bringup)/launch/pir2_wheel_v2.launch"/>
+  <include file="$(find pir2_bringup)/launch/pir2_model.launch"/>
+  <include file="$(find pir2_bringup)/launch/pir2_wheel_v2.launch"/>
 
 </launch>
