@@ -368,6 +368,11 @@ class Server(Publishsers):
 
     def slowstop(self, down_acc):
 
+        offset = 0.05
+
+        target_left = self.left_velocity
+        target_right = self.right_velocity
+
         if self.left_velocity > 0.0:
             down_left = - down_acc
         else:
@@ -380,16 +385,34 @@ class Server(Publishsers):
 
         # self.current_linear = (self.left_velocity + self.right_velocity) / 2  #Decide initial velocity
         # round(f, 1)
-        while ( round(self.left_velocity, 2) == 0.0 and round(self.right_velocity, 2) == 0.0 ):
+        # while ( round(self.left_velocity, 2) == 0.0 and round(self.right_velocity, 2) == 0.0 ):
+        while True:
 
             if self.lidar_flag == 1:
                 self.spt_pub(0.0,0.0)
                 return False
 
-            target_left = self.left_velocity + down_acc * self.rate_time
-            target_right = self.right_velocity + down_acc * self.rate_time
+            # target_left = self.left_velocity + down_left * self.rate_time
+            # target_right = self.right_velocity + down_right * self.rate_time
+
+            # if (self.left_velocity < offset and self.left_velocity > -(offset) and self.right_velocity < offset and self.right_velocity > -(offset)):
+            #     break
+
+            if (target_left < offset and target_left > -(offset)):
+                down_left = 0.0
+            else:
+                target_left += down_left * self.rate_time
+
+            if (target_right < offset and target_right > -(offset)):
+                down_right = 0.0
+            else:
+                target_right += down_right * self.rate_time
 
             self.spt_pub(target_left, target_right)
+            print target_left, target_right
+            if (down_left == 0.0 and down_right == 0.0):
+                break
+
             self.rate.sleep()
 
         self.spt_pub(0.0,0.0)
