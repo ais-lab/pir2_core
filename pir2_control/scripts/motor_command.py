@@ -30,8 +30,8 @@ class Server(Publishsers):
         self.PI = 3.1415926535897
         self.MAX_WHEEL_VELOCITY = 0.78
         self.MIN_WHEEL_VELOCITY = -(0.78)
-        self.WHEEL_SEPARATION = 0.53
-        self.HALF_WHEEL_SEPARATION = 0.265
+        self.WHEEL_SEPARATION = 0.56
+        self.HALF_WHEEL_SEPARATION = 0.28
         self.left_velocity = 0.0
         self.right_velocity = 0.0
         self.current_linear = 0.0
