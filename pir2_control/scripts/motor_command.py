@@ -59,7 +59,8 @@ class Server(Publishsers):
 
         # Declaration Subscriber
         self.search_sub = rospy.Subscriber('/search/result', Int64 , self.search_callback)
-        self.odom_sub = rospy.Subscriber('/odom', Odometry , self.odom_callback)
+        # self.odom_sub = rospy.Subscriber('/odom', Odometry , self.odom_callback)
+        self.odom_sub = rospy.Subscriber('/cmd_vel', Twist , self.odom_callback)
 
         # Declaration Service Server
         self.server = rospy.Service("/pir2_control/motor", MotorCommand, self.service_callback)
@@ -72,14 +73,17 @@ class Server(Publishsers):
             self.lidar_flag = 0
 
     def odom_callback(self, odom):
-        # print odom.twist.twist.linear.x
-        # print odom.twist.twist.angular.z
-        self.current_linear = odom.twist.twist.linear.x
-        self.current_angular = odom.twist.twist.angular.z
-        self.left_velocity = odom.twist.twist.linear.x + (odom.twist.twist.angular.z * self.HALF_WHEEL_SEPARATION)
-        self.right_velocity = odom.twist.twist.linear.x - (odom.twist.twist.angular.z * self.HALF_WHEEL_SEPARATION)
-        # print int(self.left_velocity) , int(self.right_velocity)
-        # print round(self.current_linear, 2)
+
+        # self.current_linear = odom.twist.twist.linear.x
+        # self.current_angular = odom.twist.twist.angular.z
+        # self.left_velocity = odom.twist.twist.linear.x + (odom.twist.twist.angular.z * self.HALF_WHEEL_SEPARATION)
+        # self.right_velocity = odom.twist.twist.linear.x - (odom.twist.twist.angular.z * self.HALF_WHEEL_SEPARATION)
+
+        self.current_linear = odom.linear.x
+        self.current_angular = odom.angular.z
+        self.left_velocity = odom.linear.x + (odom.angular.z * self.HALF_WHEEL_SEPARATION)
+        self.right_velocity = odom.linear.x - (odom.angular.z * self.HALF_WHEEL_SEPARATION)
+
 
     def service_callback(self, req):
         result = Bool()
