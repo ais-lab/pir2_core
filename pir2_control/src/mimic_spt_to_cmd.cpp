@@ -27,7 +27,7 @@ void Mimic::twistCallback(const geometry_msgs::TwistConstPtr& twist)
 
   float left = twist->linear.y;
   float right = twist->angular.y;
-  float separation = 0.287;
+  float separation = 0.56;
 
   cmd_msg.linear.x = (left + right) / 2.0;
   cmd_msg.angular.z = (right - left) / separation;
