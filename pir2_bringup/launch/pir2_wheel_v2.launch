@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<launch>    
+<launch>
 
   <arg name="usb_port"                default="/dev/ttyUSB0"/>
   <arg name="dxl_baud_rate"           default="57600"/>
@@ -20,11 +20,14 @@
       publish_period: 0.010
       dxl_read_period: 0.010
       dxl_write_period: 0.010
-      mobile_robot_config:                <!--this values will be set when 'use_cmd_vel' is true-->
-        seperation_between_wheels: 0.160  <!--default value is set by reference of TB3-->
-        radius_of_wheel: 0.105            <!--default value is set by reference of TB3-->
+      mobile_robot_config:
+        seperation_between_wheels: 0.56
+        radius_of_wheel: 0.105
     </rosparam>
+    <remap from="dynamixel_workbench/cmd_vel" to="cmd_vel" />
+
   </node>
-  <node name="odom_publisher" pkg="pir2_control" type="odom_publisher" /> 
+
+  <node name="odom_publisher" pkg="pir2_control" type="odom_publisher" />
 
 </launch>
