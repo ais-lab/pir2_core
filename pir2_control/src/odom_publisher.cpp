@@ -21,13 +21,22 @@ double last_right = 0;
 // double theta = 0;
 // double delta_theta = 0;
 double last_theta = 0;
-
+int count = 0;
+double init_left = 0.0;
+double init_right = 0.0;
 
 void OdomCallback(const sensor_msgs::JointState::ConstPtr& msg)
 {
 
-  current_left = msg->position[0];  //wheel_left_joint
-  current_right = msg->position[1];  //wheel_right_joint
+  if (count == 0) {
+    init_left = msg->position[0];  //wheel_left_joint
+    init_right = msg->position[1];  //wheel_right_joint
+    count++;
+
+  } else {
+    current_left = msg->position[0] - init_left;  //wheel_left_joint
+    current_right = msg->position[1] - init_right;  //wheel_right_joint
+  }
 
 }
 
