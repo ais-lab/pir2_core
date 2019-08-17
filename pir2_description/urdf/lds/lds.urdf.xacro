@@ -1,8 +1,10 @@
 <?xml version="1.0" ?>
+
 <robot name="hlds_support" xmlns:xacro="http://ros.org/wiki/xacro">
   <!--xacro:include filename="$(find pir2_description)/urdf/common_properties.xacro"/-->
   <!--xacro:include filename="$(find pir2_description)/urdf/materials.urdf.xacro"/-->
   <!--xacro:include filename="$(find pir2_description)/urdf/turtlebot3_waffle.gazebo.xacro"/-->
+  <xacro:include filename="$(find pir2_description)/urdf/lds/lds.gazebo.xacro"/>
 
   <xacro:macro name="hlds_support" params="parent" >
 

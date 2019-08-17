@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <robot name="pir2_wheel" xmlns:xacro="http://ros.org/wiki/xacro">
-
+  <xacro:include filename="$(find pir2_description)/urdf/wheels/wheel.gazebo.xacro"/>
   <!--xacro:include filename="$(find turtlebot3_description)/urdf/turtlebot3_waffle.gazebo.xacro"/-->
 
 
@@ -23,7 +23,7 @@
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <cylinder length="0.018" radius="0.21"/>
+        <cylinder length="0.018" radius="0.108"/>
       </geometry>
     </collision>
 
@@ -55,7 +55,7 @@
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <cylinder length="0.018" radius="0.21"/>
+        <cylinder length="0.018" radius="0.108"/>
       </geometry>
     </collision>
 
