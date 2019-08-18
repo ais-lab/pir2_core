@@ -1,7 +1,12 @@
 <launch>
 
+  <arg name="use_lds"              default="false"/>
+
   <include file="$(find pir2_bringup)/launch/pir2_model.launch"/>
   <include file="$(find pir2_bringup)/launch/pir2_wheel_v2.launch"/>
-  <include file="$(find pir2_bringup)/launch/hlds_laser.launch"/>
+
+  <group if="$(arg use_lds)">
+    <include file="$(find pir2_bringup)/launch/hlds_laser.launch"/>
+  </group>
 
 </launch>
