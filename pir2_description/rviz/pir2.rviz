@@ -57,7 +57,7 @@ Visualization Manager:
       Value: true
     - Alpha: 1
       Class: rviz/RobotModel
-      Collision Enabled: true
+      Collision Enabled: false
       Enabled: true
       Links:
         All Links Enabled: true
@@ -125,7 +125,7 @@ Visualization Manager:
         base_link:
           Value: false
         base_scan:
-          Value: false
+          Value: true
         bottom_scan:
           Value: false
         caster_front_link:
@@ -135,9 +135,9 @@ Visualization Manager:
         middle_scan:
           Value: false
         wheel_left_link:
-          Value: false
+          Value: true
         wheel_right_link:
-          Value: false
+          Value: true
       Marker Scale: 1
       Name: TF
       Show Arrows: true
@@ -233,10 +233,10 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.18479710817337036
+      Pitch: 0.7247976660728455
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 0.8231096267700195
+      Yaw: 0.6712971925735474
     Saved: ~
 Window Geometry:
   Displays:
