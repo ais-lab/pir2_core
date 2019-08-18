@@ -102,8 +102,10 @@ int main (int argc, char** argv)
           // ROS_INFO("theta %f", delta_theta);
 
           double dt = (current_time - last_time).toSec();
-          if (dt == 0)
+          if (dt == 0) {
             return false;
+          } else {
+
           // if (dt < 0.00001)
           //   return false; // Interval too small to integrate with
 
@@ -166,6 +168,7 @@ int main (int argc, char** argv)
 
           r.sleep();
           count++;
+        }
     }
 
  return 0;
