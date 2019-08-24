@@ -79,11 +79,6 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
-        bottom_scan:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
         caster_front_link:
           Alpha: 1
           Show Axes: false
@@ -94,7 +89,12 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
-        middle_scan:
+        lds_plate_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        middle_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -121,18 +121,18 @@ Visualization Manager:
       Frames:
         All Enabled: false
         base_footprint:
-          Value: false
+          Value: true
         base_link:
           Value: false
         base_scan:
           Value: true
-        bottom_scan:
-          Value: false
         caster_front_link:
-          Value: true
+          Value: false
         caster_rear_link:
-          Value: true
-        middle_scan:
+          Value: false
+        lds_plate_link:
+          Value: false
+        middle_link:
           Value: false
         wheel_left_link:
           Value: true
@@ -146,14 +146,14 @@ Visualization Manager:
       Tree:
         base_footprint:
           base_link:
-            bottom_scan:
-              middle_scan:
-                base_scan:
-                  {}
             caster_front_link:
               {}
             caster_rear_link:
               {}
+            middle_link:
+              lds_plate_link:
+                base_scan:
+                  {}
             wheel_left_link:
               {}
             wheel_right_link:
@@ -192,7 +192,7 @@ Visualization Manager:
       Value: true
   Enabled: true
   Global Options:
-    Background Color: 48; 48; 48
+    Background Color: 136; 138; 133
     Default Light: true
     Fixed Frame: base_footprint
     Frame Rate: 30
@@ -218,25 +218,25 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 0.9446208477020264
+      Distance: 1.4230877161026
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 0.04255986213684082
-        Y: -0.029224853962659836
-        Z: 0.04289352893829346
+        X: -0.06849180161952972
+        Y: 0.052786603569984436
+        Z: 0.07806792855262756
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.7247976660728455
+      Pitch: 0.4802030920982361
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 0.6712971925735474
+      Yaw: 0.4812965393066406
     Saved: ~
 Window Geometry:
   Displays:
