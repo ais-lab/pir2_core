@@ -9,5 +9,5 @@
   <rosparam param="source_list">["dynamixel_workbench/joint_states"]</rosparam>
 
 
-  <param name="robot_description" command="$(find xacro)/xacro '$(find pir2_description)/urdf/body/bottom.urdf.xacro'"/>
+  <param name="robot_description" command="$(find xacro)/xacro '$(find pir2_description)/robots/pir2_frame.urdf.xacro'"/>
 </launch>
