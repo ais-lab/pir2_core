@@ -1,1 +1,2 @@
 ACTION=="add", SUBSYSTEMS=="usb", ATTRS{manufacturer}=="FTDI", ATTRS{product}=="USB <-> Serial Converter", SYMLINK+="wheel"
+ACTION=="add", SUBSYSTEMS=="usb", ATTRS{manufacturer}=="Silicon Labs", ATTRS{product}=="CP2102 USB to UART Bridge Controller", SYMLINK+="lds"
