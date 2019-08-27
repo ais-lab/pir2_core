@@ -11,7 +11,7 @@
     <arg name="debug" value="false"/>
   </include>
 
-  <param name="robot_description" command="$(find xacro)/xacro $(find pir2_description)/urdf/body/bottom.urdf.xacro" />
+  <param name="robot_description" command="$(find xacro)/xacro '$(find pir2_description)/robots/pir2_frame.urdf.xacro'"/>
 
   <node pkg="gazebo_ros" type="spawn_model" name="spawn_urdf" args="-urdf -model pir_robot_frame -x $(arg x_pos) -y $(arg y_pos) -z $(arg z_pos) -param robot_description" />
 
