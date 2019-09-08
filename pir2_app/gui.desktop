@@ -1,0 +1,10 @@
+[Desktop Entry]
+#Version=1.0
+Name=GUI
+Encoding=UTF-8
+Comment=This is my comment
+Icon=/home/ud18/ピクチャ/icon2.png
+Exec=gnome-terminal -e "bash -c './gui.sh;$SHELL'"
+#Exec=gedit
+Type=Application
+Terminal=true
