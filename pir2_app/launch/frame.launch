@@ -1,0 +1,5 @@
+<launch>
+
+  <node pkg="pir2_app" name="gui" type="frame.py" />
+
+</launch>
