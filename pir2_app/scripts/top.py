@@ -8,7 +8,7 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-class Ui_Form(object):
+class Ui_top(object):
     def setupUi(self, Form):
         Form.setObjectName("Form")
         Form.resize(1012, 727)
@@ -37,6 +37,7 @@ class Ui_Form(object):
         self.pushButton.clicked.connect(Form.execute)
         self.pushButton_2.clicked.connect(Form.create)
         self.pushButton_3.clicked.connect(Form.slam)
+        self.pushButton_4.clicked.connect(QtCore.QCoreApplication.instance().quit)   
         QtCore.QMetaObject.connectSlotsByName(Form)
 
     def retranslateUi(self, Form):
