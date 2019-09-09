@@ -42,7 +42,10 @@ class Create(QDialog):
         p = self.palette()
         p.setColor(self.backgroundRole(), Qt.lightGray)
         self.setPalette(p)
-
+    def adding(self):
+        pass
+    def saving(self):
+        pass
 class Execute(QDialog):
     def __init__(self,parent=None):
         super(Execute, self).__init__(parent)
