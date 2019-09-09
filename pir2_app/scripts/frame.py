@@ -62,15 +62,17 @@ class Execute(QDialog):
         self.uie.label2.setFont(QFont("Times", 12, QFont.Bold))
         self.uie.label2.setText(str(self.filename))
 
-        test_data = open(fname, "r")
-        contents = test_data.read()
-        self.uie.label3.setText(str(contents))
-        test_data.close()
+        if fname:
+            test_data = open(fname, "r")
+            contents = test_data.read()
+            self.uie.label3.setText(str(contents))
+            test_data.close()
 
     def launch(self):
         ROS_PROGRAM = QProcess(self)
         self.filename, ext = os.path.splitext(self.filename)
-        program = 'roslaunch pir2_control pir2_control.launch file=' + self.filename
+        # program = 'roslaunch pir2_control pir2_control.launch file=' + self.filename
+        program = 'roslaunch pir2_description pir2_description.launch'
         ROS_PROGRAM.start(program)
 
 if __name__ == '__main__':
