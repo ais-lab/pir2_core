@@ -10,7 +10,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 class Ui_create(object):
     def setupUi(self, Form):
-        Form.setObjectName("Form")
+        Form.setObjectName("Create Mode")
         Form.resize(876, 696)
 
         self.label = QtWidgets.QLabel(Form)
@@ -75,7 +75,7 @@ class Ui_create(object):
 
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
-        Form.setWindowTitle(_translate("Form", "Form"))
+        Form.setWindowTitle(_translate("Form", "Create Mode"))
         self.radioButton.setText(_translate("Form", "left"))
         self.radioButton_2.setText(_translate("Form", "right"))
 

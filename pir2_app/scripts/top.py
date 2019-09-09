@@ -10,7 +10,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 class Ui_top(object):
     def setupUi(self, Form):
-        Form.setObjectName("Form")
+        Form.setObjectName("Menu")
         Form.resize(1012, 727)
         self.widget = QtWidgets.QWidget(Form)
         self.widget.setGeometry(QtCore.QRect(360, 120, 321, 491))
@@ -37,14 +37,13 @@ class Ui_top(object):
         self.pushButton.clicked.connect(Form.execute)
         self.pushButton_2.clicked.connect(Form.create)
         self.pushButton_3.clicked.connect(Form.slam)
-        self.pushButton_4.clicked.connect(QtCore.QCoreApplication.instance().quit)   
+        self.pushButton_4.clicked.connect(QtCore.QCoreApplication.instance().quit)
         QtCore.QMetaObject.connectSlotsByName(Form)
 
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
-        Form.setWindowTitle(_translate("Form", "Form"))
+        Form.setWindowTitle(_translate("Form", "Menu"))
         self.pushButton.setText(_translate("Form", "Execute "))
         self.pushButton_2.setText(_translate("Form", "Create"))
         self.pushButton_3.setText(_translate("Form", "SLAM"))
         self.pushButton_4.setText(_translate("Form", "Exit"))
-

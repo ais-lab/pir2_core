@@ -10,7 +10,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 class Ui_exe(object):
     def setupUi(self, Form):
-        Form.setObjectName("Form")
+        Form.setObjectName("Execute Mode")
         Form.resize(1059, 773)
         self.groupBox = QtWidgets.QGroupBox(Form)
         self.groupBox.setGeometry(QtCore.QRect(180, 10, 861, 701))
@@ -44,7 +44,7 @@ class Ui_exe(object):
 
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
-        Form.setWindowTitle(_translate("Form", "Form"))
+        Form.setWindowTitle(_translate("Form", "Execute Mode"))
         self.groupBox.setTitle(_translate("Form", "Launch program"))
         self.pushButton.setText(_translate("Form", "Plese select Motion Script File"))
         self.pushButton_2.setText(_translate("Form", "Launch"))

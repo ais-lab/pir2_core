@@ -71,8 +71,8 @@ class Execute(QDialog):
     def launch(self):
         ROS_PROGRAM = QProcess(self)
         self.filename, ext = os.path.splitext(self.filename)
-        # program = 'roslaunch pir2_control pir2_control.launch file=' + self.filename
-        program = 'roslaunch pir2_description pir2_description.launch'
+        program = 'roslaunch pir2_control pir2_control.launch file:=' + self.filename
+        #program = 'roslaunch pir2_description pir2_description.launch'
         ROS_PROGRAM.start(program)
 
 if __name__ == '__main__':
