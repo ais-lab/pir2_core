@@ -13,7 +13,7 @@ class Ui_top(object):
         Form.setObjectName("Menu")
         Form.resize(1366, 768)
         self.widget = QtWidgets.QWidget(Form)
-        self.widget.setGeometry(QtCore.QRect(360, 120, 321, 491))
+        self.widget.setGeometry(QtCore.QRect(520, 60, 321, 491))
         self.widget.setObjectName("widget")
         self.verticalLayout = QtWidgets.QVBoxLayout(self.widget)
         self.verticalLayout.setContentsMargins(0, 0, 0, 0)

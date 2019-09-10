@@ -20,6 +20,7 @@ class Ui_create(object):
         self.comboBox = QtWidgets.QComboBox(Form)
         self.comboBox.setGeometry(QtCore.QRect(111, 155, 150, 25))
         self.comboBox.setObjectName("comboBox")
+        self.comboBox.addItem("select command")
         self.comboBox.addItem("acceleration")
         self.comboBox.addItem("forward")
         self.comboBox.addItem("rotation")
@@ -89,6 +90,10 @@ class Ui_create(object):
         self.lorr.addButton(self.radioButton_2)
         self.verticalLayout.addWidget(self.radioButton_2)
 
+        self.label4 = QtWidgets.QTextBrowser(Form)
+        self.label4.setGeometry(QtCore.QRect(931, 230, 400, 441))
+        self.label4.setObjectName("textBrowser_2")
+
         self.pushButton = QtWidgets.QPushButton(Form)
         self.pushButton.setGeometry(QtCore.QRect(951, 155, 120, 25))
         self.pushButton.setObjectName("pushButton")
@@ -113,6 +118,7 @@ class Ui_create(object):
         self.pushButton2.setText(_translate("Form", "Save"))
 
     def onActivated(self, text):
+        self.cmd_text = text
 
         self.lineEdit.setVisible(False)
         self.lineEdit_2.setVisible(False)
@@ -121,6 +127,9 @@ class Ui_create(object):
         self.label.setVisible(False)
         self.label2.setVisible(False)
         self.label3.setVisible(False)
+        self.lineEdit.setText("")
+        self.lineEdit_2.setText("")
+        self.lineEdit_3.setText("")
 
         if text == "acceleration":
             self.lineEdit.setVisible(True)

@@ -39,13 +39,17 @@ class Menu(QDialog):
 class Create(QDialog):
     def __init__(self,parent=None):
         super(Create, self).__init__(parent)
-        self.ui = Ui_create()
-        self.ui.setupUi(self)
+        self.uic = Ui_create()
+        self.uic.setupUi(self)
         p = self.palette()
         p.setColor(self.backgroundRole(), Qt.lightGray)
         self.setPalette(p)
+        self.cmd = ""
     def adding(self):
-        pass
+        self.cmd += self.uic.cmd_text + " " + self.uic.lineEdit.text() + " " + self.uic.lineEdit_2.text() + " " + self.uic.lineEdit_3.text() + "\n"
+        self.uic.label4.setText(self.cmd)
+        # print self.uic.lineEdit.text()
+
     def saving(self):
         pass
 class Execute(QDialog):
