@@ -11,7 +11,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_exe(object):
     def setupUi(self, Form):
         Form.setObjectName("Execute Mode")
-        Form.resize(1059, 773)
+        Form.resize(1366, 768)
         self.groupBox = QtWidgets.QGroupBox(Form)
         self.groupBox.setGeometry(QtCore.QRect(900, 100, 861, 701))
         self.groupBox.setObjectName("groupBox")

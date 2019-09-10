@@ -11,7 +11,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_top(object):
     def setupUi(self, Form):
         Form.setObjectName("Menu")
-        Form.resize(1012, 727)
+        Form.resize(1366, 768)
         self.widget = QtWidgets.QWidget(Form)
         self.widget.setGeometry(QtCore.QRect(360, 120, 321, 491))
         self.widget.setObjectName("widget")
