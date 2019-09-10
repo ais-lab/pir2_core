@@ -13,7 +13,7 @@ class Ui_exe(object):
         Form.setObjectName("Execute Mode")
         Form.resize(1059, 773)
         self.groupBox = QtWidgets.QGroupBox(Form)
-        self.groupBox.setGeometry(QtCore.QRect(180, 10, 861, 701))
+        self.groupBox.setGeometry(QtCore.QRect(900, 100, 861, 701))
         self.groupBox.setObjectName("groupBox")
 
         self.label3 = QtWidgets.QTextBrowser(self.groupBox)
