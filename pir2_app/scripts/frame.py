@@ -45,13 +45,48 @@ class Create(QDialog):
         p.setColor(self.backgroundRole(), Qt.lightGray)
         self.setPalette(p)
         self.cmd = ""
+        self.filename_out_mts=""
     def adding(self):
-        self.cmd += self.uic.cmd_text + " " + self.uic.lineEdit.text() + " " + self.uic.lineEdit_2.text() + " " + self.uic.lineEdit_3.text() + "\n"
+
+        if self.uic.cmd_text == "turning":
+            if str(self.uic.radioButton.isChecked()) == "True":
+                self.cmd += self.uic.cmd_text + " " + self.uic.lineEdit.text() + " " + self.uic.lineEdit_2.text() + " " + self.uic.lineEdit_3.text() + " left" + "\n"
+            else:
+                self.cmd += self.uic.cmd_text + " " + self.uic.lineEdit.text() + " " + self.uic.lineEdit_2.text() + " " + self.uic.lineEdit_3.text() + " right" + "\n"
+        elif self.uic.cmd_text == "e":
+            self.filename_out_mts = str(self.filename).split('.')[0]
+            self.cmd += self.uic.cmd_text + " " + self.filename_out_mts
+        else:
+            self.cmd += self.uic.cmd_text + " " + self.uic.lineEdit.text() + " " + self.uic.lineEdit_2.text() + " " + self.uic.lineEdit_3.text() + "\n"
         self.uic.label4.setText(self.cmd)
         # print self.uic.lineEdit.text()
 
     def saving(self):
-        pass
+        text, ok = QInputDialog.getText(self, '---Input Dialog---', 'Enter file name:')
+        path_w = rospkg.RosPack().get_path('pir2_control') + '/motion/' + text + '.mts'
+        with open(path_w, mode='w') as f:
+            f.write(self.cmd)
+        # if ok:
+        #     self.le.setText(str(text))
+
+    def reset(self):
+        self.uic.label4.setText("")
+        self.cmd = ""
+
+    def select(self):
+        path = rospkg.RosPack().get_path('pir2_control') + '/motion'
+        fname, _ = QFileDialog.getOpenFileName(self, 'Open file', path)
+        self.filename = QFileInfo(fname).fileName()
+
+        self.uic.label5.setVisible(True)
+        self.uic.label5.setText(str(self.filename))
+
+        # if fname:
+        #     test_data = open(fname, "r")
+        #     contents = test_data.read()
+        #     self.uie.label3.setText(str(contents))
+        #     test_data.close()
+
 class Execute(QDialog):
     def __init__(self,parent=None):
         super(Execute, self).__init__(parent)
