@@ -13,7 +13,7 @@ class Ui_exe(object):
         Form.setObjectName("Execute Mode")
         Form.resize(1366, 768)
         self.groupBox = QtWidgets.QGroupBox(Form)
-        self.groupBox.setGeometry(QtCore.QRect(700, 40, 661, 701))
+        self.groupBox.setGeometry(QtCore.QRect(690, 20, 661, 701))
         self.groupBox.setObjectName("groupBox")
         # self.groupBox.setStyleSheet('color: gray')
 
@@ -22,7 +22,7 @@ class Ui_exe(object):
         self.label3.setObjectName("textBrowser_2")
 
         self.pushButton = QtWidgets.QPushButton(self.groupBox)
-        self.pushButton.setGeometry(QtCore.QRect(40, 120, 291, 25))
+        self.pushButton.setGeometry(QtCore.QRect(60, 120, 271, 25))
         self.pushButton.setObjectName("pushButton")
 
         self.label2 = QtWidgets.QLabel(self.groupBox)
