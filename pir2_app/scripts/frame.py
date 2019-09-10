@@ -23,10 +23,12 @@ class Menu(QDialog):
         self.setPalette(p)
 
     def execute(self):
-        window3.showMaximized()
+        # window3.showMaximized()
+        window3.show()
 
     def create(self):
-        window2.showMaximized()
+        # window2.showMaximized()
+        window2.show()
 
     def slam(self):
         ROS_PROGRAM = QProcess(self)
@@ -84,5 +86,6 @@ if __name__ == '__main__':
     window = Menu()
     window2 = Create()
     window3 = Execute()
-    window.showMaximized()
+    # window.showMaximized()
+    window.show()
     sys.exit(app.exec_())

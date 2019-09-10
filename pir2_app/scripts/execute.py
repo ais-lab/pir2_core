@@ -13,27 +13,28 @@ class Ui_exe(object):
         Form.setObjectName("Execute Mode")
         Form.resize(1366, 768)
         self.groupBox = QtWidgets.QGroupBox(Form)
-        self.groupBox.setGeometry(QtCore.QRect(900, 100, 861, 701))
+        self.groupBox.setGeometry(QtCore.QRect(700, 40, 661, 701))
         self.groupBox.setObjectName("groupBox")
+        # self.groupBox.setStyleSheet('color: gray')
 
         self.label3 = QtWidgets.QTextBrowser(self.groupBox)
-        self.label3.setGeometry(QtCore.QRect(100, 180, 681, 441))
+        self.label3.setGeometry(QtCore.QRect(100, 180, 481, 441))
         self.label3.setObjectName("textBrowser_2")
 
         self.pushButton = QtWidgets.QPushButton(self.groupBox)
-        self.pushButton.setGeometry(QtCore.QRect(140, 120, 291, 25))
+        self.pushButton.setGeometry(QtCore.QRect(40, 120, 291, 25))
         self.pushButton.setObjectName("pushButton")
 
         self.label2 = QtWidgets.QLabel(self.groupBox)
-        self.label2.setGeometry(QtCore.QRect(460, 120, 256, 31))
+        self.label2.setGeometry(QtCore.QRect(360, 120, 256, 31))
         self.label2.setObjectName("textBrowser")
 
         self.pushButton_2 = QtWidgets.QPushButton(self.groupBox)
-        self.pushButton_2.setGeometry(QtCore.QRect(300, 640, 301, 25))
+        self.pushButton_2.setGeometry(QtCore.QRect(200, 640, 301, 25))
         self.pushButton_2.setObjectName("pushButton_2")
 
         self.label = QtWidgets.QLabel(self.groupBox)
-        self.label.setGeometry(QtCore.QRect(460, 90, 141, 17))
+        self.label.setGeometry(QtCore.QRect(360, 90, 141, 17))
         self.label.setObjectName("label")
         self.label.setStyleSheet('color: gray')
 
@@ -45,7 +46,7 @@ class Ui_exe(object):
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
         Form.setWindowTitle(_translate("Form", "Execute Mode"))
-        self.groupBox.setTitle(_translate("Form", "Launch program"))
+        self.groupBox.setTitle(_translate("Form", "Execute program"))
         self.pushButton.setText(_translate("Form", "Plese select Motion Script File"))
         self.pushButton_2.setText(_translate("Form", "Launch"))
         self.label.setText(_translate("Form", "Selected file name"))

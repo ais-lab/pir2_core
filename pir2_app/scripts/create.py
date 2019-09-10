@@ -90,12 +90,12 @@ class Ui_create(object):
         self.verticalLayout.addWidget(self.radioButton_2)
 
         self.pushButton = QtWidgets.QPushButton(Form)
-        self.pushButton.setGeometry(QtCore.QRect(1051, 155, 150, 25))
+        self.pushButton.setGeometry(QtCore.QRect(951, 155, 120, 25))
         self.pushButton.setObjectName("pushButton")
         self.pushButton.setStyleSheet('background-color:#ff4500')
 
         self.pushButton2 = QtWidgets.QPushButton(Form)
-        self.pushButton2.setGeometry(QtCore.QRect(1280, 155, 150, 25))
+        self.pushButton2.setGeometry(QtCore.QRect(1140, 155, 120, 25))
         self.pushButton2.setObjectName("pushButton")
         self.pushButton2.setStyleSheet('background-color:#87ceeb')
 
