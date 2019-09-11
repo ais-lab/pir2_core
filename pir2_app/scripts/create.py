@@ -9,11 +9,19 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 import rospkg
 import cv2
+import numpy as np
 
 class Ui_create(object):
     def setupUi(self, Form):
         Form.setObjectName("Create Mode")
         Form.resize(1366, 768)
+
+        img_height = 460
+        img_width = 460
+        self.resolution = float(10) / float(img_height)
+
+        self.now_height = 0
+        self.now_width = 0
 
         self.cmd_text = ""
 
@@ -128,20 +136,32 @@ class Ui_create(object):
         self.pushButton3.setGeometry(QtCore.QRect(1211, 200, 100, 25))
         self.pushButton3.setObjectName("pushButton")
 
-        path = rospkg.RosPack().get_path('pir2_navigation') + '/map/map.pgm'
-
-        img = cv2.imread(path, cv2.IMREAD_GRAYSCALE)
-        # img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-        height = img.shape[0]
-        width = img.shape[1]
-        img = img[(height/2)-100:(height/2)+100 , (width/2)-100:(width/2)+100]
-        img = cv2.resize(img , (int(200*2.3), int(200*2.3)))
-        qimg = QtGui.QImage(img.data, img.shape[1], img.shape[0], QtGui.QImage.Format_RGB888)
         # path = rospkg.RosPack().get_path('pir2_navigation') + '/map/map.pgm'
+        # img = cv2.imread(path, cv2.IMREAD_GRAYSCALE)
+        # height = img.shape[0]
+        # width = img.shape[1]
+        # img = img[(height/2)-100:(height/2)+100 , (width/2)-100:(width/2)+100]
+        # img = cv2.resize(img , (int(200*2.3), int(200*2.3)))
+        # qimg = QtGui.QImage(img.data, img.shape[1], img.shape[0], QtGui.QImage.Format_RGB888)
+
+        size = img_height, img_width, 3
+        self.img = np.zeros(size, dtype=np.uint8)
+        self.img.fill(255)
+        cv2.drawMarker(self.img, (img_height/2, img_width/2), color=(255, 0, 0),
+                   markerType=cv2.MARKER_TRIANGLE_UP, thickness=2)
+        self.now_height = img_height/2
+        self.now_width = img_width/2
+        qimg = QtGui.QImage(self.img.data, self.img.shape[1], self.img.shape[0], QtGui.QImage.Format_RGB888)
         self.imageLabel = QtWidgets.QLabel(Form)
         self.imageLabel.setPixmap(QtGui.QPixmap.fromImage(qimg))
         self.imageLabel.move(200,220)
-        # self.imageLabel.setGeometry(QtCore.QRect(200, 220, int(200*2.3), int(200*2.3)))
+
+        self.lineEdit.setVisible(False)
+        self.lineEdit_2.setVisible(False)
+        self.lineEdit_3.setVisible(False)
+        self.label.setVisible(False)
+        self.label2.setVisible(False)
+        self.label3.setVisible(False)
 
         self.retranslateUi(Form)
         self.pushButton.clicked.connect(Form.adding)

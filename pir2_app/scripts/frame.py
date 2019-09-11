@@ -11,6 +11,7 @@ from execute import Ui_exe
 import rospy
 import rospkg
 import os.path
+import cv2
 
 
 class Menu(QDialog):
@@ -60,6 +61,18 @@ class Create(QDialog):
             self.cmd += self.uic.cmd_text + " " + self.uic.lineEdit.text() + " " + self.uic.lineEdit_2.text() + " " + self.uic.lineEdit_3.text() + "\n"
         self.uic.label4.setText(self.cmd)
         # print self.uic.lineEdit.text()
+        self.drawing(self.uic.cmd_text)
+
+    def drawing(self, text):
+        if text == "forward":
+            pixel = int(float(self.uic.lineEdit_2.text()) / 1000.0 / self.uic.resolution)
+            self.uic.img = cv2.line(self.uic.img,(self.uic.now_height,self.uic.now_width),(self.uic.now_height,self.uic.now_width - pixel),(255,0,0),2)
+        else:
+            pass
+        qimg = QImage(self.uic.img.data, self.uic.img.shape[1], self.uic.img.shape[0], QImage.Format_RGB888)
+        self.uic.imageLabel.setPixmap(QPixmap.fromImage(qimg))
+        # self.uic.imageLabel.move(200,220)
+
 
     def saving(self):
         text, ok = QInputDialog.getText(self, '---Input Dialog---', 'Enter file name:')
