@@ -12,6 +12,7 @@ import rospy
 import rospkg
 import os.path
 import cv2
+import numpy as np
 
 
 class Menu(QDialog):
@@ -85,6 +86,7 @@ class Create(QDialog):
     def reset(self):
         self.uic.label4.setText("")
         self.cmd = ""
+        self.reset_img()
 
     def select(self):
         path = rospkg.RosPack().get_path('pir2_control') + '/motion'
@@ -99,6 +101,17 @@ class Create(QDialog):
         #     contents = test_data.read()
         #     self.uie.label3.setText(str(contents))
         #     test_data.close()
+    def reset_img(self):
+        size = self.uic.img_height, self.uic.img_width, 3
+        self.uic.img = np.zeros(size, dtype=np.uint8)
+        self.uic.img.fill(255)
+        cv2.drawMarker(self.uic.img, (self.uic.img_height/2, self.uic.img_width/2), color=(255, 0, 0),
+                   markerType=cv2.MARKER_TRIANGLE_UP, markerSize=10,thickness=2)
+        self.uic.now_height = self.uic.img_height/2
+        self.uic.now_width = self.uic.img_width/2
+        qimg = QImage(self.uic.img.data, self.uic.img.shape[1], self.uic.img.shape[0], QImage.Format_RGB888)
+        self.uic.imageLabel.setPixmap(QPixmap.fromImage(qimg))
+        self.uic.imageLabel.move(200,220)
 
 class Execute(QDialog):
     def __init__(self,parent=None):

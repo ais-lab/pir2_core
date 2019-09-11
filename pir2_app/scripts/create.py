@@ -16,9 +16,9 @@ class Ui_create(object):
         Form.setObjectName("Create Mode")
         Form.resize(1366, 768)
 
-        img_height = 460
-        img_width = 460
-        self.resolution = float(10) / float(img_height)
+        self.img_height = 460
+        self.img_width = 460
+        self.resolution = float(10) / float(self.img_height)
 
         self.now_height = 0
         self.now_width = 0
@@ -144,13 +144,13 @@ class Ui_create(object):
         # img = cv2.resize(img , (int(200*2.3), int(200*2.3)))
         # qimg = QtGui.QImage(img.data, img.shape[1], img.shape[0], QtGui.QImage.Format_RGB888)
 
-        size = img_height, img_width, 3
+        size = self.img_height, self.img_width, 3
         self.img = np.zeros(size, dtype=np.uint8)
         self.img.fill(255)
-        cv2.drawMarker(self.img, (img_height/2, img_width/2), color=(255, 0, 0),
-                   markerType=cv2.MARKER_TRIANGLE_UP, thickness=2)
-        self.now_height = img_height/2
-        self.now_width = img_width/2
+        cv2.drawMarker(self.img, (self.img_height/2, self.img_width/2), color=(255, 0, 0),
+                   markerType=cv2.MARKER_TRIANGLE_UP, markerSize=10,thickness=2)
+        self.now_height = self.img_height/2
+        self.now_width = self.img_width/2
         qimg = QtGui.QImage(self.img.data, self.img.shape[1], self.img.shape[0], QtGui.QImage.Format_RGB888)
         self.imageLabel = QtWidgets.QLabel(Form)
         self.imageLabel.setPixmap(QtGui.QPixmap.fromImage(qimg))
