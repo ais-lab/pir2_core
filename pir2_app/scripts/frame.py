@@ -2,17 +2,22 @@
 # -*- coding: utf-8 -*-
 
 import sys
+import os.path
+
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
+
 from top import Ui_top
 from create import Ui_create
 from execute import Ui_exe
+
 import rospy
 import rospkg
-import os.path
+
 import cv2
 import numpy as np
+from PIL import Image
 
 
 class Menu(QDialog):
@@ -48,6 +53,14 @@ class Create(QDialog):
         self.setPalette(p)
         self.cmd = ""
         self.filename_out_mts=""
+        self.x_rb = 90
+        self.y_rb = 200
+        self.theta_rb = 0
+
+        path = rospkg.RosPack().get_path('pir2_app') + '/scripts/image/ind.png'
+        self.rb = cv2.imread(path, cv2.IMREAD_GRAYSCALE)
+
+
     def adding(self):
 
         if self.uic.cmd_text == "turning":
@@ -66,11 +79,14 @@ class Create(QDialog):
 
     def drawing(self, text):
         if text == "forward":
-            pixel = int(float(self.uic.lineEdit_2.text()) / 1000.0 / self.uic.resolution)
-            self.uic.img = cv2.line(self.uic.img,(self.uic.now_height,self.uic.now_width),(self.uic.now_height,self.uic.now_width - pixel),(255,0,0),2)
+            if self.uic.lineEdit_2.text():
+                pixel = int(float(self.uic.lineEdit_2.text()) / 1000.0 / self.uic.resolution)
+                self.uic.raw_img = cv2.line(self.uic.raw_img,(self.uic.now_height,self.uic.now_width),(self.uic.now_height,self.uic.now_width - pixel),(255,0,0),2)
         else:
             pass
-        qimg = QImage(self.uic.img.data, self.uic.img.shape[1], self.uic.img.shape[0], QImage.Format_RGB888)
+
+        self.rb_drawing()
+        qimg = QImage(self.uic.raw_img.data, self.uic.raw_img.shape[1], self.uic.raw_img.shape[0], QImage.Format_RGB888)
         self.uic.imageLabel.setPixmap(QPixmap.fromImage(qimg))
         # self.uic.imageLabel.move(200,220)
 
@@ -87,6 +103,14 @@ class Create(QDialog):
         self.uic.label4.setText("")
         self.cmd = ""
         self.reset_img()
+
+    def rb_drawing(self, in_img):
+        # back_im = im1.copy()
+        in_img.paste(self.rb , (-self.x_rb, -self.y_rb))
+        # back_im.save('data/dst/rocket_pillow_paste_pos.jpg', quality=95)
+        qimg = QImage(in_img, in_img.shape[1], in_img.shape[0], QImage.Format_RGB888)
+
+
 
     def select(self):
         path = rospkg.RosPack().get_path('pir2_control') + '/motion'
