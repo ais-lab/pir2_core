@@ -20,8 +20,8 @@ class Ui_create(object):
         self.img_width = 460
         self.resolution = float(10) / float(self.img_height)
 
-        self.now_height = 0
-        self.now_width = 0
+        self.x_rb = 0
+        self.y_rb = 0
 
         self.cmd_text = ""
 
@@ -151,7 +151,7 @@ class Ui_create(object):
 
         self.imageLabel = QtWidgets.QLabel(Form)
         self.imageLabel.move(200,220)
-        self.init_drawing(img)
+        # self.init_drawing(img)
 
         self.lineEdit.setVisible(False)
         self.lineEdit_2.setVisible(False)
@@ -180,12 +180,8 @@ class Ui_create(object):
     def init_drawing(self, in_img):
         in_img  = cv2.drawMarker(in_img, (self.img_height/2, self.img_width/2), color=(255, 0, 0),
                    markerType=cv2.MARKER_TRIANGLE_UP, thickness=1)
-        cv2.imshow("frame1", in_img)
-        cv2.imshow("frame2", self.raw_img)
-        cv2.waitKey(0)
-        cv2.destroyAllWindows()
-        self.now_height = self.img_height/2
-        self.now_width = self.img_width/2
+        self.x_rb = self.img_height/2
+        self.y_rb = self.img_width/2
         qimg = QtGui.QImage(in_img.data, in_img.shape[1], in_img.shape[0], QtGui.QImage.Format_RGB888)
         self.imageLabel.setPixmap(QtGui.QPixmap.fromImage(qimg))
 
