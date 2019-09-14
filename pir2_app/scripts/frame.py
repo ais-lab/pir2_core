@@ -53,25 +53,25 @@ class Create(QDialog):
         self.setPalette(p)
         self.cmd = ""
         self.filename_out_mts=""
+        self.x_rb = 0
+        self.y_rb = 0
         self.theta_rb = 60
 
         img_path = rospkg.RosPack().get_path('pir2_app') + '/scripts/image/ind2.png'
         mask_path  =rospkg.RosPack().get_path('pir2_app') + '/scripts/image/alpha.png'
         path  =rospkg.RosPack().get_path('pir2_app') + '/scripts/image/ind2.png'
-        self.rb = cv2.imread(path, cv2.IMREAD_GRAYSCALE)
+        # self.rb = cv2.imread(path)
         mask = Image.open(mask_path)
-        rb = Image.open(img_path)
-        # self.bg = Image.new("RGBA", rb.size, (0, 0, 0, 0))
-        # self.bg.paste(rb,(0,0),mask.split()[0])
-        self.bg = rb
-        # self.rb.show()
+        self.rb = Image.open(img_path)
+
         self.img_height = 460
         self.img_width = 460
         size = self.img_height, self.img_width, 3
         self.raw_img = np.zeros(size, dtype=np.uint8)
         self.raw_img.fill(255)
-        img = np.copy(self.raw_img)
-        self.uic.init_drawing(img)
+
+        #initialize Imagelabel
+        self.init_drawing()
 
 
     def adding(self):
@@ -94,12 +94,13 @@ class Create(QDialog):
         if text == "forward":
             if self.uic.lineEdit_2.text():
                 pixel = int(float(self.uic.lineEdit_2.text()) / 1000.0 / self.uic.resolution)
-                self.uic.raw_img = cv2.line(self.uic.raw_img,(self.uic.y_rb,self.uic.x_rb),(self.uic.y_rb,self.uic.x_rb - pixel),(255,0,0),2)
-                self.uic.y_rb -= pixel
+                self.raw_img = cv2.line(self.raw_img,(self.x_rb,self.y_rb),(self.x_rb,self.y_rb - pixel),(255,0,0),2)
+                self.y_rb -= pixel
         else:
             pass
 
-        self.rb_drawing(self.uic.raw_img)
+        set_img = np.copy(self.raw_img)
+        self.rb_drawing(set_img, self.x_rb, self.y_rb, self.theta_rb)
 
     def saving(self):
         text, ok = QInputDialog.getText(self, '---Input Dialog---', 'Enter file name:')
@@ -112,20 +113,41 @@ class Create(QDialog):
         self.cmd = ""
         self.reset_img()
 
-    def rb_drawing(self, in_img):
-        # h, w = self.rb.shape
-        M = cv2.getRotationMatrix2D(center=(self.rb.shape[1] / 2, self.rb.shape[0] / 2), angle=self.theta_rb, scale=1.0)
-        # h, w, c = in_img.shape
-        combined = cv2.warpAffine(self.rb, M, dsize=(in_img.shape[1], in_img.shape[0]), dst=in_img, borderMode=cv2.BORDER_TRANSPARENT)
+    def Lighten(self, in_img, bk_img):
+        for width in range(in_img.shape[1]):
+            for height in range(in_img.shape[0]):
 
-        self.bg = self.bg.rotate(self.theta_rb, expand=True)
-        in_img = Image.fromarray(np.uint8(in_img))
-        in_img.paste(self.bg , (self.uic.x_rb-14, self.uic.y_rb-12))
-        # back_im.save('data/dst/rocket_pillow_paste_pos.jpg', quality=95)
-        in_img = np.asarray(in_img)
-        qimg = QImage(in_img, in_img.shape[1], in_img.shape[0], QImage.Format_RGB888)
+                if bk_img[width][height][0] < 50 and bk_img[width][height][1] < 50 and bk_img[width][height][2] < 50:
+                    # in_img[width][height] = in_img[width][height]
+                    pass
+                else:
+                    in_img[width][height] = bk_img[width][height]
+        return in_img
+
+    def rb_drawing(self, in_img, x, y, theta):
+        show_img = np.zeros(in_img.shape, dtype=np.uint8)
+        show_img.fill(255)
+        mask_img = np.zeros(in_img.shape, dtype=np.uint8)
+        rb_img = np.copy(self.rb)
+        rb_x, rb_y, c = rb_img.shape
+
+        rb_img = Image.fromarray(np.uint8(rb_img))
+        rb_img = rb_img.rotate(theta, expand=True)
+        mask_img = Image.fromarray(np.uint8(mask_img))
+        mask_img.paste(rb_img , (x - rb_x, y - rb_y))
+
+        mask_img = np.asarray(mask_img)
+        show_img = self.Lighten(in_img, mask_img)
+        qimg = QImage(show_img, show_img.shape[1], show_img.shape[0], QImage.Format_RGB888)
+        self.uic.imageLabel.setWindowOpacity(0.8)
         self.uic.imageLabel.setPixmap(QPixmap.fromImage(qimg))
 
+    def init_drawing(self):
+        img = np.zeros(self.raw_img.shape, dtype=np.uint8)
+        img.fill(255)
+        self.x_rb = self.img_height / 2
+        self.y_rb = self.img_width / 2
+        self.rb_drawing(img, self.x_rb, self.y_rb, 0)
 
 
     def select(self):
@@ -136,11 +158,6 @@ class Create(QDialog):
         self.uic.label5.setVisible(True)
         self.uic.label5.setText(str(self.filename))
 
-        # if fname:
-        #     test_data = open(fname, "r")
-        #     contents = test_data.read()
-        #     self.uie.label3.setText(str(contents))
-        #     test_data.close()
     def reset_img(self):
         size = self.uic.img_height, self.uic.img_width, 3
         self.uic.img = np.zeros(size, dtype=np.uint8)
