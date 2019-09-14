@@ -18,6 +18,7 @@ import rospkg
 import cv2
 import numpy as np
 from PIL import Image, ImageDraw, ImageFilter
+import math
 
 
 class Menu(QDialog):
@@ -55,11 +56,12 @@ class Create(QDialog):
         self.filename_out_mts=""
         self.x_rb = 0
         self.y_rb = 0
-        self.theta_rb = 60
+        self.theta_rb = 0
+        self.lorr = "left"
 
         img_path = rospkg.RosPack().get_path('pir2_app') + '/scripts/image/ind2.png'
         mask_path  =rospkg.RosPack().get_path('pir2_app') + '/scripts/image/alpha.png'
-        path  =rospkg.RosPack().get_path('pir2_app') + '/scripts/image/ind2.png'
+        # path  =rospkg.RosPack().get_path('pir2_app') + '/scripts/image/ind2.png'
         # self.rb = cv2.imread(path)
         mask = Image.open(mask_path)
         self.rb = Image.open(img_path)
@@ -69,6 +71,7 @@ class Create(QDialog):
         size = self.img_height, self.img_width, 3
         self.raw_img = np.zeros(size, dtype=np.uint8)
         self.raw_img.fill(255)
+        self.resolution = float(10) / float(self.img_height)
 
         #initialize Imagelabel
         self.init_drawing()
@@ -78,29 +81,52 @@ class Create(QDialog):
 
         if self.uic.cmd_text == "turning":
             if str(self.uic.radioButton.isChecked()) == "True":
+                self.lorr = "left"
                 self.cmd += self.uic.cmd_text + " " + self.uic.lineEdit.text() + " " + self.uic.lineEdit_2.text() + " " + self.uic.lineEdit_3.text() + " left" + "\n"
             else:
+                self.lorr = "right"
                 self.cmd += self.uic.cmd_text + " " + self.uic.lineEdit.text() + " " + self.uic.lineEdit_2.text() + " " + self.uic.lineEdit_3.text() + " right" + "\n"
         elif self.uic.cmd_text == "e":
             self.filename_out_mts = str(self.filename).split('.')[0]
-            self.cmd += self.uic.cmd_text + " " + self.filename_out_mts
+            self.cmd += self.uic.cmd_text + " " + self.filename_out_mts + "\n"
         else:
             self.cmd += self.uic.cmd_text + " " + self.uic.lineEdit.text() + " " + self.uic.lineEdit_2.text() + " " + self.uic.lineEdit_3.text() + "\n"
         self.uic.label4.setText(self.cmd)
-        # print self.uic.lineEdit.text()
         self.drawing(self.uic.cmd_text)
 
     def drawing(self, text):
-        if text == "forward":
-            if self.uic.lineEdit_2.text():
-                pixel = int(float(self.uic.lineEdit_2.text()) / 1000.0 / self.uic.resolution)
-                self.raw_img = cv2.line(self.raw_img,(self.x_rb,self.y_rb),(self.x_rb,self.y_rb - pixel),(255,0,0),2)
-                self.y_rb -= pixel
+
+        if self.uic.lineEdit_2.text():
+            current_x = self.x_rb
+            current_y = self.y_rb
+            if text == "forward":
+                distance = int(float(self.uic.lineEdit_2.text()) / 1000.0 / self.resolution)
+                self.x_rb += int(distance * math.cos(math.radians(self.theta_rb + 90)))
+                self.y_rb -= int(distance * math.sin(math.radians(self.theta_rb + 90)))
+                self.raw_img = cv2.line(self.raw_img,(current_x,current_y),(self.x_rb,self.y_rb),(255,0,0),2)
+            elif text == "acceleration":
+                pass
+            elif text == "turning":
+                radius = int(float(self.uic.lineEdit_2.text()) / 1000.0 / self.resolution)
+                distance = int(float(self.uic.lineEdit_3.text()) / 1000.0 / self.resolution)
+                angle = int(distance * 360 / 2/ math.pi / radius)
+                
+                # path_w = rospkg.RosPack().get_path('pir2_control') + '/motion/test.mts'
+                # with open(path_w, mode='w') as f:
+                #     f.write(str(angle))
+                if self.lorr == "left":
+                    self.raw_img = cv2.ellipse(self.raw_img,(current_x,current_y),(radius, radius), 0, 0, -angle, (255,0,0), 2)
+                else:
+                    pass
+
+            elif text == "rotation":
+                angle = int(self.uic.lineEdit_2.text())
+                self.theta_rb += angle
+
+            set_img = np.copy(self.raw_img)
+            self.rb_drawing(set_img, self.x_rb, self.y_rb, self.theta_rb)
         else:
             pass
-
-        set_img = np.copy(self.raw_img)
-        self.rb_drawing(set_img, self.x_rb, self.y_rb, self.theta_rb)
 
     def saving(self):
         text, ok = QInputDialog.getText(self, '---Input Dialog---', 'Enter file name:')
@@ -111,7 +137,7 @@ class Create(QDialog):
     def reset(self):
         self.uic.label4.setText("")
         self.cmd = ""
-        self.reset_img()
+        self.init_drawing()
 
     def Lighten(self, in_img, bk_img):
         for width in range(in_img.shape[1]):
@@ -138,8 +164,9 @@ class Create(QDialog):
 
         mask_img = np.asarray(mask_img)
         show_img = self.Lighten(in_img, mask_img)
+
         qimg = QImage(show_img, show_img.shape[1], show_img.shape[0], QImage.Format_RGB888)
-        self.uic.imageLabel.setWindowOpacity(0.8)
+        # self.uic.imageLabel.setWindowOpacity(0.8)
         self.uic.imageLabel.setPixmap(QPixmap.fromImage(qimg))
 
     def init_drawing(self):
@@ -157,18 +184,6 @@ class Create(QDialog):
 
         self.uic.label5.setVisible(True)
         self.uic.label5.setText(str(self.filename))
-
-    def reset_img(self):
-        size = self.uic.img_height, self.uic.img_width, 3
-        self.uic.img = np.zeros(size, dtype=np.uint8)
-        self.uic.img.fill(255)
-        cv2.drawMarker(self.uic.img, (self.uic.img_height/2, self.uic.img_width/2), color=(255, 0, 0),
-                   markerType=cv2.MARKER_TRIANGLE_UP, markerSize=10,thickness=2)
-        self.uic.x_rb = self.uic.img_height/2
-        self.uic.y_rb = self.uic.img_width/2
-        qimg = QImage(self.uic.img.data, self.uic.img.shape[1], self.uic.img.shape[0], QImage.Format_RGB888)
-        self.uic.imageLabel.setPixmap(QPixmap.fromImage(qimg))
-        self.uic.imageLabel.move(200,220)
 
 class Execute(QDialog):
     def __init__(self,parent=None):

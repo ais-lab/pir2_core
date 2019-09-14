@@ -15,19 +15,8 @@ class Ui_create(object):
     def setupUi(self, Form):
         Form.setObjectName("Create Mode")
         Form.resize(1366, 768)
-
-        self.img_height = 460
-        self.img_width = 460
-        self.resolution = float(10) / float(self.img_height)
-
-        self.x_rb = 0
-        self.y_rb = 0
-
+        
         self.cmd_text = ""
-
-        # self.groupBox = QtWidgets.QGroupBox(Form)
-        # self.groupBox.setGeometry(QtCore.QRect(690, 20, 661, 701))
-        # self.groupBox.setObjectName("groupBox")
 
         self.label = QtWidgets.QLabel(Form)
         self.label.setGeometry(QtCore.QRect(200, 40, 67, 17))
@@ -136,18 +125,10 @@ class Ui_create(object):
         self.pushButton3.setGeometry(QtCore.QRect(1211, 200, 100, 25))
         self.pushButton3.setObjectName("pushButton")
 
-        # path = rospkg.RosPack().get_path('pir2_navigation') + '/map/map.pgm'
-        # img = cv2.imread(path, cv2.IMREAD_GRAYSCALE)
-        # height = img.shape[0]
-        # width = img.shape[1]
-        # img = img[(height/2)-100:(height/2)+100 , (width/2)-100:(width/2)+100]
-        # img = cv2.resize(img , (int(200*2.3), int(200*2.3)))
-        # qimg = QtGui.QImage(img.data, img.shape[1], img.shape[0], QtGui.QImage.Format_RGB888)
-
-        size = self.img_height, self.img_width, 3
-        self.raw_img = np.zeros(size, dtype=np.uint8)
-        self.raw_img.fill(255)
-        img = np.copy(self.raw_img)
+        # size = self.img_height, self.img_width, 3
+        # self.raw_img = np.zeros(size, dtype=np.uint8)
+        # self.raw_img.fill(255)
+        # img = np.copy(self.raw_img)
 
         self.imageLabel = QtWidgets.QLabel(Form)
         self.imageLabel.move(200,220)
@@ -176,14 +157,6 @@ class Ui_create(object):
         self.pushButton2.setText(_translate("Form", "Save"))
         self.pushButton3.setText(_translate("Form", "Reset"))
         self.pushButton5.setText(_translate("Form", "Plese select Motion Script File"))
-
-    def init_drawing(self, in_img):
-        in_img  = cv2.drawMarker(in_img, (self.img_height/2, self.img_width/2), color=(255, 0, 0),
-                   markerType=cv2.MARKER_TRIANGLE_UP, thickness=1)
-        self.x_rb = self.img_height/2
-        self.y_rb = self.img_width/2
-        qimg = QtGui.QImage(in_img.data, in_img.shape[1], in_img.shape[0], QtGui.QImage.Format_RGB888)
-        self.imageLabel.setPixmap(QtGui.QPixmap.fromImage(qimg))
 
     def onActivated(self, text):
         self.cmd_text = text
