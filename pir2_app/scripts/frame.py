@@ -68,9 +68,7 @@ class Create(QDialog):
 
         self.img_height = 460
         self.img_width = 460
-        size = self.img_height, self.img_width, 3
-        self.raw_img = np.zeros(size, dtype=np.uint8)
-        self.raw_img.fill(255)
+        self.size = self.img_height, self.img_width, 3
         self.resolution = float(10) / float(self.img_height)
 
         #initialize Imagelabel
@@ -110,12 +108,13 @@ class Create(QDialog):
                 radius = int(float(self.uic.lineEdit_2.text()) / 1000.0 / self.resolution)
                 distance = int(float(self.uic.lineEdit_3.text()) / 1000.0 / self.resolution)
                 angle = int(distance * 360 / 2/ math.pi / radius)
-                
-                # path_w = rospkg.RosPack().get_path('pir2_control') + '/motion/test.mts'
-                # with open(path_w, mode='w') as f:
-                #     f.write(str(angle))
                 if self.lorr == "left":
-                    self.raw_img = cv2.ellipse(self.raw_img,(current_x,current_y),(radius, radius), 0, 0, -angle, (255,0,0), 2)
+                    center_x = self.x_rb + int(radius * math.sin(math.radians(self.theta_rb + 90)) * math.sin(math.radians(-90)))
+                    center_y = self.y_rb - int(radius * math.cos(math.radians(self.theta_rb + 90)) * math.sin(math.radians(-90)))
+                    # path_w = rospkg.RosPack().get_path('pir2_control') + '/motion/test.mts'
+                    # with open(path_w, mode='w') as f:
+                    #     f.write(str(center_x) + "/" + str(center_y) + "/" + str(radius))
+                    self.raw_img = cv2.ellipse(self.raw_img,(center_x,center_y),(radius, radius),  90-self.theta_rb, 0,  90-self.theta_rb - angle, (255,0,0), 2)
                 else:
                     pass
 
@@ -170,6 +169,8 @@ class Create(QDialog):
         self.uic.imageLabel.setPixmap(QPixmap.fromImage(qimg))
 
     def init_drawing(self):
+        self.raw_img = np.zeros(self.size, dtype=np.uint8)
+        self.raw_img.fill(255)
         img = np.zeros(self.raw_img.shape, dtype=np.uint8)
         img.fill(255)
         self.x_rb = self.img_height / 2
