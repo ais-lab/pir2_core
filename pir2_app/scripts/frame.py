@@ -114,9 +114,14 @@ class Create(QDialog):
                     # path_w = rospkg.RosPack().get_path('pir2_control') + '/motion/test.mts'
                     # with open(path_w, mode='w') as f:
                     #     f.write(str(center_x) + "/" + str(center_y) + "/" + str(radius))
-                    self.raw_img = cv2.ellipse(self.raw_img,(center_x,center_y),(radius, radius),  90-self.theta_rb, 0,  90-self.theta_rb - angle, (255,0,0), 2)
+                    self.raw_img = cv2.ellipse(self.raw_img,(center_x,center_y),(radius, radius),  0, self.theta_rb,  - angle, (255,0,0), 2)
                 else:
-                    pass
+                    center_x = self.x_rb + int(radius * math.sin(math.radians(self.theta_rb + 90)) * math.sin(math.radians(90)))
+                    center_y = self.y_rb - int(radius * math.cos(math.radians(self.theta_rb + 90)) * math.sin(math.radians(90)))
+                    # path_w = rospkg.RosPack().get_path('pir2_control') + '/motion/test.mts'
+                    # with open(path_w, mode='w') as f:
+                    #     f.write(str(center_x) + "/" + str(center_y) + "/" + str(radius))
+                    self.raw_img = cv2.ellipse(self.raw_img,(center_x,center_y),(radius, radius),  0, -180 + self.theta_rb, -angle, (255,0,0), 2)
 
             elif text == "rotation":
                 angle = int(self.uic.lineEdit_2.text())
