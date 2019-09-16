@@ -13,7 +13,7 @@ class Ui_exe(object):
         Form.setObjectName("Execute Mode")
         Form.resize(1366, 768)
         self.groupBox = QtWidgets.QGroupBox(Form)
-        self.groupBox.setGeometry(QtCore.QRect(690, 20, 661, 701))
+        self.groupBox.setGeometry(QtCore.QRect(320, 20, 661, 701))
         self.groupBox.setObjectName("groupBox")
         # self.groupBox.setStyleSheet('color: gray')
 

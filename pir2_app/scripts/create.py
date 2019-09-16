@@ -15,7 +15,7 @@ class Ui_create(object):
     def setupUi(self, Form):
         Form.setObjectName("Create Mode")
         Form.resize(1366, 768)
-        
+
         self.cmd_text = ""
 
         self.label = QtWidgets.QLabel(Form)
@@ -108,21 +108,22 @@ class Ui_create(object):
         self.verticalLayout.addWidget(self.radioButton_2)
 
         self.label4 = QtWidgets.QTextBrowser(Form)
-        self.label4.setGeometry(QtCore.QRect(911, 230, 400, 441))
+        self.label4.setGeometry(QtCore.QRect(840, 230, 400, 441))
         self.label4.setObjectName("textBrowser_2")
+        self.label4.setStyleSheet('background-color:#f5f5f5')
 
         self.pushButton = QtWidgets.QPushButton(Form)
-        self.pushButton.setGeometry(QtCore.QRect(931, 135, 120, 25))
+        self.pushButton.setGeometry(QtCore.QRect(930, 135, 160, 25))
         self.pushButton.setObjectName("pushButton")
         self.pushButton.setStyleSheet('background-color:#ff4500')
 
         self.pushButton2 = QtWidgets.QPushButton(Form)
-        self.pushButton2.setGeometry(QtCore.QRect(1120, 135, 120, 25))
+        self.pushButton2.setGeometry(QtCore.QRect(930, 200, 150, 25))
         self.pushButton2.setObjectName("pushButton")
         self.pushButton2.setStyleSheet('background-color:#87ceeb')
 
         self.pushButton3 = QtWidgets.QPushButton(Form)
-        self.pushButton3.setGeometry(QtCore.QRect(1211, 200, 100, 25))
+        self.pushButton3.setGeometry(QtCore.QRect(1110, 200, 100, 25))
         self.pushButton3.setObjectName("pushButton")
 
         # size = self.img_height, self.img_width, 3
