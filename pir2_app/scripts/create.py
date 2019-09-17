@@ -36,6 +36,7 @@ class Ui_create(object):
         self.comboBox.addItem("detect")
         self.comboBox.addItem("e")
         self.comboBox.addItem("end")
+        self.comboBox.addItem("navigation")
         # self.combo.setGeometry(QtCore.QRect(300, 300, 300, 200))
         self.comboBox.activated[str].connect(self.onActivated)
 

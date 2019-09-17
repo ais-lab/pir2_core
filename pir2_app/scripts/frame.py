@@ -108,20 +108,20 @@ class Create(QDialog):
                 radius = int(float(self.uic.lineEdit_2.text()) / 1000.0 / self.resolution)
                 distance = int(float(self.uic.lineEdit_3.text()) / 1000.0 / self.resolution)
                 angle = int(distance * 360 / 2/ math.pi / radius)
-                if self.lorr == "left":
-                    center_x = self.x_rb + int(radius * math.sin(math.radians(self.theta_rb + 90)) * math.sin(math.radians(-90)))
+                if self.lorr == "right":
+                    center_x = self.x_rb - int(radius * math.sin(math.radians(self.theta_rb + 90)) * math.sin(math.radians(-90)))
                     center_y = self.y_rb - int(radius * math.cos(math.radians(self.theta_rb + 90)) * math.sin(math.radians(-90)))
                     # path_w = rospkg.RosPack().get_path('pir2_control') + '/motion/test.mts'
                     # with open(path_w, mode='w') as f:
                     #     f.write(str(center_x) + "/" + str(center_y) + "/" + str(radius))
-                    self.raw_img = cv2.ellipse(self.raw_img,(center_x,center_y),(radius, radius),  0, self.theta_rb,  - angle, (255,0,0), 2)
+                    self.raw_img = cv2.ellipse(self.raw_img,(center_x,center_y),(radius, radius),  180,- self.theta_rb, angle, (255,0,0), 2)
                 else:
-                    center_x = self.x_rb + int(radius * math.sin(math.radians(self.theta_rb + 90)) * math.sin(math.radians(90)))
+                    center_x = self.x_rb - int(radius * math.sin(math.radians(self.theta_rb + 90)) * math.sin(math.radians(90)))
                     center_y = self.y_rb - int(radius * math.cos(math.radians(self.theta_rb + 90)) * math.sin(math.radians(90)))
-                    # path_w = rospkg.RosPack().get_path('pir2_control') + '/motion/test.mts'
-                    # with open(path_w, mode='w') as f:
-                    #     f.write(str(center_x) + "/" + str(center_y) + "/" + str(radius))
-                    self.raw_img = cv2.ellipse(self.raw_img,(center_x,center_y),(radius, radius),  180, self.theta_rb, 180 + angle, (255,0,0), 2)
+                    path_w = rospkg.RosPack().get_path('pir2_control') + '/motion/test.mts'
+                    with open(path_w, mode='w') as f:
+                        f.write(str(angle) + "/" + str(center_y) + "/" + str(radius))
+                    self.raw_img = cv2.ellipse(self.raw_img,(center_x,center_y),(radius, radius), 0, self.theta_rb, -angle, (255,0,0), 2)
 
             elif text == "rotation":
                 angle = int(self.uic.lineEdit_2.text())
