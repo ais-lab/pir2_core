@@ -49,7 +49,7 @@ class Create(QDialog):
         super(Create, self).__init__(parent)
         self.uic = Ui_create()
         self.uic.setupUi(self)
-        self.setMouseTracking(True)
+        # self.setMouseTracking(True)
 
         p = self.palette()
         p.setColor(self.backgroundRole(), Qt.lightGray)
@@ -71,29 +71,36 @@ class Create(QDialog):
         # path  =rospkg.RosPack().get_path('pir2_app') + '/scripts/image/ind2.png'
         # self.rb = cv2.imread(path)
 
+        # image information
         self.img_height = 460
         self.img_width = 460
         self.size = self.img_height, self.img_width, 3
         self.resolution = float(10) / float(self.img_height)
 
+        # add signals
         self.uic.pushButton.clicked.connect(self.adding)
         self.uic.pushButton2.clicked.connect(self.saving)
         self.uic.pushButton3.clicked.connect(self.reset)
         self.uic.pushButton5.clicked.connect(self.select)
+
+        # for naviagtion
+        self.nav_x = 0
+        self.nav_y = 0
 
         #initialize Imagelabel
         self.init_drawing()
 
 
     def mousePressEvent(self, event):
-        if event.button() == Qt.LeftButton:
-            self.lastPoint = event.pos()
-            self.scribbling = True
-            self.uic.label.setText('LEFt')
-            self.uic.label.setVisible(True)
+        if self.uic.cmd_text == "navigation":
+            self.nav_x = event.pos().x() - 200
+            self.nav_y = event.pos().y() - 220
+            set_img = np.copy(self.raw_img)
+            self.rb_drawing(set_img, self.x_rb, self.y_rb, self.theta_rb, self.nav_x, self.nav_y)
+
+
 
     def adding(self):
-
         if self.uic.cmd_text == "turning":
             if str(self.uic.radioButton.isChecked()) == "True":
                 self.lorr = "left"
@@ -110,10 +117,9 @@ class Create(QDialog):
         self.drawing(self.uic.cmd_text)
 
     def drawing(self, text):
-
+        current_x = self.x_rb
+        current_y = self.y_rb
         if self.uic.lineEdit_2.text():
-            current_x = self.x_rb
-            current_y = self.y_rb
             if text == "forward":
                 distance = int(float(self.uic.lineEdit_2.text()) / 1000.0 / self.resolution)
                 self.x_rb += int(distance * math.cos(math.radians(self.theta_rb + 90)))
@@ -144,26 +150,16 @@ class Create(QDialog):
                 angle = int(self.uic.lineEdit_2.text())
                 self.theta_rb += angle
 
-            elif text == "navigation":
-                # self.uic.setMouseTracking(True)
-                pass
-
             set_img = np.copy(self.raw_img)
-            self.rb_drawing(set_img, self.x_rb, self.y_rb, self.theta_rb)
-
+            self.rb_drawing(set_img, self.x_rb, self.y_rb, self.theta_rb, -100, -100)
+        elif text == "navigation":
+            self.raw_img = cv2.line(self.raw_img, (current_x, current_y), (self.nav_x, self.nav_y), (0,255,255), 2)
+            self.x_rb = self.nav_x
+            self.y_rb = self.nav_y
+            set_img = np.copy(self.raw_img)
+            self.rb_drawing(set_img, self.x_rb, self.y_rb, self.theta_rb, -100, -100)
         else:
             pass
-
-    def saving(self):
-        text, ok = QInputDialog.getText(self, '---Input Dialog---', 'Enter file name:')
-        path_w = rospkg.RosPack().get_path('pir2_control') + '/motion/' + text + '.mts'
-        with open(path_w, mode='w') as f:
-            f.write(self.cmd)
-
-    def reset(self):
-        self.uic.label4.setText("")
-        self.cmd = ""
-        self.init_drawing()
 
     def Lighten(self, in_img, bk_img):
         for width in range(in_img.shape[1]):
@@ -176,7 +172,7 @@ class Create(QDialog):
                     in_img[width][height] = bk_img[width][height]
         return in_img
 
-    def rb_drawing(self, in_img, x, y, theta):
+    def rb_drawing(self, in_img, x, y, theta, x2, y2):
         show_img = np.zeros(in_img.shape, dtype=np.uint8)
         show_img.fill(255)
         mask_img = np.zeros(in_img.shape, dtype=np.uint8)
@@ -185,8 +181,13 @@ class Create(QDialog):
 
         rb_img = Image.fromarray(np.uint8(rb_img))
         rb_img = rb_img.rotate(theta, expand=True)
+
+        # for navigation
+        mask_img = cv2.circle(mask_img,(x2,y2), 5, (0,255,255), -1)
+
         mask_img = Image.fromarray(np.uint8(mask_img))
         mask_img.paste(rb_img , (x - rb_x, y - rb_y))
+
 
         mask_img = np.asarray(mask_img)
         show_img = self.Lighten(in_img, mask_img)
@@ -202,7 +203,18 @@ class Create(QDialog):
         img.fill(255)
         self.x_rb = self.img_height / 2
         self.y_rb = self.img_width / 2
-        self.rb_drawing(img, self.x_rb, self.y_rb, 0)
+        self.rb_drawing(img, self.x_rb, self.y_rb, 0, -100, -100)
+
+    def saving(self):
+        text, ok = QInputDialog.getText(self, '---Input Dialog---', 'Enter file name:')
+        path_w = rospkg.RosPack().get_path('pir2_control') + '/motion/' + text + '.mts'
+        with open(path_w, mode='w') as f:
+            f.write(self.cmd)
+
+    def reset(self):
+        self.uic.label4.setText("")
+        self.cmd = ""
+        self.init_drawing()
 
 
     def select(self):
