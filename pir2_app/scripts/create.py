@@ -7,6 +7,8 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtWidgets import QMainWindow, QApplication, QDesktopWidget
+from PyQt5.QtCore import Qt
 import rospkg
 import cv2
 import numpy as np
@@ -15,6 +17,7 @@ class Ui_create(object):
     def setupUi(self, Form):
         Form.setObjectName("Create Mode")
         Form.resize(1366, 768)
+        Form.setMouseTracking(True)
 
         self.cmd_text = ""
 
@@ -127,13 +130,9 @@ class Ui_create(object):
         self.pushButton3.setGeometry(QtCore.QRect(1110, 200, 100, 25))
         self.pushButton3.setObjectName("pushButton")
 
-        # size = self.img_height, self.img_width, 3
-        # self.raw_img = np.zeros(size, dtype=np.uint8)
-        # self.raw_img.fill(255)
-        # img = np.copy(self.raw_img)
-
         self.imageLabel = QtWidgets.QLabel(Form)
         self.imageLabel.move(200,220)
+        self.imageLabel.setMouseTracking(True)
         # self.init_drawing(img)
 
         self.lineEdit.setVisible(False)
@@ -144,10 +143,6 @@ class Ui_create(object):
         self.label3.setVisible(False)
 
         self.retranslateUi(Form)
-        self.pushButton.clicked.connect(Form.adding)
-        self.pushButton2.clicked.connect(Form.saving)
-        self.pushButton3.clicked.connect(Form.reset)
-        self.pushButton5.clicked.connect(Form.select)
         QtCore.QMetaObject.connectSlotsByName(Form)
 
     def retranslateUi(self, Form):
@@ -159,6 +154,7 @@ class Ui_create(object):
         self.pushButton2.setText(_translate("Form", "Save"))
         self.pushButton3.setText(_translate("Form", "Reset"))
         self.pushButton5.setText(_translate("Form", "Plese select Motion Script File"))
+
 
     def onActivated(self, text):
         self.cmd_text = text

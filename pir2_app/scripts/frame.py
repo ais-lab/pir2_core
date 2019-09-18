@@ -49,9 +49,13 @@ class Create(QDialog):
         super(Create, self).__init__(parent)
         self.uic = Ui_create()
         self.uic.setupUi(self)
+        self.setMouseTracking(True)
+
         p = self.palette()
         p.setColor(self.backgroundRole(), Qt.lightGray)
         self.setPalette(p)
+
+        # initialze
         self.cmd = ""
         self.filename_out_mts=""
         self.x_rb = 0
@@ -59,21 +63,34 @@ class Create(QDialog):
         self.theta_rb = 0
         self.lorr = "left"
 
+        # Loading images
         img_path = rospkg.RosPack().get_path('pir2_app') + '/scripts/image/ind2.png'
         mask_path  =rospkg.RosPack().get_path('pir2_app') + '/scripts/image/alpha.png'
-        # path  =rospkg.RosPack().get_path('pir2_app') + '/scripts/image/ind2.png'
-        # self.rb = cv2.imread(path)
         mask = Image.open(mask_path)
         self.rb = Image.open(img_path)
+        # path  =rospkg.RosPack().get_path('pir2_app') + '/scripts/image/ind2.png'
+        # self.rb = cv2.imread(path)
 
         self.img_height = 460
         self.img_width = 460
         self.size = self.img_height, self.img_width, 3
         self.resolution = float(10) / float(self.img_height)
 
+        self.uic.pushButton.clicked.connect(self.adding)
+        self.uic.pushButton2.clicked.connect(self.saving)
+        self.uic.pushButton3.clicked.connect(self.reset)
+        self.uic.pushButton5.clicked.connect(self.select)
+
         #initialize Imagelabel
         self.init_drawing()
 
+
+    def mousePressEvent(self, event):
+        if event.button() == Qt.LeftButton:
+            self.lastPoint = event.pos()
+            self.scribbling = True
+            self.uic.label.setText('LEFt')
+            self.uic.label.setVisible(True)
 
     def adding(self):
 
@@ -127,8 +144,13 @@ class Create(QDialog):
                 angle = int(self.uic.lineEdit_2.text())
                 self.theta_rb += angle
 
+            elif text == "navigation":
+                # self.uic.setMouseTracking(True)
+                pass
+
             set_img = np.copy(self.raw_img)
             self.rb_drawing(set_img, self.x_rb, self.y_rb, self.theta_rb)
+
         else:
             pass
 
@@ -190,6 +212,9 @@ class Create(QDialog):
 
         self.uic.label5.setVisible(True)
         self.uic.label5.setText(str(self.filename))
+
+
+
 
 class Execute(QDialog):
     def __init__(self,parent=None):
