@@ -117,7 +117,7 @@ class Ui_create(object):
         self.label4.setStyleSheet('background-color:#f5f5f5')
 
         self.pushButton = QtWidgets.QPushButton(Form)
-        self.pushButton.setGeometry(QtCore.QRect(930, 135, 160, 25))
+        self.pushButton.setGeometry(QtCore.QRect(930, 135, 280, 25))
         self.pushButton.setObjectName("pushButton")
         self.pushButton.setStyleSheet('background-color:#ff4500')
 

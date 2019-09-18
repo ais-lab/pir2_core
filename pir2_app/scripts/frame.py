@@ -98,8 +98,6 @@ class Create(QDialog):
             set_img = np.copy(self.raw_img)
             self.rb_drawing(set_img, self.x_rb, self.y_rb, self.theta_rb, self.nav_x, self.nav_y)
 
-
-
     def adding(self):
         if self.uic.cmd_text == "turning":
             if str(self.uic.radioButton.isChecked()) == "True":
@@ -134,17 +132,19 @@ class Create(QDialog):
                 if self.lorr == "right":
                     center_x = self.x_rb - int(radius * math.sin(math.radians(self.theta_rb + 90)) * math.sin(math.radians(-90)))
                     center_y = self.y_rb - int(radius * math.cos(math.radians(self.theta_rb + 90)) * math.sin(math.radians(-90)))
-                    # path_w = rospkg.RosPack().get_path('pir2_control') + '/motion/test.mts'
-                    # with open(path_w, mode='w') as f:
-                    #     f.write(str(center_x) + "/" + str(center_y) + "/" + str(radius))
-                    self.raw_img = cv2.ellipse(self.raw_img,(center_x,center_y),(radius, radius),  180,- self.theta_rb, angle, (255,0,0), 2)
+                    self.raw_img = cv2.ellipse(self.raw_img,(center_x,center_y),(radius, radius),  180-self.theta_rb,0, angle, (255,0,0), 2)
+                    self.x_rb += (radius - int(radius * math.cos(math.radians(angle)) - radius * math.sin(math.radians(angle))))
+                    self.y_rb -= (radius - int(radius * math.sin(math.radians(angle)) + radius * math.cos(math.radians(angle))))
                 else:
                     center_x = self.x_rb - int(radius * math.sin(math.radians(self.theta_rb + 90)) * math.sin(math.radians(90)))
                     center_y = self.y_rb - int(radius * math.cos(math.radians(self.theta_rb + 90)) * math.sin(math.radians(90)))
                     path_w = rospkg.RosPack().get_path('pir2_control') + '/motion/test.mts'
                     with open(path_w, mode='w') as f:
                         f.write(str(angle) + "/" + str(center_y) + "/" + str(radius))
-                    self.raw_img = cv2.ellipse(self.raw_img,(center_x,center_y),(radius, radius), 0, self.theta_rb, -angle, (255,0,0), 2)
+                    self.raw_img = cv2.ellipse(self.raw_img,(center_x,center_y),(radius, radius), -self.theta_rb, 0, -angle, (255,0,0), 2)
+                    self.x_rb += int(radius * math.cos(math.radians(angle)) - radius * math.sin(math.radians(angle)))
+                    self.y_rb -= int(radius * math.sin(math.radians(angle)) + radius * math.cos(math.radians(angle)))
+
 
             elif text == "rotation":
                 angle = int(self.uic.lineEdit_2.text())
@@ -203,6 +203,7 @@ class Create(QDialog):
         img.fill(255)
         self.x_rb = self.img_height / 2
         self.y_rb = self.img_width / 2
+        self.theta_rb = 0
         self.rb_drawing(img, self.x_rb, self.y_rb, 0, -100, -100)
 
     def saving(self):
