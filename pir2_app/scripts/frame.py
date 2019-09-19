@@ -119,6 +119,7 @@ class Create(QDialog):
         if self.uic.lineEdit_2.text():
             if text == "forward":
                 distance = int(float(self.uic.lineEdit_2.text()) / 1000.0 / self.resolution)
+                self.last_vel = float(self.uic.lineEdit.text()) / 1000.0
                 if float(self.uic.lineEdit.text()) > 0.0:
                     self.x_rb += int(distance * math.cos(math.radians(self.theta_rb + 90)))
                     self.y_rb -= int(distance * math.sin(math.radians(self.theta_rb + 90)))
@@ -130,13 +131,19 @@ class Create(QDialog):
                 acc = float(self.uic.lineEdit.text()) / 1000.0
                 vel = float(self.uic.lineEdit_2.text()) / 1000.0
                 distance = int((vel * vel - self.last_vel * self.last_vel) / 2 / acc)
-                self.x_rb += int(distance * math.cos(math.radians(self.theta_rb + 90)))
-                self.y_rb -= int(distance * math.sin(math.radians(self.theta_rb + 90)))
+                self.last_vel = vel
+                if vel > 0.0:
+                    self.x_rb += int(distance * math.cos(math.radians(self.theta_rb + 90)))
+                    self.y_rb -= int(distance * math.sin(math.radians(self.theta_rb + 90)))
+                else:
+                    self.x_rb += int(distance * math.cos(math.radians(self.theta_rb + 90)))
+                    self.y_rb -= int(distance * math.sin(math.radians(self.theta_rb + 90)))
                 self.raw_img = cv2.line(self.raw_img,(current_x,current_y),(self.x_rb,self.y_rb),(255,0,0),2)
             elif text == "turning":
                 radius = int(float(self.uic.lineEdit_2.text()) / 1000.0 / self.resolution)
                 distance = int(float(self.uic.lineEdit_3.text()) / 1000.0 / self.resolution)
                 angle = int(distance * 360 / 2/ math.pi / radius)
+                self.last_vel = float(self.uic.lineEdit.text()) / 1000.0
                 if self.lorr == "right":
                     center_x = self.x_rb - int(radius * math.sin(math.radians(self.theta_rb + 90)) * math.sin(math.radians(-90)))
                     center_y = self.y_rb - int(radius * math.cos(math.radians(self.theta_rb + 90)) * math.sin(math.radians(-90)))
