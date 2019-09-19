@@ -116,6 +116,21 @@ class Ui_create(object):
         self.label4.setObjectName("textBrowser_2")
         self.label4.setStyleSheet('background-color:#f5f5f5')
 
+        self.label6 = QtWidgets.QLabel(Form)
+        self.label6.setGeometry(QtCore.QRect(200, 680, 130, 25))
+        self.label6.setObjectName("label6")
+        self.label6.setText('current_velocity')
+
+        self.label7 = QtWidgets.QLabel(Form)
+        self.label7.setGeometry(QtCore.QRect(350, 680, 50, 25))
+        self.label7.setObjectName("label7")
+
+        self.label8 = QtWidgets.QLabel(Form)
+        self.label8.setGeometry(QtCore.QRect(410, 680, 40, 25))
+        self.label8.setObjectName("label8")
+        # self.label8.setStylesheet('QLabel { color: red }')
+        self.label8.setText('m/s')
+
         self.pushButton = QtWidgets.QPushButton(Form)
         self.pushButton.setGeometry(QtCore.QRect(930, 135, 280, 25))
         self.pushButton.setObjectName("pushButton")
@@ -123,12 +138,17 @@ class Ui_create(object):
 
         self.pushButton2 = QtWidgets.QPushButton(Form)
         self.pushButton2.setGeometry(QtCore.QRect(930, 200, 150, 25))
-        self.pushButton2.setObjectName("pushButton")
+        self.pushButton2.setObjectName("pushButton2")
         self.pushButton2.setStyleSheet('background-color:#87ceeb')
 
         self.pushButton3 = QtWidgets.QPushButton(Form)
         self.pushButton3.setGeometry(QtCore.QRect(1110, 200, 100, 25))
-        self.pushButton3.setObjectName("pushButton")
+        self.pushButton3.setObjectName("pushButton3")
+
+        self.pushButton4 = QtWidgets.QPushButton(Form)
+        self.pushButton4.setGeometry(QtCore.QRect(25, 240, 150, 50))
+        self.pushButton4.setObjectName("pushButton4")
+        self.pushButton4.setStyleSheet('background-color:#daa520')
 
         self.imageLabel = QtWidgets.QLabel(Form)
         self.imageLabel.move(200,220)
@@ -153,6 +173,7 @@ class Ui_create(object):
         self.pushButton.setText(_translate("Form", "Add"))
         self.pushButton2.setText(_translate("Form", "Save"))
         self.pushButton3.setText(_translate("Form", "Reset"))
+        self.pushButton4.setText(_translate("Form", "Loading Map"))
         self.pushButton5.setText(_translate("Form", "Plese select Motion Script File"))
 
 

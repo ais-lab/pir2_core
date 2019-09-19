@@ -81,6 +81,7 @@ class Create(QDialog):
         self.uic.pushButton2.clicked.connect(self.saving)
         self.uic.pushButton3.clicked.connect(self.reset)
         self.uic.pushButton5.clicked.connect(self.select)
+        self.uic.pushButton4.clicked.connect(self.open_map)
 
         # for naviagtion
         self.nav_x = 0
@@ -198,6 +199,7 @@ class Create(QDialog):
 
         else:
             pass
+        self.uic.label7.setText(str(self.last_vel))
 
     def Lighten(self, in_img, bk_img):
         for width in range(in_img.shape[1]):
@@ -249,12 +251,18 @@ class Create(QDialog):
         self.theta_rb = 0
         self.last_vel = 0.0
         self.rb_drawing(img, self.x_rb, self.y_rb, 0, -100, -100)
+        self.uic.label7.setText(str(self.last_vel))
 
     def saving(self):
         text, ok = QInputDialog.getText(self, '---Input Dialog---', 'Enter file name:')
         path_w = rospkg.RosPack().get_path('pir2_control') + '/motion/' + text + '.mts'
         with open(path_w, mode='w') as f:
             f.write(self.cmd)
+
+    def open_map(self):
+        path = rospkg.RosPack().get_path('pir2_navigation') + '/map'
+        fname, _ = QFileDialog.getOpenFileName(self, 'Open file', path)
+        self.filename = QFileInfo(fname).fileName()
 
     def reset(self):
         self.uic.label4.setText("")
