@@ -65,7 +65,7 @@ class Create(QDialog):
         self.last_vel = 0.0
 
         # Loading images
-        img_path = rospkg.RosPack().get_path('pir2_app') + '/scripts/image/ind2.png'
+        img_path = rospkg.RosPack().get_path('pir2_app') + '/scripts/image/ind3.png'
         mask_path  =rospkg.RosPack().get_path('pir2_app') + '/scripts/image/alpha.png'
         mask = Image.open(mask_path)
         self.rb = Image.open(img_path)
@@ -137,14 +137,16 @@ class Create(QDialog):
                     center_x = self.x_rb - int(radius * math.sin(math.radians(self.theta_rb + 90)) * math.sin(math.radians(-90)))
                     center_y = self.y_rb - int(radius * math.cos(math.radians(self.theta_rb + 90)) * math.sin(math.radians(-90)))
                     self.raw_img = cv2.ellipse(self.raw_img,(center_x,center_y),(radius, radius),  180-self.theta_rb,0, angle, (255,0,0), 2)
-                    self.x_rb += (radius - int(radius * math.cos(math.radians(angle)) - radius * math.sin(math.radians(angle))))
-                    self.y_rb -= (radius - int(radius * math.sin(math.radians(angle)) + radius * math.cos(math.radians(angle))))
+                    diff_x, diff_y = self.cal_dis(radius, 180-self.theta_rb, angle)
+                    self.x_rb -= diff_x
+                    self.y_rb -= diff_y
                 else:
                     center_x = self.x_rb - int(radius * math.sin(math.radians(self.theta_rb + 90)) * math.sin(math.radians(90)))
                     center_y = self.y_rb - int(radius * math.cos(math.radians(self.theta_rb + 90)) * math.sin(math.radians(90)))
                     self.raw_img = cv2.ellipse(self.raw_img,(center_x,center_y),(radius, radius), -self.theta_rb, 0, -angle, (255,0,0), 2)
-                    self.x_rb += int(radius * math.cos(math.radians(angle)) - radius * math.sin(math.radians(angle)))
-                    self.y_rb -= int(radius * math.sin(math.radians(angle)) + radius * math.cos(math.radians(angle)))
+                    diff_x, diff_y = self.cal_dis(radius, -self.theta_rb, -angle)
+                    self.x_rb -= diff_x
+                    self.y_rb -= diff_y
 
                     # path_w = rospkg.RosPack().get_path('pir2_control') + '/motion/test.mts'
                     # with open(path_w, mode='w') as f:
@@ -189,7 +191,7 @@ class Create(QDialog):
         # for navigation point and robot icon
         mask_img = cv2.circle(mask_img,(x2,y2), 5, (0,255,255), -1)
         mask_img = Image.fromarray(np.uint8(mask_img))
-        mask_img.paste(rb_img , (x - rb_x, y - rb_y))
+        mask_img.paste(rb_img , (x - rb_x/2, y - rb_y/2))
 
         mask_img = np.asarray(mask_img)
         show_img = self.Lighten(in_img, mask_img)
@@ -197,6 +199,13 @@ class Create(QDialog):
         qimg = QImage(show_img, show_img.shape[1], show_img.shape[0], QImage.Format_RGB888)
         # self.uic.imageLabel.setWindowOpacity(0.8)
         self.uic.imageLabel.setPixmap(QPixmap.fromImage(qimg))
+
+    def cal_dis(self, radius, start_angle, angle):
+        start_x = int(radius * math.cos(math.radians(start_angle)) - 0 * math.sin(math.radians(start_angle)))
+        start_y = int(radius * math.sin(math.radians(start_angle)) + 0 * math.cos(math.radians(start_angle)))
+        end_x = int(radius * math.cos(math.radians(start_angle + angle)) - 0 * math.sin(math.radians(start_angle + angle)))
+        end_y = int(radius * math.sin(math.radians(start_angle + angle)) + 0 * math.cos(math.radians(start_angle + angle)))
+        return start_x - end_x, start_y - end_y
 
     def init_drawing(self):
         self.raw_img = np.zeros(self.size, dtype=np.uint8)
