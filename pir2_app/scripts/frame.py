@@ -49,27 +49,26 @@ class Create(QDialog):
         super(Create, self).__init__(parent)
         self.uic = Ui_create()
         self.uic.setupUi(self)
-        # self.setMouseTracking(True)
 
+        # setting backgroud color
         p = self.palette()
         p.setColor(self.backgroundRole(), Qt.lightGray)
         self.setPalette(p)
 
-        # initialze
+        # initialze parameter
         self.cmd = ""
         self.filename_out_mts=""
         self.x_rb = 0
         self.y_rb = 0
         self.theta_rb = 0
         self.lorr = "left"
+        self.last_vel = 0.0
 
         # Loading images
         img_path = rospkg.RosPack().get_path('pir2_app') + '/scripts/image/ind2.png'
         mask_path  =rospkg.RosPack().get_path('pir2_app') + '/scripts/image/alpha.png'
         mask = Image.open(mask_path)
         self.rb = Image.open(img_path)
-        # path  =rospkg.RosPack().get_path('pir2_app') + '/scripts/image/ind2.png'
-        # self.rb = cv2.imread(path)
 
         # image information
         self.img_height = 460
@@ -124,7 +123,12 @@ class Create(QDialog):
                 self.y_rb -= int(distance * math.sin(math.radians(self.theta_rb + 90)))
                 self.raw_img = cv2.line(self.raw_img,(current_x,current_y),(self.x_rb,self.y_rb),(255,0,0),2)
             elif text == "acceleration":
-                pass
+                acc = float(self.uic.lineEdit.text()) / 1000.0
+                vel = float(self.uic.lineEdit_2.text()) / 1000.0
+                distance = int((vel * vel - self.last_vel * self.last_vel) / 2 / acc)
+                self.x_rb += int(distance * math.cos(math.radians(self.theta_rb + 90)))
+                self.y_rb -= int(distance * math.sin(math.radians(self.theta_rb + 90)))
+                self.raw_img = cv2.line(self.raw_img,(current_x,current_y),(self.x_rb,self.y_rb),(255,0,0),2)
             elif text == "turning":
                 radius = int(float(self.uic.lineEdit_2.text()) / 1000.0 / self.resolution)
                 distance = int(float(self.uic.lineEdit_3.text()) / 1000.0 / self.resolution)
@@ -138,26 +142,26 @@ class Create(QDialog):
                 else:
                     center_x = self.x_rb - int(radius * math.sin(math.radians(self.theta_rb + 90)) * math.sin(math.radians(90)))
                     center_y = self.y_rb - int(radius * math.cos(math.radians(self.theta_rb + 90)) * math.sin(math.radians(90)))
-                    path_w = rospkg.RosPack().get_path('pir2_control') + '/motion/test.mts'
-                    with open(path_w, mode='w') as f:
-                        f.write(str(angle) + "/" + str(center_y) + "/" + str(radius))
                     self.raw_img = cv2.ellipse(self.raw_img,(center_x,center_y),(radius, radius), -self.theta_rb, 0, -angle, (255,0,0), 2)
                     self.x_rb += int(radius * math.cos(math.radians(angle)) - radius * math.sin(math.radians(angle)))
                     self.y_rb -= int(radius * math.sin(math.radians(angle)) + radius * math.cos(math.radians(angle)))
 
-
+                    # path_w = rospkg.RosPack().get_path('pir2_control') + '/motion/test.mts'
+                    # with open(path_w, mode='w') as f:
+                    #     f.write(str(angle) + "/" + str(center_y) + "/" + str(radius))
             elif text == "rotation":
                 angle = int(self.uic.lineEdit_2.text())
                 self.theta_rb += angle
-
             set_img = np.copy(self.raw_img)
             self.rb_drawing(set_img, self.x_rb, self.y_rb, self.theta_rb, -100, -100)
+
         elif text == "navigation":
             self.raw_img = cv2.line(self.raw_img, (current_x, current_y), (self.nav_x, self.nav_y), (0,255,255), 2)
             self.x_rb = self.nav_x
             self.y_rb = self.nav_y
             set_img = np.copy(self.raw_img)
             self.rb_drawing(set_img, self.x_rb, self.y_rb, self.theta_rb, -100, -100)
+
         else:
             pass
 
@@ -182,12 +186,10 @@ class Create(QDialog):
         rb_img = Image.fromarray(np.uint8(rb_img))
         rb_img = rb_img.rotate(theta, expand=True)
 
-        # for navigation
+        # for navigation point and robot icon
         mask_img = cv2.circle(mask_img,(x2,y2), 5, (0,255,255), -1)
-
         mask_img = Image.fromarray(np.uint8(mask_img))
         mask_img.paste(rb_img , (x - rb_x, y - rb_y))
-
 
         mask_img = np.asarray(mask_img)
         show_img = self.Lighten(in_img, mask_img)
@@ -217,7 +219,6 @@ class Create(QDialog):
         self.cmd = ""
         self.init_drawing()
 
-
     def select(self):
         path = rospkg.RosPack().get_path('pir2_control') + '/motion'
         fname, _ = QFileDialog.getOpenFileName(self, 'Open file', path)
@@ -225,9 +226,6 @@ class Create(QDialog):
 
         self.uic.label5.setVisible(True)
         self.uic.label5.setText(str(self.filename))
-
-
-
 
 class Execute(QDialog):
     def __init__(self,parent=None):
