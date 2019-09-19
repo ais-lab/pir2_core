@@ -119,8 +119,12 @@ class Create(QDialog):
         if self.uic.lineEdit_2.text():
             if text == "forward":
                 distance = int(float(self.uic.lineEdit_2.text()) / 1000.0 / self.resolution)
-                self.x_rb += int(distance * math.cos(math.radians(self.theta_rb + 90)))
-                self.y_rb -= int(distance * math.sin(math.radians(self.theta_rb + 90)))
+                if float(self.uic.lineEdit.text()) > 0.0:
+                    self.x_rb += int(distance * math.cos(math.radians(self.theta_rb + 90)))
+                    self.y_rb -= int(distance * math.sin(math.radians(self.theta_rb + 90)))
+                else:
+                    self.x_rb -= int(distance * math.cos(math.radians(self.theta_rb + 90)))
+                    self.y_rb += int(distance * math.sin(math.radians(self.theta_rb + 90)))
                 self.raw_img = cv2.line(self.raw_img,(current_x,current_y),(self.x_rb,self.y_rb),(255,0,0),2)
             elif text == "acceleration":
                 acc = float(self.uic.lineEdit.text()) / 1000.0
@@ -140,6 +144,7 @@ class Create(QDialog):
                     diff_x, diff_y = self.cal_dis(radius, 180-self.theta_rb, angle)
                     self.x_rb -= diff_x
                     self.y_rb -= diff_y
+                    self.theta_rb -= angle
                 else:
                     center_x = self.x_rb - int(radius * math.sin(math.radians(self.theta_rb + 90)) * math.sin(math.radians(90)))
                     center_y = self.y_rb - int(radius * math.cos(math.radians(self.theta_rb + 90)) * math.sin(math.radians(90)))
@@ -147,10 +152,7 @@ class Create(QDialog):
                     diff_x, diff_y = self.cal_dis(radius, -self.theta_rb, -angle)
                     self.x_rb -= diff_x
                     self.y_rb -= diff_y
-
-                    # path_w = rospkg.RosPack().get_path('pir2_control') + '/motion/test.mts'
-                    # with open(path_w, mode='w') as f:
-                    #     f.write(str(angle) + "/" + str(center_y) + "/" + str(radius))
+                    self.theta_rb += angle
             elif text == "rotation":
                 angle = int(self.uic.lineEdit_2.text())
                 self.theta_rb += angle
