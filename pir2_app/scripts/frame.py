@@ -119,7 +119,8 @@ class Create(QDialog):
         if self.uic.lineEdit_2.text():
             if text == "forward":
                 distance = int(float(self.uic.lineEdit_2.text()) / 1000.0 / self.resolution)
-                self.last_vel = float(self.uic.lineEdit.text()) / 1000.0
+                vel = float(self.uic.lineEdit.text()) / 1000.0
+                self.last_vel = vel
                 if float(self.uic.lineEdit.text()) > 0.0:
                     self.x_rb += int(distance * math.cos(math.radians(self.theta_rb + 90)))
                     self.y_rb -= int(distance * math.sin(math.radians(self.theta_rb + 90)))
@@ -143,7 +144,8 @@ class Create(QDialog):
                 radius = int(float(self.uic.lineEdit_2.text()) / 1000.0 / self.resolution)
                 distance = int(float(self.uic.lineEdit_3.text()) / 1000.0 / self.resolution)
                 angle = int(distance * 360 / 2/ math.pi / radius)
-                self.last_vel = float(self.uic.lineEdit.text()) / 1000.0
+                vel = float(self.uic.lineEdit.text()) / 1000.0
+                self.last_vel = vel
                 if self.lorr == "right":
                     center_x = self.x_rb - int(radius * math.sin(math.radians(self.theta_rb + 90)) * math.sin(math.radians(-90)))
                     center_y = self.y_rb - int(radius * math.cos(math.radians(self.theta_rb + 90)) * math.sin(math.radians(-90)))
@@ -163,6 +165,7 @@ class Create(QDialog):
             elif text == "rotation":
                 angle = int(self.uic.lineEdit_2.text())
                 self.theta_rb += angle
+                self.last_vel = 0.0
             set_img = np.copy(self.raw_img)
             self.rb_drawing(set_img, self.x_rb, self.y_rb, self.theta_rb, -100, -100)
 
@@ -170,6 +173,26 @@ class Create(QDialog):
             self.raw_img = cv2.line(self.raw_img, (current_x, current_y), (self.nav_x, self.nav_y), (0,255,255), 2)
             self.x_rb = self.nav_x
             self.y_rb = self.nav_y
+            self.last_vel = 0.0
+            set_img = np.copy(self.raw_img)
+            self.rb_drawing(set_img, self.x_rb, self.y_rb, self.theta_rb, -100, -100)
+
+        elif text == "stop":
+            self.last_vel = 0.0
+
+        elif text == "slowstop":
+            if self.last_vel > 0.0:
+                acc = - float(self.uic.lineEdit.text()) / 1000.0
+                distance = int(- self.last_vel * self.last_vel / 2 / acc)
+                self.x_rb += int(distance * math.cos(math.radians(self.theta_rb + 90)))
+                self.y_rb -= int(distance * math.sin(math.radians(self.theta_rb + 90)))
+            else:
+                acc = float(self.uic.lineEdit.text()) / 1000.0
+                distance = int(- self.last_vel * self.last_vel / 2 / acc)
+                self.x_rb += int(distance * math.cos(math.radians(self.theta_rb + 90)))
+                self.y_rb -= int(distance * math.sin(math.radians(self.theta_rb + 90)))
+            self.raw_img = cv2.line(self.raw_img,(current_x,current_y),(self.x_rb,self.y_rb),(255,0,0),2)
+            self.last_vel = 0.0
             set_img = np.copy(self.raw_img)
             self.rb_drawing(set_img, self.x_rb, self.y_rb, self.theta_rb, -100, -100)
 
@@ -224,6 +247,7 @@ class Create(QDialog):
         self.x_rb = self.img_height / 2
         self.y_rb = self.img_width / 2
         self.theta_rb = 0
+        self.last_vel = 0.0
         self.rb_drawing(img, self.x_rb, self.y_rb, 0, -100, -100)
 
     def saving(self):
