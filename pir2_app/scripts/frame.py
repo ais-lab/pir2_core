@@ -109,6 +109,12 @@ class Create(QDialog):
         elif self.uic.cmd_text == "e":
             self.filename_out_mts = str(self.filename).split('.')[0]
             self.cmd += self.uic.cmd_text + " " + self.filename_out_mts + "\n"
+        elif self.uic.cmd_text == "navigation":
+            x_point = - float((self.nav_y-230) * self.resolution)
+            y_point = - float((self.nav_x-230) * self.resolution)
+            self.cmd += self.uic.cmd_text + " " + str(x_point) + " " + str(y_point) + "\n"
+            self.uic.label4.setText(self.cmd)
+            self.drawing(self.uic.cmd_text)
         else:
             self.cmd += self.uic.cmd_text + " " + self.uic.lineEdit.text() + " " + self.uic.lineEdit_2.text() + " " + self.uic.lineEdit_3.text() + "\n"
         self.uic.label4.setText(self.cmd)
