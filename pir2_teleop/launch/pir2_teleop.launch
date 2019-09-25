@@ -1,0 +1,4 @@
+<launch>
+  <node pkg="pir2_teleop" type="pir2_teleop_key.py" name="pir2_teleop_key"  output="screen">
+  </node>
+</launch>
