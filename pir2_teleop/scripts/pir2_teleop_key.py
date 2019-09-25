@@ -8,8 +8,8 @@ if os.name == 'nt':
 else:
   import tty, termios
 
-MAX_LIN_VEL = 0.74
-MAX_ANG_VEL = 2.56
+MAX_LIN_VEL = 0.26
+MAX_ANG_VEL = 1.82
 
 LIN_VEL_STEP_SIZE = 0.01
 ANG_VEL_STEP_SIZE = 0.1
@@ -21,8 +21,8 @@ Moving around:
    a    s    d
         x
 
-w/x : increase/decrease linear velocity ( ~ 0.74)
-a/d : increase/decrease angular velocity ( ~ 2.56)
+w/x : increase/decrease linear velocity ( ~ 0.22)
+a/d : increase/decrease angular velocity ( ~ 2.84)
 
 space key, s : force stop
 
