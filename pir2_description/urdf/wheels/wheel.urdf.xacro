@@ -28,11 +28,12 @@
 
       <inertial>
         <origin xyz="0 0 0" />
-        <mass value="0.2" />
-        <inertia ixx="1.1175580e-05" ixy="-4.2369783e-11" ixz="-5.9381719e-09"
-                 iyy="1.1192413e-05" iyz="-1.4400107e-11"
-                 izz="2.0712558e-05" />
+        <mass value="0.230446843750" />
+        <inertia ixx="1" ixy="0" ixz="0"
+                 iyy="1" iyz="0"
+                 izz="1" />
         </inertial>
+
     </link>
 
     <joint name="wheel_right_joint" type="continuous">
@@ -60,11 +61,12 @@
 
       <inertial>
         <origin xyz="0 0 0" />
-        <mass value="0.2" />
-        <inertia ixx="1.1175580e-05" ixy="-4.2369783e-11" ixz="-5.9381719e-09"
-                 iyy="1.1192413e-05" iyz="-1.4400107e-11"
-                 izz="2.0712558e-05" />
+        <mass value="2" />
+        <inertia ixx="1" ixy="0" ixz="0"
+                 iyy="1" iyz="0"
+                 izz="1" />
         </inertial>
+
     </link>
   </xacro:macro>
 
