@@ -1,0 +1,28 @@
+wheel_left_joint:
+  ID: 1
+  Return_Delay_Time: 0
+
+wheel_right_joint:
+  ID: 2
+  Return_Delay_Time: 0
+
+pan:
+  ID: 3
+  Return_Delay_Time: 0
+  Operating_Mode: 3
+  Profile_Acceleration: 0
+  Profile_Velocity: 0
+
+tilt:
+  ID: 4
+  Return_Delay_Time: 0
+  Operating_Mode: 3
+  Profile_Acceleration: 0
+  Profile_Velocity: 0
+
+yaw:
+  ID: 5
+  Return_Delay_Time: 0
+  Operating_Mode: 3
+  Profile_Acceleration: 0
+  Profile_Velocity: 0
