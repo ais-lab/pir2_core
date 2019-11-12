@@ -47,5 +47,5 @@ class Ui_top(object):
         Form.setWindowTitle(_translate("Form", "Menu"))
         self.pushButton.setText(_translate("Form", "Execute "))
         self.pushButton_2.setText(_translate("Form", "Create"))
-        self.pushButton_3.setText(_translate("Form", "SLAM"))
+        self.pushButton_3.setText(_translate("Form", "Teleop"))
         self.pushButton_4.setText(_translate("Form", "Exit"))
