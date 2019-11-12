@@ -45,37 +45,37 @@ class Ui_create(object):
         self.comboBox.activated[str].connect(self.onActivated)
 
         self.lineEdit = QtWidgets.QLineEdit(self.groupBox)
-        self.lineEdit.setGeometry(QtCore.QRect(170, 90, 145, 25))
+        self.lineEdit.setGeometry(QtCore.QRect(190, 90, 145, 25))
         self.lineEdit.setObjectName("lineEdit")
         self.lineEdit.setVisible(True)
         self.lineEdit.setStyleSheet('background-color: White')
 
         self.lineEdit_2 = QtWidgets.QLineEdit(self.groupBox)
-        self.lineEdit_2.setGeometry(QtCore.QRect(380, 90, 145, 25))
+        self.lineEdit_2.setGeometry(QtCore.QRect(400, 90, 145, 25))
         self.lineEdit_2.setObjectName("lineEdit_2")
         self.lineEdit_2.setVisible(True)
         self.lineEdit_2.setStyleSheet('background-color: White')
 
         self.lineEdit_3 = QtWidgets.QLineEdit(self.groupBox)
-        self.lineEdit_3.setGeometry(QtCore.QRect(590, 90, 145, 25))
+        self.lineEdit_3.setGeometry(QtCore.QRect(610, 90, 145, 25))
         self.lineEdit_3.setObjectName("lineEdit_3")
         self.lineEdit_3.setVisible(False)
         self.lineEdit_3.setStyleSheet('background-color: White')
 
         self.label = QtWidgets.QLabel(self.groupBox)
-        self.label.setGeometry(QtCore.QRect(170, 50, 200, 31))
+        self.label.setGeometry(QtCore.QRect(190, 60, 200, 31))
         self.label.setObjectName("label")
         self.label.setText('acceleration value')
         # self.label.setStyleSheet('background-color: lightGray')
 
         self.label2 = QtWidgets.QLabel(self.groupBox)
-        self.label2.setGeometry(QtCore.QRect(380, 50, 200, 31))
+        self.label2.setGeometry(QtCore.QRect(400, 60, 200, 31))
         self.label2.setObjectName("label2")
         self.label2.setText('target speed')
         # self.label2.setStyleSheet('background-color: lightGray')
 
         self.label3 = QtWidgets.QLabel(self.groupBox)
-        self.label3.setGeometry(QtCore.QRect(590, 50, 200, 31))
+        self.label3.setGeometry(QtCore.QRect(610, 60, 200, 31))
         self.label3.setObjectName("label3")
         # self.label3.setText('target speed')
         # self.label3.setStyleSheet('background-color: lightGray')
@@ -83,18 +83,18 @@ class Ui_create(object):
 
         ### "e" select motoin file ###
         self.pushButton5 = QtWidgets.QPushButton(self.groupBox)
-        self.pushButton5.setGeometry(QtCore.QRect(170, 90, 271, 25))
+        self.pushButton5.setGeometry(QtCore.QRect(190, 90, 271, 25))
         self.pushButton5.setObjectName("pushButton")
         self.pushButton5.setVisible(False)
 
         self.label5 = QtWidgets.QLabel(self.groupBox)
-        self.label5.setGeometry(QtCore.QRect(500, 90, 141, 25))
+        self.label5.setGeometry(QtCore.QRect(520, 90, 141, 25))
         self.label5.setObjectName("label")
         self.label5.setVisible(False)
 
         ### for left or rught ###
         self.widget = QtWidgets.QWidget(self.groupBox)
-        self.widget.setGeometry(QtCore.QRect(800, 80, 60, 54))
+        self.widget.setGeometry(QtCore.QRect(820, 80, 60, 54))
         self.widget.setObjectName("widget")
         self.widget.setVisible(False)
 
@@ -123,36 +123,36 @@ class Ui_create(object):
 
         ### label6 ~ label8 current_velocity ###
         self.label6 = QtWidgets.QLabel(Form)
-        self.label6.setGeometry(QtCore.QRect(200, 680, 130, 25))
+        self.label6.setGeometry(QtCore.QRect(200, 690, 130, 25))
         self.label6.setObjectName("label6")
         self.label6.setText('current_velocity')
 
         self.label7 = QtWidgets.QLabel(Form)
-        self.label7.setGeometry(QtCore.QRect(350, 680, 50, 25))
+        self.label7.setGeometry(QtCore.QRect(350, 690, 50, 25))
         self.label7.setObjectName("label7")
 
         self.label8 = QtWidgets.QLabel(Form)
-        self.label8.setGeometry(QtCore.QRect(410, 680, 40, 25))
+        self.label8.setGeometry(QtCore.QRect(410, 690, 40, 25))
         self.label8.setObjectName("label8")
         # self.label8.setStylesheet('QLabel { color: red }')
         self.label8.setText('m/s')
 
         self.pushButton = QtWidgets.QPushButton(self.groupBox)
-        self.pushButton.setGeometry(QtCore.QRect(890, 80, 260, 40))
+        self.pushButton.setGeometry(QtCore.QRect(950, 80, 200, 40))
         self.pushButton.setObjectName("pushButton")
         self.pushButton.setStyleSheet('background-color:#ff4500')
 
         self.pushButton2 = QtWidgets.QPushButton(Form)
-        self.pushButton2.setGeometry(QtCore.QRect(930, 680, 150, 25))
+        self.pushButton2.setGeometry(QtCore.QRect(920, 690, 150, 25))
         self.pushButton2.setObjectName("pushButton2")
         self.pushButton2.setStyleSheet('background-color:#87ceeb')
 
         self.pushButton3 = QtWidgets.QPushButton(Form)
-        self.pushButton3.setGeometry(QtCore.QRect(1110, 680, 100, 25))
+        self.pushButton3.setGeometry(QtCore.QRect(1100, 690, 100, 25))
         self.pushButton3.setObjectName("pushButton3")
 
         self.pushButton4 = QtWidgets.QPushButton(Form)
-        self.pushButton4.setGeometry(QtCore.QRect(25, 240, 150, 50))
+        self.pushButton4.setGeometry(QtCore.QRect(500, 690, 150, 25))
         self.pushButton4.setObjectName("pushButton4")
         self.pushButton4.setStyleSheet('background-color:#daa520')
 
@@ -202,23 +202,23 @@ class Ui_create(object):
         if text == "acceleration":
             self.lineEdit.setVisible(True)
             self.lineEdit_2.setVisible(True)
-            self.label.setText('acceleration value')
-            self.label2.setText('target speed')
+            self.label.setText('acceleration value (mm^2/s)')
+            self.label2.setText('target speed (mm/s)')
             self.label.setVisible(True)
             self.label2.setVisible(True)
 
         elif text == "forward":
             self.lineEdit.setVisible(True)
             self.lineEdit_2.setVisible(True)
-            self.label.setText('velocity value')
-            self.label2.setText('target distance')
+            self.label.setText('velocity value (mm/s)')
+            self.label2.setText('target distance (mm)')
             self.label.setVisible(True)
             self.label2.setVisible(True)
         elif text == "rotation":
             self.lineEdit.setVisible(True)
             self.lineEdit_2.setVisible(True)
-            self.label.setText('angular value')
-            self.label2.setText('target angle')
+            self.label.setText('angular value (rad/s)')
+            self.label2.setText('target angle (degree)')
             self.label.setVisible(True)
             self.label2.setVisible(True)
         elif text == "turning":
@@ -226,25 +226,25 @@ class Ui_create(object):
             self.lineEdit_2.setVisible(True)
             self.lineEdit_3.setVisible(True)
             self.widget.setVisible(True)
-            self.label.setText('velocity value')
-            self.label2.setText('radius')
-            self.label3.setText('target distance')
+            self.label.setText('velocity value (mm/s)')
+            self.label2.setText('radius (mm)')
+            self.label3.setText('target distance (mm)')
             self.label.setVisible(True)
             self.label2.setVisible(True)
             self.label3.setVisible(True)
         elif text == "pause":
             self.lineEdit.setVisible(True)
-            self.label.setText('pause time')
+            self.label.setText('pause time (sec)')
             self.label.setVisible(True)
         elif text == "stop":
             pass
         elif text == "slowstop":
             self.lineEdit.setVisible(True)
-            self.label.setText('decceleration value')
+            self.label.setText('decceleration value (mm^2/s)')
             self.label.setVisible(True)
         elif text == "detect":
             self.lineEdit.setVisible(True)
-            self.label.setText('distance')
+            self.label.setText('distance (m)')
             self.label.setVisible(True)
         elif text == "e":
             # self.lineEdit.setVisible(True)
