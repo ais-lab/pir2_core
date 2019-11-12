@@ -135,7 +135,7 @@ class Ui_create(object):
         self.label8.setGeometry(QtCore.QRect(410, 690, 40, 25))
         self.label8.setObjectName("label8")
         # self.label8.setStylesheet('QLabel { color: red }')
-        self.label8.setText('m/s')
+        self.label8.setText('mm/s')
 
         self.pushButton = QtWidgets.QPushButton(self.groupBox)
         self.pushButton.setGeometry(QtCore.QRect(950, 80, 200, 40))

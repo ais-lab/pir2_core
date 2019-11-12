@@ -64,6 +64,8 @@ class Create(QDialog):
         self.lorr = "left"
         self.last_vel = 0.0
 
+        self.map_name = "blank"
+
         # Loading images
         img_path = rospkg.RosPack().get_path('pir2_app') + '/scripts/image/ind3.png'
         mask_path  =rospkg.RosPack().get_path('pir2_app') + '/scripts/image/alpha.png'
@@ -75,6 +77,8 @@ class Create(QDialog):
         self.img_width = 460
         self.size = self.img_height, self.img_width, 3
         self.resolution = float(10) / float(self.img_height)
+        self.raw_img = np.zeros(self.size, dtype=np.uint8)
+        self.raw_img.fill(255)
 
         # add signals
         self.uic.pushButton.clicked.connect(self.adding)
@@ -205,26 +209,42 @@ class Create(QDialog):
 
         else:
             pass
-        self.uic.label7.setText(str(self.last_vel))
+        self.uic.label7.setText(str(self.last_vel * 1000.0))
 
     def Lighten(self, in_img, bk_img):
+        thread = 50
         for width in range(in_img.shape[1]):
             for height in range(in_img.shape[0]):
 
-                if bk_img[width][height][0] < 50 and bk_img[width][height][1] < 50 and bk_img[width][height][2] < 50:
+                if bk_img[width][height][0] < thread and bk_img[width][height][1] < thread and bk_img[width][height][2] < thread:
                     # in_img[width][height] = in_img[width][height]
                     pass
                 else:
                     in_img[width][height] = bk_img[width][height]
         return in_img
 
+    def BLighten(self, in_img, bk_img):
+        thread = 100
+        for width in range(in_img.shape[1]):
+            for height in range(in_img.shape[0]):
+
+                if bk_img[width][height][0] < thread and bk_img[width][height][1] < thread and bk_img[width][height][2] < thread:
+                    in_img[width][height] = bk_img[width][height]
+                else:
+                    pass
+        return in_img
+
     def rb_drawing(self, in_img, x, y, theta, x2, y2):
+        ### show_img is while image ###
         show_img = np.zeros(in_img.shape, dtype=np.uint8)
         show_img.fill(255)
         mask_img = np.zeros(in_img.shape, dtype=np.uint8)
+
+        ### robot icon image ###
         rb_img = np.copy(self.rb)
         rb_x, rb_y, c = rb_img.shape
 
+        ### rotation robot icon image ###
         rb_img = Image.fromarray(np.uint8(rb_img))
         rb_img = rb_img.rotate(theta, expand=True)
 
@@ -236,9 +256,39 @@ class Create(QDialog):
         mask_img = np.asarray(mask_img)
         show_img = self.Lighten(in_img, mask_img)
 
+        if self.map_name != "blank":
+            show_img = self.map_drawing(show_img, self.map_name)
+
         qimg = QImage(show_img, show_img.shape[1], show_img.shape[0], QImage.Format_RGB888)
         # self.uic.imageLabel.setWindowOpacity(0.8)
         self.uic.imageLabel.setPixmap(QPixmap.fromImage(qimg))
+
+    def init_drawing(self):
+
+        ### set white image ###
+        img = np.zeros(self.raw_img.shape, dtype=np.uint8)
+        img.fill(255)
+
+        ### initial parameter ###
+        self.x_rb = self.img_height / 2
+        self.y_rb = self.img_width / 2
+        self.theta_rb = 0
+        self.last_vel = 0.0
+        self.map_name = "blank"
+
+        ### draw white image ###
+        self.rb_drawing(img, self.x_rb, self.y_rb, 0, -100, -100)
+
+        ### initial current velocity value ###
+        self.uic.label7.setText(str(self.last_vel))
+
+    def map_drawing(self, in_img, map_name):
+        map_path = rospkg.RosPack().get_path('pir2_navigation') + '/map/' + map_name + ".pgm"
+        # map_img = Image.open(map_path)
+        map_img = cv2.imread(map_path)
+        map_img = map_img[map_img.shape[1]/2-230:map_img.shape[1]/2+230,map_img.shape[0]/2-230:map_img.shape[0]/2+230]
+        in_img = self.BLighten(in_img, map_img)
+        return in_img
 
     def cal_dis(self, radius, start_angle, angle):
         start_x = int(radius * math.cos(math.radians(start_angle)) - 0 * math.sin(math.radians(start_angle)))
@@ -246,18 +296,6 @@ class Create(QDialog):
         end_x = int(radius * math.cos(math.radians(start_angle + angle)) - 0 * math.sin(math.radians(start_angle + angle)))
         end_y = int(radius * math.sin(math.radians(start_angle + angle)) + 0 * math.cos(math.radians(start_angle + angle)))
         return start_x - end_x, start_y - end_y
-
-    def init_drawing(self):
-        self.raw_img = np.zeros(self.size, dtype=np.uint8)
-        self.raw_img.fill(255)
-        img = np.zeros(self.raw_img.shape, dtype=np.uint8)
-        img.fill(255)
-        self.x_rb = self.img_height / 2
-        self.y_rb = self.img_width / 2
-        self.theta_rb = 0
-        self.last_vel = 0.0
-        self.rb_drawing(img, self.x_rb, self.y_rb, 0, -100, -100)
-        self.uic.label7.setText(str(self.last_vel))
 
     def saving(self):
         text, ok = QInputDialog.getText(self, '---Input Dialog---', 'Enter file name:')
@@ -269,6 +307,14 @@ class Create(QDialog):
         path = rospkg.RosPack().get_path('pir2_navigation') + '/map'
         fname, _ = QFileDialog.getOpenFileName(self, 'Open file', path)
         self.filename = QFileInfo(fname).fileName()
+        expand = self.filename.split(".")
+        if str(expand[1]) == "pgm":
+            self.map_name = expand[0]
+            set_img = np.copy(self.raw_img)
+            self.rb_drawing(set_img, self.x_rb, self.y_rb, self.theta_rb, -100, -100)
+        else:
+            pass
+
 
     def reset(self):
         self.uic.label4.setText("")
