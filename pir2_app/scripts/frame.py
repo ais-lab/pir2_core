@@ -77,8 +77,6 @@ class Create(QDialog):
         self.img_width = 460
         self.size = self.img_height, self.img_width, 3
         self.resolution = float(10) / float(self.img_height)
-        self.raw_img = np.zeros(self.size, dtype=np.uint8)
-        self.raw_img.fill(255)
 
         # add signals
         self.uic.pushButton.clicked.connect(self.adding)
@@ -224,7 +222,7 @@ class Create(QDialog):
         return in_img
 
     def BLighten(self, in_img, bk_img):
-        thread = 100
+        thread = 50
         for width in range(in_img.shape[1]):
             for height in range(in_img.shape[0]):
 
@@ -264,7 +262,8 @@ class Create(QDialog):
         self.uic.imageLabel.setPixmap(QPixmap.fromImage(qimg))
 
     def init_drawing(self):
-
+        self.raw_img = np.zeros(self.size, dtype=np.uint8)
+        self.raw_img.fill(255)
         ### set white image ###
         img = np.zeros(self.raw_img.shape, dtype=np.uint8)
         img.fill(255)
