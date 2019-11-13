@@ -28,10 +28,10 @@
 
       <inertial>
         <origin xyz="0 0 0" rpy="0 0 0"/>
-        <mass value="1.3729096e+00"/>
-        <inertia ixx="8.7002718e-03" ixy="-4.7576583e-05" ixz="1.1160499e-04"
-                 iyy="8.6195418e-03" iyz="-3.5422299e-06"
-                 izz="1.4612727e-02" />
+        <mass value="1.3"/>
+        <inertia ixx="0.01" ixy="0" ixz="0"
+                 iyy="0.01" iyz="0"
+                 izz="0.02" />
       </inertial>
     </link>
 
@@ -53,16 +53,16 @@
       <collision>
         <origin xyz="0 0.001 -0.025" rpy="0 0 0"/>
         <geometry>
-          <sphere radius="0.05"/>
+          <sphere radius="0.0577"/>
         </geometry>
       </collision>
 
       <inertial>
         <origin xyz="0 0 0" />
-        <mass value="0.005" />
-        <inertia ixx="0.001" ixy="0.0" ixz="0.0"
-                 iyy="0.001" iyz="0.0"
-                 izz="0.001" />
+        <mass value="0.05" />
+        <inertia ixx="0.00005" ixy="0.0" ixz="0.0"
+                 iyy="0.00005" iyz="0.0"
+                 izz="0.00005" />
       </inertial>
     </link>
 
@@ -84,16 +84,16 @@
       <collision>
         <origin xyz="0 0.001 -0.025" rpy="0 0 0"/>
         <geometry>
-          <sphere radius="0.05"/>
+          <sphere radius="0.0585"/>
         </geometry>
       </collision>
 
       <inertial>
         <origin xyz="0 0 0" />
-        <mass value="0.005" />
-        <inertia ixx="0.001" ixy="0.0" ixz="0.0"
-                 iyy="0.001" iyz="0.0"
-                 izz="0.001" />
+        <mass value="0.05" />
+        <inertia ixx="0.00005" ixy="0.0" ixz="0.0"
+                 iyy="0.00005" iyz="0.0"
+                 izz="0.00005" />
       </inertial>
     </link>
   </xacro:macro>
