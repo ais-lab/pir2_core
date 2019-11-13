@@ -285,8 +285,9 @@ class Create(QDialog):
         map_path = rospkg.RosPack().get_path('pir2_navigation') + '/map/' + map_name + ".pgm"
         # map_img = Image.open(map_path)
         map_img = cv2.imread(map_path)
-        map_img = map_img[map_img.shape[1]/2-230:map_img.shape[1]/2+230,map_img.shape[0]/2-230:map_img.shape[0]/2+230]
-        in_img = self.BLighten(in_img, map_img)
+        map_img = map_img[map_img.shape[1]/2-100:map_img.shape[1]/2+100,map_img.shape[0]/2-100:map_img.shape[0]/2+100]
+        dst_map_img = cv2.resize(map_img,(460, 460), interpolation = cv2.INTER_LINEAR)
+        in_img = self.BLighten(in_img, dst_map_img)
         return in_img
 
     def cal_dis(self, radius, start_angle, angle):
