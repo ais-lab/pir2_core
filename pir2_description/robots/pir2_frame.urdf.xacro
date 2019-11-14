@@ -19,7 +19,8 @@
   <xacro:lds parent="lds_plate_link" />
   <xacro:wheel parent="base_link" />
   <xacro:head_frame parent="top_link" />
-
+  <xacro:head_frame_transmission />
+  <xacro:head_frame_gazebo />
   <!-- =============== Gazebo =============== -->
   <gazebo>
     <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">

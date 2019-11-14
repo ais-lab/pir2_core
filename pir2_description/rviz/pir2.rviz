@@ -104,6 +104,16 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
+        pan_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        tilt_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
         top_link:
           Alpha: 1
           Show Axes: false
@@ -141,11 +151,15 @@ Visualization Manager:
         caster_rear_link:
           Value: false
         head_base_link:
-          Value: true
+          Value: false
         lds_plate_link:
           Value: false
         middle_link:
           Value: false
+        pan_link:
+          Value: true
+        tilt_link:
+          Value: true
         top_link:
           Value: false
         wheel_left_link:
@@ -170,7 +184,9 @@ Visualization Manager:
                   {}
               top_link:
                 head_base_link:
-                  {}
+                  pan_link:
+                    tilt_link:
+                      {}
             wheel_left_link:
               {}
             wheel_right_link:
@@ -250,10 +266,10 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.9152031540870667
+      Pitch: 0.5152029991149902
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 0.7513056993484497
+      Yaw: 0.45130667090415955
     Saved: ~
 Window Geometry:
   Displays:
