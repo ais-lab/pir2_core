@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+
+<robot name="head_base_frame" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!--xacro:include filename="$(find pir2_description)/urdf/head/head.transmission.xacro"/-->
+  <!--xacro:include filename="$(find pir2_description)/urdf/head/head.gazebo.xacro"/-->
+
+  <xacro:macro name="head_frame" params="parent">
+
+    <joint name="head_base_joint" type="fixed">
+      <origin xyz="0 0 0.0316 " rpy="0 0 0" />
+      <parent link="${parent}"/>
+      <child link="head_base_link"/>
+    </joint>
+
+    <link name="head_base_link" >
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <!--box size="0.07 0.085 0.065" /-->
+          <mesh filename="package://pir2_description/meshes/head/pan_frame.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+        <material name="gray"/>
+      </visual>
+     <inertial>
+       <origin xyz="0 0 0" rpy="0 0 0"/>
+       <mass value="0.78"/>
+       <inertia
+	    ixx="0.00190" ixy="0.0" ixz="0.0"
+	    iyy="0.00202" iyz="0.0"
+	    izz="0.00152"/>
+     </inertial>
+    </link>
+
+    <joint name="pan_joint" type="revolute">
+      <parent link="head_base_link"/>
+      <child link="pan_link"/>
+      <origin xyz="0 0 0.0245" rpy="0 0 0" />
+      <axis xyz="0 0 1" />
+      <limit lower="-1.3" upper="1.3" effort="10" velocity="1"/>
+      <dynamics damping="0.7"/>
+    </joint>
+
+
+    <link name="pan_link" >
+      <visual>
+        <origin xyz="0 0 0.0515" rpy="0 0 0" />
+        <geometry>
+          <!--box size="0.07 0.085 0.065" /-->
+          <mesh filename="package://pir2_description/meshes/head/tilt_frame.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+        <material name="gray"/>
+      </visual>
+     <inertial>
+       <origin xyz="0 0 0.0515" rpy="0 0 0"/>
+       <mass value="0.78"/>
+       <inertia
+      ixx="0.00190" ixy="0.0" ixz="0.0"
+      iyy="0.00202" iyz="0.0"
+      izz="0.00152"/>
+     </inertial>
+    </link>
+  </xacro:macro>
+
+</robot>
