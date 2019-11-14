@@ -20,7 +20,7 @@
     <mu2>0.2</mu2>
     <material>Gazebo/LightGrey</material>
   </gazebo>
-  <gazebo reference="projector_link">
+  <gazebo reference="yaw_link">
     <mu1>0.2</mu1>
     <mu2>0.2</mu2>
     <material>Gazebo/LightGrey</material>
