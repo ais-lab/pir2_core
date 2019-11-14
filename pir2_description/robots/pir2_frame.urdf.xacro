@@ -7,12 +7,14 @@
   <xacro:include filename="$(find pir2_description)/urdf/body/bottom.urdf.xacro"/>
   <xacro:include filename="$(find pir2_description)/urdf/body/middle.urdf.xacro"/>
   <xacro:include filename="$(find pir2_description)/urdf/body/lds_plate.urdf.xacro"/>
+  <xacro:include filename="$(find pir2_description)/urdf/body/top.urdf.xacro"/>
   <xacro:include filename="$(find pir2_description)/urdf/wheels/wheel.urdf.xacro"/>
   <xacro:include filename="$(find pir2_description)/urdf/lds/lds.urdf.xacro"/>
 
   <xacro:bottom_frame parent="base_footprint"/>
   <xacro:middle_frame parent="base_link"/>
   <xacro:lds_plate_frame parent="middle_link"/>
+  <xacro:top_frame parent="middle_link"/>
   <xacro:lds parent="lds_plate_link" />
   <xacro:wheel parent="base_link" />
 
