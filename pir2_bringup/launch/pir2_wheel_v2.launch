@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <launch>
 
-  <arg name="usb_port"                default="/dev/wheel"/>
+  <arg name="usb_port"                default="/dev/ttyUSB0"/>
   <arg name="dxl_baud_rate"           default="57600"/>
   <arg name="namespace"               default="dynamixel_workbench"/>
 
