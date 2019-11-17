@@ -11,7 +11,6 @@
   <xacro:include filename="$(find pir2_description)/urdf/body/top.urdf.xacro"/>
   <xacro:include filename="$(find pir2_description)/urdf/wheels/wheel.urdf.xacro"/>
   <xacro:include filename="$(find pir2_description)/urdf/lds/lds.urdf.xacro"/>
-  <xacro:include filename="$(find pir2_description)/urdf/head/head.urdf.xacro"/>
 
   <xacro:bottom_frame parent="base_footprint"/>
   <xacro:middle_frame parent="base_link"/>
@@ -19,9 +18,7 @@
   <xacro:top_frame parent="middle_link"/>
   <xacro:lds parent="lds_plate_link" />
   <xacro:wheel parent="base_link" />
-  <xacro:head_frame parent="top_link" angle="1.0471975511965976" />
-  <xacro:head_frame_transmission />
-  <xacro:head_frame_gazebo />
+
   <!-- =============== Gazebo =============== -->
   <gazebo>
     <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">

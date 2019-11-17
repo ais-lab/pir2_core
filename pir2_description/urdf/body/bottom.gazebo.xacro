@@ -2,8 +2,29 @@
 <robot name="pir2_sim" xmlns:xacro="http://ros.org/wiki/xacro">
 
   <gazebo reference="base_link">
-    <material>Gazebo/DarkGrey</material>
+    <material>DarkGrey</material>
   </gazebo>
 
-
+  <gazebo>
+    <plugin name="pir2_controller" filename="libgazebo_ros_diff_drive.so">
+      <commandTopic>cmd_vel</commandTopic>
+      <odometryTopic>odom</odometryTopic>
+      <odometryFrame>odom</odometryFrame>
+      <odometrySource>world</odometrySource>
+      <publishOdomTF>true</publishOdomTF>
+      <robotBaseFrame>base_footprint</robotBaseFrame>
+      <publishWheelTF>false</publishWheelTF>
+      <publishTf>true</publishTf>
+      <publishWheelJointState>true</publishWheelJointState>
+      <legacyMode>false</legacyMode>
+      <updateRate>30</updateRate>
+      <leftJoint>wheel_left_joint</leftJoint>
+      <rightJoint>wheel_right_joint</rightJoint>
+      <wheelSeparation>0.56</wheelSeparation>
+      <wheelDiameter>0.5</wheelDiameter>
+      <wheelAcceleration>1</wheelAcceleration>
+      <wheelTorque>100</wheelTorque>
+      <rosDebugLevel>na</rosDebugLevel>
+    </plugin>
+  </gazebo>
 </robot>
