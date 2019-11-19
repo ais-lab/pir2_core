@@ -15,6 +15,7 @@ from pir2_msgs.srv import *
 from geometry_msgs.msg import Twist
 
 
+
 class TextfileController(object):
     def __init__(self):
         self.rate = rospy.Rate(100) # 100hz
@@ -23,6 +24,8 @@ class TextfileController(object):
         self.result = True
         self.motor = rospy.ServiceProxy('/pir2_control/motor', MotorCommand)
         self.cmd_pub = rospy.Publisher('/cmd_vel', Twist, queue_size=10)
+        self.head = rospy.ServiceProxy('/pir2_control/head', HeadCommand)
+        self.nav = rospy.ServiceProxy('/pir2_control/nav', NavCommand)
 
 
     def executive_file(self):
@@ -52,6 +55,15 @@ class TextfileController(object):
         text = text.replace('\n'," ")
         text = text.split(" ")
         return text
+
+    def make_head(self, name, angle, speed):
+        req = HeadCommandRequest()
+        req.name.data = name
+        req.angle.data = angle
+        req.speed.data = speed
+        result = self.head(req)
+        self.result = result.result.data
+        return self.result
 
     def shutdown(self):
         self.cmd_pub.publish(Twist())
@@ -190,12 +202,19 @@ class TextfileController(object):
                 rospy.set_param("/textfile_controller/file_name", file)
                 break
 
+            elif command == "pan" or command == "tilt" or command == "yaw":
+                result = self.make_head(command, float(command_param_set[1]), 0.3)
+
+
             elif command == "navigation":
                 x = float(command_param_set[1])
                 y = float(command_param_set[2])
 
 
             elif command == "end":
+                result = self.make_head("pan", 0.0 ,0.3)
+                result = self.make_head("tilt", 0.0, 0.3)
+                result = self.make_head("yaw", 0.0, 0.3)
                 self.file_open(None)
 
             elif command == "" or command == "#":

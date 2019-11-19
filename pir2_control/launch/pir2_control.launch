@@ -1,6 +1,7 @@
 <launch>
     <arg name="file"  default="sample"/>
     <node pkg="pir2_control" name="motor_server" type="motor_command.py" output="screen"/>
+    <node pkg="pir2_control" name="head_server" type="head_command.py" output="screen"/>
     <node pkg="pir2_control" name="textfile_controller" type="frame_controller.py" output="screen">
         <param name="distance" value="0"/>
         <param name="file_name" value="$(arg file)"/>
