@@ -41,6 +41,9 @@ class Ui_create(object):
         self.comboBox.addItem("e")
         self.comboBox.addItem("end")
         self.comboBox.addItem("navigation")
+        self.comboBox.addItem("pan")
+        self.comboBox.addItem("tilt")
+        self.comboBox.addItem("yaw")
         # self.combo.setGeometry(QtCore.QRect(300, 300, 300, 200))
         self.comboBox.activated[str].connect(self.onActivated)
 
@@ -232,6 +235,18 @@ class Ui_create(object):
             self.label.setVisible(True)
             self.label2.setVisible(True)
             self.label3.setVisible(True)
+        elif text == "pan":
+            self.lineEdit.setVisible(True)
+            self.label.setText('angle (degree)')
+            self.label.setVisible(True)
+        elif text == "tilt":
+            self.lineEdit.setVisible(True)
+            self.label.setText('angle (degree)')
+            self.label.setVisible(True)
+        elif text == "yaw":
+            self.lineEdit.setVisible(True)
+            self.label.setText('angle (degree)')
+            self.label.setVisible(True)
         elif text == "pause":
             self.lineEdit.setVisible(True)
             self.label.setText('pause time (sec)')
