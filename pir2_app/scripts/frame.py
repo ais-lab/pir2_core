@@ -287,6 +287,8 @@ class Create(QDialog):
         map_img = cv2.imread(map_path)
         map_img = map_img[map_img.shape[1]/2-100:map_img.shape[1]/2+100,map_img.shape[0]/2-100:map_img.shape[0]/2+100]
         dst_map_img = cv2.resize(map_img,(460, 460), interpolation = cv2.INTER_LINEAR)
+        trans = cv2.getRotationMatrix2D((230,230), 90 , 1.0)
+        dst_map_img = cv2.warpAffine(dst_map_img, trans, (460,460))
         in_img = self.BLighten(in_img, dst_map_img)
         return in_img
 
