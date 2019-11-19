@@ -190,6 +190,11 @@ class TextfileController(object):
                 rospy.set_param("/textfile_controller/file_name", file)
                 break
 
+            elif command == "navigation":
+                x = float(command_param_set[1])
+                y = float(command_param_set[2])
+
+
             elif command == "end":
                 self.file_open(None)
 
