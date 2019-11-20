@@ -1,5 +1,6 @@
 <?xml version="1.0" ?>
 <robot name="bottom_frame" xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:include filename="$(find pir2_description)/urdf/body/bottom.gazebo.xacro"/>
 
   <xacro:macro name="bottom_frame" params="parent" >
     <link name="base_footprint"/>

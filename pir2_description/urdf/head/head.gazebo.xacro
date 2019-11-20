@@ -7,23 +7,29 @@
   <gazebo reference="head_base_link">
     <mu1>0.2</mu1>
     <mu2>0.2</mu2>
-    <material>Gazebo/LightGrey</material>
+    <material>Gazebo/Grey</material>
+  </gazebo>
+
+  <gazebo reference="pan_support_link">
+    <mu1>0.2</mu1>
+    <mu2>0.2</mu2>
+    <material>Gazebo/Green</material>
   </gazebo>
 
   <gazebo reference="tilt_link">
     <mu1>0.2</mu1>
     <mu2>0.2</mu2>
-    <material>Gazebo/LightGrey</material>
+    <material>Gazebo/Grey</material>
   </gazebo>
   <gazebo reference="pan_link">
     <mu1>0.2</mu1>
     <mu2>0.2</mu2>
-    <material>Gazebo/LightGrey</material>
+    <material>Gazebo/Grey</material>
   </gazebo>
   <gazebo reference="yaw_link">
     <mu1>0.2</mu1>
     <mu2>0.2</mu2>
-    <material>Gazebo/LightGrey</material>
+    <material>Gazebo/FlatBlack</material>
   </gazebo>
 
 </xacro:macro>

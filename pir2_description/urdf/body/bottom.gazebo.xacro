@@ -2,7 +2,7 @@
 <robot name="pir2_sim" xmlns:xacro="http://ros.org/wiki/xacro">
 
   <gazebo reference="base_link">
-    <material>DarkGrey</material>
+    <material>LightGrey</material>
   </gazebo>
 
   <gazebo>
