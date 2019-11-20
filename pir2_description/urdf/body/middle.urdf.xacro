@@ -25,13 +25,13 @@
         </geometry>
       </collision>
 
-      <!-- <inertial>
+      <inertial>
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <mass value="0.8"/>
         <inertia ixx="0.008" ixy="0" ixz="0"
                  iyy="0.008" iyz="0"
                  izz="0.016" />
-      </inertial> -->
+      </inertial>
     </link>
 
   </xacro:macro>
