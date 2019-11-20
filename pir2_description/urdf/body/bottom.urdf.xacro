@@ -27,11 +27,11 @@
       </collision>
 
       <inertial>
-        <origin xyz="0 0 0.175" rpy="0 0 0"/>
-        <mass value="3.0"/>
-        <inertia ixx="0.10" ixy="0" ixz="0"
-                 iyy="0.10" iyz="0"
-                 izz="0.20" />
+        <origin xyz="0 0 0.75" rpy="0 0 0"/>
+        <mass value="20.0"/>
+        <inertia ixx="0.24" ixy="0" ixz="0"
+                 iyy="0.24" iyz="0"
+                 izz="0.48" />
       </inertial>
     </link>
 
@@ -53,7 +53,7 @@
       <collision>
         <origin xyz="0 0.001 -0.025" rpy="0 0 0"/>
         <geometry>
-          <sphere radius="0.0588"/>
+          <sphere radius="0.056"/>
         </geometry>
       </collision>
 
@@ -84,7 +84,7 @@
       <collision>
         <origin xyz="0 0.001 -0.025" rpy="0 0 0"/>
         <geometry>
-          <sphere radius="0.0588"/>
+          <sphere radius="0.054"/>
         </geometry>
       </collision>
 
