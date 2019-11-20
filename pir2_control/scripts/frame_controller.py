@@ -209,7 +209,11 @@ class TextfileController(object):
             elif command == "navigation":
                 x = float(command_param_set[1])
                 y = float(command_param_set[2])
-
+                req = NavCommandRequest()
+                req.goal_position.position.x = x
+                req.goal_position.position.y = y
+                result = self.nav(req)
+                self.result = result.result.data
 
             elif command == "end":
                 result = self.make_head("pan", 0.0 ,0.3)
