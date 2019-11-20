@@ -15,7 +15,7 @@
         <geometry>
           <mesh filename="package://pir2_description/meshes/base/lds_frame.stl" scale="0.001 0.001 0.001"/>
         </geometry>
-        <material name="light_black"/>
+        <material name="dark"/>
       </visual>
 
       <collision>
@@ -33,6 +33,12 @@
                  izz="0.004" />
       </inertial> -->
     </link>
+
+    <gazebo reference="lds_plate_link">
+      <mu1>0.2</mu1>
+      <mu2>0.2</mu2>
+      <material>Gazebo/DarkGrey</material>
+    </gazebo>
 
   </xacro:macro>
 

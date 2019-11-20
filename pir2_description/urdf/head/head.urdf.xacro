@@ -36,7 +36,7 @@
         <origin xyz="0 0 0" rpy="0 0 0" />
         <geometry>
           <!--box size="0.07 0.085 0.065" /-->
-          <mesh filename="package://pir2_description/meshes/head/pan_frame.stl" scale="0.001 0.001 0.001"/>
+          <mesh filename="package://pir2_description/meshes/head/pan_frame.dae" scale="0.001 0.001 0.001"/>
         </geometry>
         <material name="grey"/>
       </visual>
@@ -71,7 +71,7 @@
         <origin xyz="0 0 0.0515" rpy="0 0 0" />
         <geometry>
           <!--box size="0.07 0.085 0.065" /-->
-          <mesh filename="package://pir2_description/meshes/head/tilt_frame.stl" scale="0.001 0.001 0.001"/>
+          <mesh filename="package://pir2_description/meshes/head/tilt_frame.dae" scale="0.001 0.001 0.001"/>
         </geometry>
         <material name="grey"/>
       </visual>
@@ -105,7 +105,7 @@
       <visual>
         <origin xyz="0 0 -0.0245" rpy="0 0 0" />
         <geometry>
-          <mesh filename="package://pir2_description/meshes/head/yaw_plate.stl" scale="0.001 0.001 0.001"/>
+          <mesh filename="package://pir2_description/meshes/head/yaw_plate.dae" scale="0.001 0.001 0.001"/>
         </geometry>
         <material name="grey"/>
       </visual>
@@ -135,7 +135,7 @@
       <visual>
         <origin xyz="0.027 0 0" rpy="0 0 0" />
         <geometry>
-          <mesh filename="package://pir2_description/meshes/head/yaw_frame.stl" scale="0.001 0.001 0.001"/>
+          <mesh filename="package://pir2_description/meshes/head/yaw_frame.dae" scale="0.001 0.001 0.001"/>
         </geometry>
         <material name="grey"/>
       </visual>
@@ -171,7 +171,7 @@
           <!--box size="0.07 0.085 0.065" /-->
           <mesh filename="package://pir2_description/meshes/head/display_frame.stl" scale="0.001 0.001 0.001"/>
         </geometry>
-        <material name="grey"/>
+        <material name="dark"/>
       </visual>
       <collision>
         <origin xyz="0 0 0" rpy="0 0 0"/>
