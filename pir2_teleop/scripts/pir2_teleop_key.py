@@ -186,13 +186,30 @@ if __name__=="__main__":
                 target_pan_pos = checkYawLimitPosition(target_pan_pos + POS_STEP_SIZE)
                 status = status + 1
                 print vels(target_linear_vel,target_angular_vel, target_pan_pos, target_tilt_pos, target_yaw_pos)
-
+            elif key == 'j':
+                target_linear_vel   = 0.0
+                control_linear_vel  = 0.0
+                target_angular_vel  = 0.0
+                control_angular_vel = 0.0
+                target_pan_pos = 0.0
+                control_pan_pos = 0.0
+                target_tilt_pos = 0.0
+                control_tilt_pos = 0.0
+                target_yaw_pos = 0.0
+                control_yaw_pos = 0.0
+                print vels(target_linear_vel,target_angular_vel, target_pan_pos, target_tilt_pos, target_yaw_pos)
             elif key == ' ' or key == 's' :
                 target_linear_vel   = 0.0
                 control_linear_vel  = 0.0
                 target_angular_vel  = 0.0
                 control_angular_vel = 0.0
-                print vels(target_linear_vel, target_angular_vel)
+                target_pan_pos = 0.0
+                control_pan_pos = 0.0
+                target_tilt_pos = 0.0
+                control_tilt_pos = 0.0
+                target_yaw_pos = 0.0
+                control_yaw_pos = 0.0
+                print vels(target_linear_vel,target_angular_vel, target_pan_pos, target_tilt_pos, target_yaw_pos)
             else:
                 if (key == '\x03'):
                     break
