@@ -55,6 +55,7 @@
   <build_export_depend>pir2_description</build_export_depend>
   <exec_depend>dynamixel_workbench</exec_depend>
   <exec_depend>pir2_description</exec_depend>
+  <exec_depend>laser_filters</exec_depend>
 
 
   <!-- The export tag contains other, unspecified, tags -->
