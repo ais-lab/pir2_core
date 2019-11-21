@@ -1,6 +1,6 @@
 <launch>
     <arg name="file"  default="sample"/>
-    <include file="$(find pir2_navigation)/launch/navigation.launch"/>
+    <include file="$(find pir2_control)/launch/navigation_no_rviz.launch"/>
     <node pkg="pir2_control" name="motor_server" type="motor_command.py" output="screen"/>
     <node pkg="pir2_control" name="head_server" type="head_command.py" output="screen"/>
     <node pkg="pir2_control" name="nav_server" type="nav_command.py" output="screen"/>

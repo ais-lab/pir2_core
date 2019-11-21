@@ -409,7 +409,7 @@ class Server(Publishsers):
                 target_right += down_right * self.rate_time
 
             self.spt_pub(target_left, target_right)
-            print target_left, target_right
+            # print target_left, target_right
             if (down_left == 0.0 and down_right == 0.0):
                 break
 
