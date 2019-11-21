@@ -60,6 +60,7 @@ class Subscribe(Publishers):
             print "*"
             if self.exit == 1:
                 break
+        print ("finish: navigation {0:4.0f}(m) {1:4.0f}(m)".format(x,y))
 
         result = Bool()
         result.data = True

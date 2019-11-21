@@ -13,7 +13,7 @@
   <include file="$(find pir2_navigation)/launch/amcl.launch"/>
 
   <!-- MOVE BASE -->
-  <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+  <node pkg="move_base" type="move_base" respawn="false" name="move_base">
     <!-- COST MAP -->
     <rosparam file="$(find pir2_navigation)/config/costmap/costmap_common.yaml" command="load" ns="global_costmap" />
     <rosparam file="$(find pir2_navigation)/config/costmap/costmap_common.yaml" command="load" ns="local_costmap" />
