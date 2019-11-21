@@ -366,9 +366,9 @@ class Execute(QDialog):
 if __name__ == '__main__':
     rospy.init_node('gui_frame')
     app = QApplication(sys.argv)
-    window = Menu()
+    # window = Menu()
     window2 = Create()
-    window3 = Execute()
+    # window3 = Execute()
     # window.showMaximized()
-    window.show()
+    window2.show()
     sys.exit(app.exec_())
