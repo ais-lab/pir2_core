@@ -3,9 +3,9 @@
 
   <arg name="usb_port"                default="/dev/ttyUSB1"/>
   <arg name="dxl_baud_rate"           default="57600"/>
-  <arg name="namespace"               default="dynamixel_workbench"/>
+  <arg name="namespace"               default="dynamixel_workbench_head"/>
 
-  <arg name="use_moveit"              default="false"/>
+  <arg name="use_moveit"              default="true"/>
   <arg name="use_joint_state"         default="true"/>
   <arg name="use_cmd_vel"             default="false"/>
 

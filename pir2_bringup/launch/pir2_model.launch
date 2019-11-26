@@ -6,7 +6,7 @@
   <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
     <param name="rate" value="50"/>
   </node>
-  <rosparam param="source_list">["dynamixel_workbench/joint_states"]</rosparam>
+  <rosparam param="source_list">["dynamixel_workbench_wheel/joint_states","dynamixel_workbench_head/joint_states"]</rosparam>
 
 
   <param name="robot_description" command="$(find xacro)/xacro '$(find pir2_description)/robots/pir2_frame.urdf.xacro'"/>
