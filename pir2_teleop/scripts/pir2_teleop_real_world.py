@@ -3,7 +3,7 @@
 import rospy
 from geometry_msgs.msg import Twist
 from std_msgs.msg import Float64
-from dynamixel_workbench_msgs.msg import DynamixelCommand, DynamixelCommandRequest
+from dynamixel_workbench_msgs.srv import DynamixelCommand, DynamixelCommandRequest
 import sys, select, os
 if os.name == 'nt':
   import msvcrt
@@ -13,18 +13,18 @@ else:
 MAX_LIN_VEL = 0.74
 MAX_ANG_VEL = 2.56
 
-MAX_PAN_POS = 1.3
-MIN_PAN_POS = -1.3
+MAX_PAN_POS = 4000
+MIN_PAN_POS = 0
 
-MAX_TILT_POS = 0.17
-MIN_TILT_POS = -0.34
+MAX_TILT_POS = 4000
+MIN_TILT_POS = 1900
 
-MAX_YAW_POS = 1.3
-MIN_YAW_POS = -1.3
+MAX_YAW_POS = 4000
+MIN_YAW_POS = 0
 
 LIN_VEL_STEP_SIZE = 0.01
 ANG_VEL_STEP_SIZE = 0.1
-POS_STEP_SIZE = 0.087
+POS_STEP_SIZE = 400
 
 msg = """
 ---------------------------
@@ -117,9 +117,7 @@ if __name__=="__main__":
 
     rospy.init_node('pir2_teleop')
     pub = rospy.Publisher('cmd_vel', Twist, queue_size=10)
-    pan_pub = rospy.Publisher('/pir2/pan_controller/command', Float64, queue_size=10)
-    tilt_pub = rospy.Publisher('/pir2/tilt_controller/command', Float64, queue_size=10)
-    yaw_pub = rospy.Publisher('/pir2/yaw_controller/command', Float64, queue_size=10)
+    dxl_srv = rospy.ServiceProxy('/dynamixel_workbench/dynamixel_command', DynamixelCommand)
 
 
     status = 0
@@ -128,20 +126,20 @@ if __name__=="__main__":
     control_linear_vel  = 0.0
     control_angular_vel = 0.0
 
-    target_pan_pos   = 0.0
-    target_pan_pos  = 0.0
-    control_pan_pos  = 0.0
-    control_pan_pos = 0.0
+    target_pan_pos   = 2000
+    target_pan_pos  = 2000
+    control_pan_pos  = 2000
+    control_pan_pos = 2000
 
-    target_tilt_pos   = 0.0
-    target_tilt_pos  = 0.0
-    control_tilt_pos  = 0.0
-    control_tilt_pos = 0.0
+    target_tilt_pos   = 2000
+    target_tilt_pos  = 2000
+    control_tilt_pos  = 2000
+    control_tilt_pos = 2000
 
-    target_yaw_pos   = 0.0
-    target_yaw_pos  = 0.0
-    control_yaw_pos  = 0.0
-    control_yaw_pos = 0.0
+    target_yaw_pos   = 2000
+    target_yaw_pos  = 2000
+    control_yaw_pos  = 2000
+    control_yaw_pos = 2000
 
     try:
         print msg
@@ -192,24 +190,24 @@ if __name__=="__main__":
                 control_linear_vel  = 0.0
                 target_angular_vel  = 0.0
                 control_angular_vel = 0.0
-                target_pan_pos = 0.0
-                control_pan_pos = 0.0
-                target_tilt_pos = 0.0
-                control_tilt_pos = 0.0
-                target_yaw_pos = 0.0
-                control_yaw_pos = 0.0
+                target_pan_pos = 2000
+                control_pan_pos = 2000
+                target_tilt_pos = 2000
+                control_tilt_pos = 2000
+                target_yaw_pos = 2000
+                control_yaw_pos = 2000
                 print vels(target_linear_vel,target_angular_vel, target_pan_pos, target_tilt_pos, target_yaw_pos)
             elif key == ' ' or key == 's' :
                 target_linear_vel   = 0.0
                 control_linear_vel  = 0.0
                 target_angular_vel  = 0.0
                 control_angular_vel = 0.0
-                target_pan_pos = 0.0
-                control_pan_pos = 0.0
-                target_tilt_pos = 0.0
-                control_tilt_pos = 0.0
-                target_yaw_pos = 0.0
-                control_yaw_pos = 0.0
+                target_pan_pos = 2000
+                control_pan_pos = 2000
+                target_tilt_pos = 2000
+                control_tilt_pos = 2000
+                target_yaw_pos = 2000
+                control_yaw_pos = 2000
                 print vels(target_linear_vel,target_angular_vel, target_pan_pos, target_tilt_pos, target_yaw_pos)
             else:
                 if (key == '\x03'):
@@ -225,13 +223,13 @@ if __name__=="__main__":
             tilt_req = DynamixelCommandRequest()
             yaw_req = DynamixelCommandRequest()
 
-            pan_req.id.data = 3
-            tilt_req.id.data = 4
-            yaw_req.id.data = 5
+            pan_req.id = 3
+            tilt_req.id = 4
+            yaw_req.id = 5
 
-            pan_req.addr_name.data = "Goal_Position"
-            tilt_req.addr_name.data = "Goal_Position"
-            yaw_req.addr_name.data = "Goal_Position"
+            pan_req.addr_name = "Goal_Position"
+            tilt_req.addr_name = "Goal_Position"
+            yaw_req.addr_name = "Goal_Position"
 
             control_linear_vel = makeSimpleProfile(control_linear_vel, target_linear_vel, (LIN_VEL_STEP_SIZE/2.0))
             twist.linear.x = control_linear_vel; twist.linear.y = 0.0; twist.linear.z = 0.0
@@ -240,15 +238,18 @@ if __name__=="__main__":
             twist.angular.x = 0.0; twist.angular.y = 0.0; twist.angular.z = control_angular_vel
 
             control_pan_pos = makeSimpleProfile(control_pan_pos, target_pan_pos, (POS_STEP_SIZE/2.0))
-            pan_msg.data = control_pan_pos
+            pan_req.value = control_pan_pos
 
             control_tilt_pos = makeSimpleProfile(control_tilt_pos, target_tilt_pos, (POS_STEP_SIZE/2.0))
-            tilt_msg.data = control_tilt_pos
+            tilt_req.value = control_tilt_pos
 
             control_yaw_pos = makeSimpleProfile(control_yaw_pos, target_yaw_pos, (POS_STEP_SIZE/2.0))
-            yaw_msg.data = control_yaw_pos
+            yaw_req.value = control_yaw_pos
 
             pub.publish(twist)
+            result = dxl_srv(pan_req)
+            result = dxl_srv(tilt_req)
+            result = dxl_srv(yaw_req)
 
 
 
