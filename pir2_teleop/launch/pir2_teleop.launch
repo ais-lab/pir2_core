@@ -1,4 +1,17 @@
 <launch>
-  <node pkg="pir2_teleop" type="pir2_teleop_key.py" name="pir2_teleop_key"  output="screen">
-  </node>
+
+  <arg name="use_gazebo"              default="false"/>
+
+
+  <group if="$(arg use_gazebo)">
+    <node pkg="pir2_teleop" type="pir2_teleop_key.py" name="pir2_teleop_key"  output="screen">
+    </node>
+  </group>
+
+
+  <group unless="$(arg use_gazebo)">
+    <node pkg="pir2_teleop" type="pir2_teleop_real_world.py" name="pir2_teleop_key"  output="screen">
+    </node>
+  </group>
+
 </launch>
