@@ -13,11 +13,12 @@ find_package(catkin REQUIRED COMPONENTS
   rospy
   std_msgs
   tf
+  roslib
 )
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
-
+find_package(OpenCV REQUIRED)
 
 ## Uncomment this if the package has a setup.py. This macro ensures
 ## modules and global scripts declared therein get installed
@@ -118,8 +119,9 @@ catkin_package(
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
 include_directories(
-# include
+  include
   ${catkin_INCLUDE_DIRS}
+  ${OpenCV_INCLUDE_DIRS}
 )
 
 ## Declare a C++ library
@@ -160,6 +162,9 @@ target_link_libraries(cmd_odom_publisher ${catkin_LIBRARIES} ${OpenCV_LIBRARIES}
 
 add_executable(mimic_spt src/mimic_spt_to_cmd.cpp)
 target_link_libraries(mimic_spt ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
+
+add_executable(display_teleop_show src/display_teleop_show.cpp)
+target_link_libraries(display_teleop_show ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
 
 #############
 ## Install ##
