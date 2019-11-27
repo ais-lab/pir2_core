@@ -187,11 +187,11 @@ if __name__=="__main__":
                 status = status + 1
                 print vels(target_linear_vel,target_angular_vel, target_pan_pos, target_tilt_pos, target_yaw_pos)
             elif key == 'h' :
-                target_pan_pos = checkYawLimitPosition(target_pan_pos - POS_STEP_SIZE)
+                target_pan_pos = checkPanLimitPosition(target_pan_pos - POS_STEP_SIZE)
                 status = status + 1
                 print vels(target_linear_vel,target_angular_vel, target_pan_pos, target_tilt_pos, target_yaw_pos)
             elif key == 'k' :
-                target_pan_pos = checkYawLimitPosition(target_pan_pos + POS_STEP_SIZE)
+                target_pan_pos = checkPanLimitPosition(target_pan_pos + POS_STEP_SIZE)
                 status = status + 1
                 print vels(target_linear_vel,target_angular_vel, target_pan_pos, target_tilt_pos, target_yaw_pos)
             elif key == 'j':
