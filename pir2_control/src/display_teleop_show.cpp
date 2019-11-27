@@ -39,11 +39,11 @@ int main(int argc, char **argv)
     ros::spinOnce();
 
     if (image_num > 0 && image_num < 10) {
-      std::cout << image_num << std::endl;
+      // std::cout << image_num << std::endl;
       ///// get image and resize projectr size
       file_name = std::to_string(image_num);
       std::string input_file_path = file_dir + file_name + ".png";
-      std::cout << input_file_path << std::endl;
+      // std::cout << input_file_path << std::endl;
 
       source_img = cv::imread(input_file_path, cv::IMREAD_UNCHANGED);
 

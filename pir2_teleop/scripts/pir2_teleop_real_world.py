@@ -2,7 +2,7 @@
 
 import rospy
 from geometry_msgs.msg import Twist
-from std_msgs.msg import Float64
+from std_msgs.msg import Float64, Int16
 # from dynamixel_workbench_msgs.srv import DynamixelCommand, DynamixelCommandRequest
 from std_msgs.msg import String, Header
 from trajectory_msgs.msg import JointTrajectory, JointTrajectoryPoint
@@ -120,6 +120,7 @@ if __name__=="__main__":
     rospy.init_node('pir2_teleop')
     pub = rospy.Publisher('cmd_vel', Twist, queue_size=10)
     head_pub = rospy.Publisher('/dynamixel_workbench_head/joint_trajectory', JointTrajectory, queue_size=100)
+    image_pub = rospy.Publisher('/pir2_image', Int16, queue_size=10)
 
     # head_msg = JointTrajectory()
     # head_msg.joint_names = [ "pan_joint", "tilt_joint", "yaw_joint" ]
@@ -146,6 +147,8 @@ if __name__=="__main__":
     target_yaw_pos  = 0.0
     control_yaw_pos  = 0.0
     control_yaw_pos = 0.0
+
+    image_msg = Int16()
 
     try:
         print msg
@@ -215,6 +218,26 @@ if __name__=="__main__":
                 target_yaw_pos = 0.0
                 control_yaw_pos = 0.0
                 print vels(target_linear_vel,target_angular_vel, target_pan_pos, target_tilt_pos, target_yaw_pos)
+            elif key == '0':
+                image_msg.data = 0
+            elif key == '1':
+                image_msg.data = 1
+            elif key == '2':
+                image_msg.data = 2
+            elif key == '3':
+                image_msg.data = 3
+            elif key == '4':
+                image_msg.data = 4
+            elif key == '5':
+                image_msg.data = 5
+            elif key == '6':
+                image_msg.data = 6
+            elif key == '7':
+                image_msg.data = 7
+            elif key == '8':
+                image_msg.data = 8
+            elif key == '9':
+                image_msg.data = 9
             else:
                 if (key == '\x03'):
                     break
@@ -248,6 +271,7 @@ if __name__=="__main__":
 
             pub.publish(twist)
             head_pub.publish(head_msg)
+            image_pub.publish(image_msg)
 
 
 
