@@ -26,7 +26,7 @@ MIN_YAW_POS = -1.3
 
 LIN_VEL_STEP_SIZE = 0.01
 ANG_VEL_STEP_SIZE = 0.1
-POS_STEP_SIZE = 0.35
+POS_STEP_SIZE = 0.55
 
 msg = """
 ---------------------------
@@ -265,6 +265,7 @@ if __name__=="__main__":
             # jtp_msg.points.positions = [control_pan_pos,control_tilt_pos,control_yaw_pos]
 
             jtp_msg.positions = [control_pan_pos,control_tilt_pos,control_yaw_pos]
+	    jtp_msg.velocities = [0.5,0.5,0.5]
             jtp_msg.time_from_start = rospy.Duration.from_sec(0.00000002)
 
             head_msg.points.append(jtp_msg)
