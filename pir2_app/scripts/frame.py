@@ -209,6 +209,9 @@ class Create(QDialog):
             pass
         self.uic.label7.setText(str(self.last_vel * 1000.0))
 
+        self.uic.label10.setText("(X : " + str(-(self.y_rb - 230) * self.resolution) + " m")
+        self.uic.label11.setText("Y : " + str(-(self.x_rb - 230) * self.resolution) + " m)")
+
     def Lighten(self, in_img, bk_img):
         thread = 50
         for width in range(in_img.shape[1]):
@@ -280,7 +283,9 @@ class Create(QDialog):
 
         ### initial current velocity value ###
         self.uic.label7.setText(str(self.last_vel))
-
+        self.uic.label10.setText("(X : " + str(-(self.y_rb - 230) * self.resolution) + " m")
+        self.uic.label11.setText("Y : " + str(-(self.x_rb - 230) * self.resolution) + " m)")
+        
     def map_drawing(self, in_img, map_name):
         map_path = rospkg.RosPack().get_path('pir2_navigation') + '/map/' + map_name + ".pgm"
         # map_img = Image.open(map_path)

@@ -140,6 +140,22 @@ class Ui_create(object):
         # self.label8.setStylesheet('QLabel { color: red }')
         self.label8.setText('mm/s')
 
+        ### label9 ~ label11 current_position ###
+        self.label9 = QtWidgets.QLabel(Form)
+        self.label9.setGeometry(QtCore.QRect(200, 725, 120, 25))
+        self.label9.setObjectName("label9")
+        self.label9.setText('current_position')
+
+        self.label10 = QtWidgets.QLabel(Form)
+        self.label10.setGeometry(QtCore.QRect(320, 725, 70, 25))
+        self.label10.setObjectName("label10")
+        self.label10.setText('(X : 0.0 m')
+
+        self.label11 = QtWidgets.QLabel(Form)
+        self.label11.setGeometry(QtCore.QRect(390, 725, 70, 25))
+        self.label11.setObjectName("label11")
+        self.label11.setText('Y : 0.0 m)')
+
         self.pushButton = QtWidgets.QPushButton(self.groupBox)
         self.pushButton.setGeometry(QtCore.QRect(950, 80, 200, 40))
         self.pushButton.setObjectName("pushButton")
