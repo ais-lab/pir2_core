@@ -6,17 +6,17 @@ pan_joint:
   ID: 3
   Return_Delay_Time: 0
   Operating_Mode: 3
-  Profile_Acceleration: 0
+  Profile_Acceleration: 10000
   Profile_Velocity: 40
 tilt_joint:
   ID: 4
   Return_Delay_Time: 0
   Operating_Mode: 3
-  Profile_Acceleration: 0
+  Profile_Acceleration: 10000
   Profile_Velocity: 40
 yaw_joint:
   ID: 5
   Return_Delay_Time: 0
   Operating_Mode: 3
-  Profile_Acceleration: 0
+  Profile_Acceleration: 10000
   Profile_Velocity: 40
