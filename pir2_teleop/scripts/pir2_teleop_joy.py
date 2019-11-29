@@ -161,17 +161,17 @@ class Subscribe(Publishsers):
             self.control_yaw_pos = 0.0
 
 
-        if msg.axes[4] > 0.0:
-            self.target_tilt_pos = self.checkTiltLimitPosition(self.target_tilt_pos - (msg.axes[4] * POS_STEP_SIZE))
-        elif msg.axes[4] <  0.0:
-            self.target_tilt_pos = self.checkTiltLimitPosition(self.target_tilt_pos - (msg.axes[4] * POS_STEP_SIZE))
+        if msg.axes[4] > 0.5:
+            self.target_tilt_pos = self.checkTiltLimitPosition(self.target_tilt_pos - (POS_STEP_SIZE))
+        elif msg.axes[4] <  -0.5:
+            self.target_tilt_pos = self.checkTiltLimitPosition(self.target_tilt_pos + (POS_STEP_SIZE))
         else:
             pass
 
-        if msg.axes[3] > 0.0:
-            self.target_pan_pos = self.checkPanLimitPosition(self.target_pan_pos + (msg.axes[3] * POS_STEP_SIZE))
-        elif msg.axes[3] <  0.0:
-            self.target_pan_pos = self.checkPanLimitPosition(self.target_pan_pos + (msg.axes[3] * POS_STEP_SIZE))
+        if msg.axes[3] > 0.5:
+            self.target_pan_pos = self.checkPanLimitPosition(self.target_pan_pos + (POS_STEP_SIZE))
+        elif msg.axes[3] <  -0.5:
+            self.target_pan_pos = self.checkPanLimitPosition(self.target_pan_pos - (POS_STEP_SIZE))
         else:
             pass
 
