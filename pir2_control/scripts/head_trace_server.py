@@ -87,7 +87,7 @@ def cal(x, y, z):
 if __name__ == '__main__':
     rospy.init_node('detect_person_server')
 
-    rospy.set_param("/head_trace_server/flag", "human")
+    rospy.set_param("/head_trace_server/flag", "none")
 
     rate = rospy.Rate(10.0)
 
@@ -105,7 +105,7 @@ if __name__ == '__main__':
 
             pan, tilt = cal(trans[0], trans[1], trans[2])
             print pan, tilt
-            head_make_gazebo(pan, tilt)
+            head_make(pan, tilt)
 
         elif flag == "none":
             pass
