@@ -1,6 +1,7 @@
 <launch>
 
   <arg name="use_gazebo"              default="false"/>
+  <arg name="use_display"               default="true"/>
 
 
   <group if="$(arg use_gazebo)">
@@ -8,12 +9,13 @@
     </node>
   </group>
 
-
   <group unless="$(arg use_gazebo)">
     <node pkg="pir2_teleop" type="pir2_teleop_real_world.py" name="pir2_teleop_key"  output="screen">
     </node>
-    <node pkg="pir2_control" type="display_teleop_show" name="display_teleop_show"  output="screen" />
+  </group>
 
+  <group if="$(arg use_display)">
+    <node pkg="pir2_control" type="display_teleop_show" name="display_teleop_show"  output="screen" />
   </group>
 
 </launch>

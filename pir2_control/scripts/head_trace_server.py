@@ -2,13 +2,39 @@
 
 import rospy
 import numpy as np
-from math import radians, copysign, sqrt, pow, pi, atan2
+from math import radians, copysign, sqrt, pow, pi, atan2, degrees
 import tf
 import PyKDL
 
 from std_msgs.msg import Float64
 from trajectory_msgs.msg import JointTrajectory, JointTrajectoryPoint
 from geometry_msgs.msg import Quaternion
+
+MAX_PAN_POS = 3.4
+MIN_PAN_POS = -3.4
+
+MAX_TILT_POS = 0.30
+MIN_TILT_POS = -0.34
+
+def constrain(input, low, high):
+    if input < low:
+      input = low
+    elif input > high:
+      input = high
+    else:
+      input = input
+
+    return input
+
+def checkPanLimitPosition(pos):
+    pos = constrain(pos, MIN_PAN_POS, MAX_PAN_POS)
+
+    return pos
+
+def checkTiltLimitPosition(pos):
+    pos = constrain(pos, MIN_TILT_POS, MAX_TILT_POS)
+
+    return pos
 
 def head_make(pan,tilt):
     head_pub = rospy.Publisher('/dynamixel_workbench_head/joint_trajectory', JointTrajectory, queue_size=100)
@@ -44,8 +70,19 @@ def cal(x, y, z):
     pan = theta
 
     distance = get_distance(x, y)
-    tilt = atan2(distance, z - 0.759)
-    return pan, -(tilt-rad30)
+
+    print z - 0.673
+    print distance
+
+    tilt = atan2(z - 0.673, distance)
+    print degrees(tilt)
+    tilt = (tilt - rad30)
+
+
+    pan = checkPanLimitPosition(pan)
+    tilt = checkTiltLimitPosition(tilt)
+
+    return pan, -tilt
 
 if __name__ == '__main__':
     rospy.init_node('detect_person_server')
@@ -68,7 +105,7 @@ if __name__ == '__main__':
 
             pan, tilt = cal(trans[0], trans[1], trans[2])
             print pan, tilt
-            head_make(pan, tilt)
+            head_make_gazebo(pan, tilt)
 
         elif flag == "none":
             pass
