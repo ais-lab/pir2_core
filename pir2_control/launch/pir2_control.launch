@@ -2,6 +2,8 @@
     <arg name="file"  default="sample"/>
     <arg name="use_gazebo"  default="false"/>
 
+    <arg name="map_file" default="$(find pir2_navigation)/map/blank.yaml"/>
+
     <group if="$(arg use_gazebo)">
       <include file="$(find pir2_bringup)/launch/filtered_laser.launch"/>
       <node pkg="pir2_control" name="head_server" type="head_command.py" output="screen"/>
@@ -21,4 +23,18 @@
     </node>
     <!--node pkg="pir_control" name="lidar" type="detect_obs.py" output="screen"/-->
     <node pkg="pir2_control" name="mimic_spt_to_cmd" type="mimic_spt" output="screen"/>
+
+    <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)">
+      <param name="frame_id" value="/map" />
+    </node>
+
+    <node pkg="pir2_control" name="human_broadcaster" type="tf_broadcaster" output="screen" >
+      <param name="pos_x" value="4.0" />
+      <param name="pos_y" value="0.0" />
+      <param name="pos_z" value="1.7" />
+    </node>
+
+    
+
+
 </launch>
