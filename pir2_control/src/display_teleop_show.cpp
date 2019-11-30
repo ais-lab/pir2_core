@@ -53,7 +53,7 @@ int main(int argc, char **argv)
 
     }
 
-    resize(source_img, source_img, cv::Size(1024,768));
+    resize(source_img, source_img, cv::Size(1366,768));
 
 
     cv::namedWindow( "screen" ,CV_WINDOW_NORMAL);

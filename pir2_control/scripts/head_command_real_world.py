@@ -22,6 +22,20 @@ MIN_YAW_POS = -3.14
 
 class Publishers():
 
+    def init_make(self):
+        head_msg = JointTrajectory()
+        jtp_msg = JointTrajectoryPoint()
+        head_msg.joint_names = [ "pan_joint", "tilt_joint", "yaw_joint" ]
+        head_msg.header.stamp = rospy.Time.now()
+        # jtp_msg.points.positions = [control_pan_pos,control_tilt_pos,control_yaw_pos]
+
+        jtp_msg.positions = [0.0,0.0,0.0]
+        jtp_msg.time_from_start = rospy.Duration.from_sec(0.00000002)
+
+        head_msg.points.append(jtp_msg)
+        self.head_pub.publish(head_msg)
+
+
     def head_make(self,joint_name, rad):
         head_msg = JointTrajectory()
         jtp_msg = JointTrajectoryPoint()
@@ -42,7 +56,7 @@ class Subscribe(Publishers):
         self.tilt_rad = 0.0
         self.yaw_rad = 0.0
 
-        self.offset = 0.052 #3 degree
+        self.offset = 0.08 #5 degree
 
         # Declaration Publisher
         self.head_pub = rospy.Publisher('/dynamixel_workbench_head/joint_trajectory', JointTrajectory, queue_size=100)
@@ -92,6 +106,10 @@ class Subscribe(Publishers):
                 # print "*"
                 if (self.yaw_rad > target_rad - self.offset) and (self.yaw_rad < target_rad + self.offset):
                     break
+
+        elif name == "init":
+            self.init():
+            rospy.sleep(2)
         else:
             pass
 

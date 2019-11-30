@@ -42,7 +42,7 @@ class Server(Publishsers):
         self.lidar_flag = 0
 
         try:
-            self.tf_listener.waitForTransform(self.odom_frame, '/base_footprint', rospy.Time(), rospy.Duration(1.0))
+            self.tf_listener.waitForTransform(self.odom_frame, '/base_footprint', rospy.Time(), rospy.Duration(5.0))
             self.base_frame = 'base_footprint'
         except (tf.Exception, tf.ConnectivityException, tf.LookupException):
             try:

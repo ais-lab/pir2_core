@@ -1,9 +1,4 @@
-acceleration 300 700
-forward 700 600
-slowstop 600
-forward -400 1000
-pause 100
-turning 300 700 1100 left
-forward 350 500
-stop
-end
+acceleration 100 300 
+turning 350 500 1570 left
+slowstop 100  
+pan 90  
