@@ -56,10 +56,10 @@ int main(int argc, char **argv)
     resize(source_img, source_img, cv::Size(1366,768));
 
 
-    cv::namedWindow( "screen" ,CV_WINDOW_NORMAL);
-    cv::setWindowProperty("screen",CV_WND_PROP_FULLSCREEN,CV_WINDOW_FULLSCREEN);
+    cv::namedWindow( "image_screen" ,CV_WINDOW_NORMAL);
+    cv::setWindowProperty("image_screen",CV_WND_PROP_FULLSCREEN,CV_WINDOW_FULLSCREEN);
 
-    cv::imshow("screen", source_img);
+    cv::imshow("image_screen", source_img);
     cv::waitKey(1);
 
     rate.sleep();

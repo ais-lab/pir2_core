@@ -26,6 +26,7 @@ class TextfileController(object):
         self.cmd_pub = rospy.Publisher('/cmd_vel', Twist, queue_size=10)
         self.head = rospy.ServiceProxy('/pir2_control/head', HeadCommand)
         self.nav = rospy.ServiceProxy('/pir2_control/nav', NavCommand)
+        self.img_pub = rospy.Publisher('/pir2_image', Int16, queue_size=10)
 
 
     def executive_file(self):
@@ -103,7 +104,6 @@ class TextfileController(object):
 
             #forward
             elif command == "forward":
-
                 speed = float(command_param_set[1])
                 # speed = speed / 1000  # convert from mm to m
 
@@ -214,6 +214,13 @@ class TextfileController(object):
                 req.goal_position.position.y = y
                 result = self.nav(req)
                 self.result = result.result.data
+
+            elif command == "image":
+                image_num = int(command_param_set[1])
+                img_msg = Int16()
+                img_msg.data = image_num
+                self.img_pub.publish(img_msg)
+
 
             elif command == "end":
                 result = self.make_head("pan", 0.0 ,0.3)
