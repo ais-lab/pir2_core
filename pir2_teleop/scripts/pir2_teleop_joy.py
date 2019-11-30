@@ -81,6 +81,8 @@ class Subscribe(Publishsers):
 
         self.image_num = 0
 
+        self.trace_frag = 0
+
     def vels(self, target_linear_vel, target_angular_vel, target_pan_pos, target_tilt_pos, target_yaw_pos):
         return "currently:\tlinear vel %s\t angular vel %s\t pan pos %s\t tilt pos %s\t yaw pos %s\t " % (target_linear_vel,target_angular_vel, target_pan_pos, target_tilt_pos, target_yaw_pos)
 
@@ -184,13 +186,31 @@ class Subscribe(Publishsers):
 
         ### display show  ###
         if msg.buttons[0] == 1.0:
-            self.image_num = 1
+            if msg.buttons[2] == 1.0:
+                self.image_num = 6
+            else:
+                self.image_num = 4
+
         elif msg.buttons[1] == 1.0:
-            self.image_num = 2
+            if msg.buttons[3] == 1.0:
+                self.image_num = 1
+            else:
+                self.image_num = 3
+
         elif msg.buttons[2] == 1.0:
-            self.image_num = 3
+            self.image_num = 2
+
         elif msg.buttons[3] == 1.0:
-            self.image_num = 4
+            self.image_num = 5
+        else:
+            pass
+
+        if msg.buttons[6] == 1.0:
+            rospy.set_param("/head_trace_server/flag", "human")
+            self.trace_frag = 1
+        elif msg.buttons[7] == 1.0:
+            rospy.set_param("/head_trace_server/flag", "none")
+            self.trace_frag = 0
         else:
             pass
 
@@ -202,11 +222,14 @@ class Subscribe(Publishsers):
 
         self.cmd_make(self.control_linear_vel, self.control_angular_vel)
 
-        self.control_pan_pos = self.makeSimpleProfile(self.control_pan_pos, self.target_pan_pos, (POS_STEP_SIZE/2.0))
-        self.control_tilt_pos = self.makeSimpleProfile(self.control_tilt_pos, self.target_tilt_pos, (POS_STEP_SIZE/2.0))
-        self.control_yaw_pos = self.makeSimpleProfile(self.control_yaw_pos, self.target_yaw_pos, (YAW_POS_STEP_SIZE/2.0))
+        if self.trace_frag == 0:
+            self.control_pan_pos = self.makeSimpleProfile(self.control_pan_pos, self.target_pan_pos, (POS_STEP_SIZE/2.0))
+            self.control_tilt_pos = self.makeSimpleProfile(self.control_tilt_pos, self.target_tilt_pos, (POS_STEP_SIZE/2.0))
+            self.control_yaw_pos = self.makeSimpleProfile(self.control_yaw_pos, self.target_yaw_pos, (YAW_POS_STEP_SIZE/2.0))
 
-        self.head_make(self.control_pan_pos, self.control_tilt_pos, self.control_yaw_pos)
+            self.head_make(self.control_pan_pos, self.control_tilt_pos, self.control_yaw_pos)
+        else:
+            pass
 
         # print self.vels(self.target_linear_vel, self.target_angular_vel, self.target_pan_pos, self.target_tilt_pos, self.target_yaw_pos)
 

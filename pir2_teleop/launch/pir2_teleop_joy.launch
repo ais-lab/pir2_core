@@ -1,6 +1,16 @@
 <launch>
 
+  <arg name="use_trace"               default="false"/>
+
+  <group if="$(arg use_trace)">
+    <include file="$(find pir2_control)/launch/tf_blank.launch" />
+    <node pkg="pir2_control" name="head_trace_server" type="head_trace_server.py" />
+  </group>
+
+
   <node pkg="pir2_teleop" name="pir2_teleop_joy" type="pir2_teleop_joy.py" />
+
+
   <node pkg="joy" name="joy_node" type="joy_node" />
 
 </launch>
