@@ -1,0 +1,79 @@
+#!/usr/bin/env python
+
+import rospy
+import numpy as np
+from math import radians, copysign, sqrt, pow, pi, atan2
+import tf
+import PyKDL
+
+from std_msgs.msg import Float64
+from trajectory_msgs.msg import JointTrajectory, JointTrajectoryPoint
+from geometry_msgs.msg import Quaternion
+
+def head_make(pan,tilt):
+    head_pub = rospy.Publisher('/dynamixel_workbench_head/joint_trajectory', JointTrajectory, queue_size=100)
+    head_msg = JointTrajectory()
+    jtp_msg = JointTrajectoryPoint()
+    head_msg.joint_names = [ "pan_joint", "tilt_joint", "yaw_joint" ]
+    head_msg.header.stamp = rospy.Time.now()
+    # jtp_msg.points.positions = [control_pan_pos,control_tilt_pos,control_yaw_pos]
+
+    jtp_msg.positions = [pan,tilt,0.0]
+    jtp_msg.time_from_start = rospy.Duration.from_sec(0.00000002)
+
+    head_msg.points.append(jtp_msg)
+    head_pub.publish(head_msg)
+
+def head_make_gazebo(pan, tilt):
+    pan_pub = rospy.Publisher('/pir2/pan_controller/command', Float64, queue_size=10)
+    tilt_pub = rospy.Publisher('/pir2/tilt_controller/command', Float64, queue_size=10)
+    pan_pub.publish(pan)
+    tilt_pub.publish(tilt)
+
+def get_distance(x, y):
+    d = sqrt((x) ** 2 + (y) ** 2)
+    return d
+
+
+def cal(x, y, z):
+    rad90 = radians(90)
+    rad30 = radians(30)
+    pan = 0.0
+    tilt = 0.0
+    theta = atan2(y, x)
+    pan = theta
+
+    distance = get_distance(x, y)
+    tilt = atan2(distance, z - 0.759)
+    return pan, -(tilt-rad30)
+
+if __name__ == '__main__':
+    rospy.init_node('detect_person_server')
+
+    rospy.set_param("/head_trace_server/flag", "human")
+
+    rate = rospy.Rate(10.0)
+
+    listener = tf.TransformListener()
+
+
+    while not rospy.is_shutdown():
+        flag = rospy.get_param("/head_trace_server/flag")
+
+        if flag == "human":
+            try:
+                (trans,rot) = listener.lookupTransform('/base_link', flag, rospy.Time(0))
+            except (tf.LookupException, tf.ConnectivityException, tf.ExtrapolationException):
+                continue
+
+            pan, tilt = cal(trans[0], trans[1], trans[2])
+            print pan, tilt
+            head_make(pan, tilt)
+
+        elif flag == "none":
+            pass
+
+        else:
+            pass
+
+        rate.sleep()

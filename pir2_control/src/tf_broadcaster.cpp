@@ -32,7 +32,7 @@ int main(int argc, char** argv)
 
 		transform.setOrigin( tf::Vector3(pos_x, pos_y, pos_z) );
 	  transform.setRotation( tf::Quaternion(0.0, 0.0, 0.0, 1.0));
-	  br.sendTransform(tf::StampedTransform(transform, ros::Time::now(), "map", frame_id));
+	  br.sendTransform(tf::StampedTransform(transform, ros::Time::now(), "odom", frame_id));
 
 		rate.sleep();
 	}

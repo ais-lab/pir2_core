@@ -24,17 +24,20 @@
     <!--node pkg="pir_control" name="lidar" type="detect_obs.py" output="screen"/-->
     <node pkg="pir2_control" name="mimic_spt_to_cmd" type="mimic_spt" output="screen"/>
 
-    <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)">
-      <param name="frame_id" value="/map" />
-    </node>
-
     <node pkg="pir2_control" name="human_broadcaster" type="tf_broadcaster" output="screen" >
       <param name="pos_x" value="4.0" />
       <param name="pos_y" value="0.0" />
       <param name="pos_z" value="1.7" />
+      <param name="frame_name" value="/human" />
     </node>
 
-    
+    <node pkg="pir2_control" name="obstacle_broadcaster" type="tf_broadcaster" output="screen" >
+      <param name="pos_x" value="2.0" />
+      <param name="pos_y" value="2.0" />
+      <param name="pos_z" value="0.6" />
+      <param name="frame_name" value="/target" />
+    </node>
+
 
 
 </launch>
