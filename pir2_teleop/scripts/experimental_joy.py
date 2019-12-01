@@ -16,19 +16,6 @@ class Publishsers():
         ### publish ###
         self.cmd_pub.publish(cmd_msg)
 
-    def head_make(self, control_pan_pos):
-        head_msg = JointTrajectory()
-        jtp_msg = JointTrajectoryPoint()
-        head_msg.joint_names = [ "pan_joint", "tilt_joint", "yaw_joint" ]
-        head_msg.header.stamp = rospy.Time.now()
-        # jtp_msg.points.positions = [control_pan_pos,control_tilt_pos,control_yaw_pos]
-
-        jtp_msg.positions = [control_pan_pos, math.radians(18), 0.0]
-        jtp_msg.time_from_start = rospy.Duration.from_sec(0.00000002)
-
-        head_msg.points.append(jtp_msg)
-        self.head_pub.publish(head_msg)
-
     def image_make(self, data):
         image_msg = Int16()
         image_msg.data = data
@@ -55,15 +42,6 @@ class Subscribe(Publishsers):
             self.image_num = 6
         elif msg.buttons[1] == 1.0:
             self.image_num = 1
-        else:
-            pass
-
-        if msg.buttons[2] == 1.0:
-            self.target_pan_pos = 0.0
-            self.head_make(self.target_pan_pos)
-        elif msg.buttons[3] == 1.0:
-            self.target_pan_pos = math.radians(30)
-            self.head_make(self.target_pan_pos)
         else:
             pass
 
