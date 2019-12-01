@@ -12,7 +12,7 @@
 
     <group unless="$(arg use_gazebo)">
       <node pkg="pir2_control" name="head_server" type="head_command_real_world.py" output="screen"/>
-      <node pkg="pir2_control" name="display_server" type="display_teleop_show" output="screen" />
+      <!-- <node pkg="pir2_control" name="display_server" type="display_teleop_show" output="screen" /> -->
       <node pkg="pir2_control" name="head_trace_server" type="head_trace_server_real_world.py" output="screen"/>
     </group>
     <!-- <include file="$(find pir2_control)/launch/navigation_no_rviz.launch"/> -->

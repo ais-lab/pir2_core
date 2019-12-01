@@ -1,0 +1,5 @@
+<launch>
+
+    <node pkg="pir2_control" name="display_server" type="display_teleop_show" output="screen" />
+
+</launch>
