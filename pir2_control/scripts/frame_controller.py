@@ -2,7 +2,7 @@
 import sys
 import os
 import rospy
-from std_msgs.msg import Int64, Float64
+from std_msgs.msg import Int64, Float64, Int16
 import time
 import numpy as np
 import serial

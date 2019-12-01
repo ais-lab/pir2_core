@@ -110,7 +110,7 @@ class Subscribe(Publishers):
                     break
 
         elif name == "init":
-            self.init():
+            self.init()
             rospy.sleep(2)
         else:
             pass

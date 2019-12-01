@@ -2,7 +2,7 @@
     <arg name="file"  default="sample"/>
     <arg name="use_gazebo"  default="false"/>
 
-    <include file="$(find pir2control)/launch/tf_blank.launch"/>
+    <include file="$(find pir2_control)/launch/tf_blank.launch"/>
 
     <group if="$(arg use_gazebo)">
       <include file="$(find pir2_bringup)/launch/filtered_laser.launch"/>
