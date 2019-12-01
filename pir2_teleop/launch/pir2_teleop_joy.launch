@@ -5,7 +5,7 @@
 
   <group if="$(arg use_trace)">
     <include file="$(find pir2_control)/launch/tf_blank.launch" />
-    <node pkg="pir2_control" name="head_trace_server" type="head_trace_server.py" />
+    <node pkg="pir2_control" name="head_trace_server" type="head_trace_server_real_world.py" />
   </group>
 
   <group if="$(arg use_image)">
