@@ -169,6 +169,9 @@ target_link_libraries(display_teleop_show ${catkin_LIBRARIES} ${OpenCV_LIBRARIES
 add_executable(tf_broadcaster src/tf_broadcaster.cpp)
 target_link_libraries(tf_broadcaster ${catkin_LIBRARIES})
 
+add_executable(velocity_to_odom src/velocity_to_odom.cpp)
+target_link_libraries(velocity_to_odom ${catkin_LIBRARIES})
+
 #############
 ## Install ##
 #############

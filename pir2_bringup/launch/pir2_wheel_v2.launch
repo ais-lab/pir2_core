@@ -28,6 +28,6 @@
 
   </node>
 
-  <node name="odom_publisher" pkg="pir2_control" type="odom_publisher" />
+  <!-- <node name="odom_publisher" pkg="pir2_control" type="odom_publisher" /> -->
 
 </launch>

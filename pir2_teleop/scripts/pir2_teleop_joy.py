@@ -18,8 +18,8 @@ MIN_TILT_POS = -0.34
 MAX_YAW_POS = 1.3
 MIN_YAW_POS = -1.3
 
-LIN_VEL_STEP_SIZE = 0.01
-ANG_VEL_STEP_SIZE = 0.1
+LIN_VEL_STEP_SIZE = 0.001
+ANG_VEL_STEP_SIZE = 0.01
 POS_STEP_SIZE = 0.087
 YAW_POS_STEP_SIZE = 0.43
 
@@ -144,9 +144,9 @@ class Subscribe(Publishsers):
         elif msg.axes[1] < -0.1 and msg.axes[1] < self.last_lin:
             self.target_linear_vel = self.checkLinearLimitVelocity(self.target_linear_vel - LIN_VEL_STEP_SIZE)
         elif msg.axes[0] > 0.1 and msg.axes[0] > self.last_ang:
-            self.target_angular_vel = self.checkAngularLimitVelocity(self.target_angular_vel + ANG_VEL_STEP_SIZE)
-        elif msg.axes[0] < -0.1 and msg.axes[0] < self.last_ang:
             self.target_angular_vel = self.checkAngularLimitVelocity(self.target_angular_vel - ANG_VEL_STEP_SIZE)
+        elif msg.axes[0] < -0.1 and msg.axes[0] < self.last_ang:
+            self.target_angular_vel = self.checkAngularLimitVelocity(self.target_angular_vel + ANG_VEL_STEP_SIZE)
         else:
             pass
 
