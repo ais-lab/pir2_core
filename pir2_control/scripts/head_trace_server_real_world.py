@@ -91,7 +91,7 @@ if __name__ == '__main__':
     while not rospy.is_shutdown():
         flag = rospy.get_param("/head_trace_server/flag")
 
-        if flag == "human":
+        if flag == "human" or flag == "obstacle":
             try:
                 (trans,rot) = listener.lookupTransform('/base_link', flag, rospy.Time(0))
             except (tf.LookupException, tf.ConnectivityException, tf.ExtrapolationException):

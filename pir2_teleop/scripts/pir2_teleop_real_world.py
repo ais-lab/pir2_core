@@ -128,6 +128,7 @@ if __name__=="__main__":
 
 
     status = 0
+    flag = 0
     target_linear_vel   = 0.0
     target_angular_vel  = 0.0
     control_linear_vel  = 0.0
@@ -194,6 +195,12 @@ if __name__=="__main__":
                 target_pan_pos = checkPanLimitPosition(target_pan_pos + POS_STEP_SIZE)
                 status = status + 1
                 print vels(target_linear_vel,target_angular_vel, target_pan_pos, target_tilt_pos, target_yaw_pos)
+            elif key == "t":
+                rospy.set_param("/head_trace_server/flag", "human")
+                flag = 1
+            elif key == "f":
+                rospy.set_param("/head_trace_server/flag", "none")
+                flag = 0
             elif key == 'j':
                 target_linear_vel   = 0.0
                 control_linear_vel  = 0.0
@@ -211,12 +218,6 @@ if __name__=="__main__":
                 control_linear_vel  = 0.0
                 target_angular_vel  = 0.0
                 control_angular_vel = 0.0
-                target_pan_pos = 0.0
-                control_pan_pos = 0.0
-                target_tilt_pos = 0.0
-                control_tilt_pos = 0.0
-                target_yaw_pos = 0.0
-                control_yaw_pos = 0.0
                 print vels(target_linear_vel,target_angular_vel, target_pan_pos, target_tilt_pos, target_yaw_pos)
             elif key == '0':
                 image_msg.data = 0
@@ -271,7 +272,8 @@ if __name__=="__main__":
             head_msg.points.append(jtp_msg)
 
             pub.publish(twist)
-            head_pub.publish(head_msg)
+            if flag == 0:
+                head_pub.publish(head_msg)
             image_pub.publish(image_msg)
 
 

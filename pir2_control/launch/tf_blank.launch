@@ -8,8 +8,8 @@
   </node>
 
   <node pkg="pir2_control" name="obstacle_broadcaster" type="tf_broadcaster" output="screen" >
-    <param name="pos_x" value="2.0" />
-    <param name="pos_y" value="2.0" />
+    <param name="pos_x" value="2.2" />
+    <param name="pos_y" value="0.0" />
     <param name="pos_z" value="0.6" />
     <param name="frame_name" value="/obstacle" />
   </node>
