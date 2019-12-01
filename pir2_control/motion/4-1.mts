@@ -1,3 +1,5 @@
+pause 100
+image 1
 tilt -10    
 pause 350  
 tilt 5  

@@ -1,6 +1,10 @@
-tilt -10
+pause 100
+image 4
+tilt -5
+image 1
 pause 300  
-tilt 10
+tilt 5
+image 4
 pause 300  
 acceleration 500 500 
 forward 500 2000 

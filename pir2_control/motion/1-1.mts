@@ -1,3 +1,5 @@
+pause 100
+image 4
 acceleration 500 500 
 forward 500 2000 
 acceleration -300 300
