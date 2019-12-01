@@ -1,0 +1,10 @@
+tilt -10    
+pause 350  
+tilt 5  
+tilt -5  
+pause 80  
+tilt 5  
+tilt -5  
+pause 120  
+tilt 5  
+tilt -5  
