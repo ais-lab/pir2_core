@@ -186,6 +186,10 @@ if __name__=="__main__":
                 target_pan_pos = checkYawLimitPosition(target_pan_pos + POS_STEP_SIZE)
                 status = status + 1
                 print vels(target_linear_vel,target_angular_vel, target_pan_pos, target_tilt_pos, target_yaw_pos)
+            elif key == 't' :
+                rospy.set_param("/head_trace_server/flag", "human")
+            elif key == 'f' :
+                rospy.set_param("/head_trace_server/flag", "none")
             elif key == 'j':
                 target_linear_vel   = 0.0
                 control_linear_vel  = 0.0

@@ -2,6 +2,7 @@
 
   <arg name="use_gazebo"              default="false"/>
   <arg name="use_display"               default="true"/>
+  <arg name="use_trace"               default="true"/>
 
 
   <group if="$(arg use_gazebo)">
@@ -16,6 +17,11 @@
 
   <group if="$(arg use_display)">
     <node pkg="pir2_control" type="display_teleop_show" name="display_teleop_show"  output="screen" />
+  </group>
+
+  <group if="$(arg use_trace)">
+    <include file="$(find pir2_control)/launch/tf_blank.launch" />
+    <node pkg="pir2_control" name="head_trace_server" type="head_trace_server_real_world.py" />
   </group>
 
 </launch>
