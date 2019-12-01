@@ -2,4 +2,7 @@
 
     <node pkg="pir2_control" name="display_server" type="display_teleop_show" output="screen" />
 
+    <node pkg="pir2_teleop" name="emergency_server" type="experimental_joy.py" output="screen" />
+    <node pkg="joy" name="joy_node" type="joy_node" />
+
 </launch>
