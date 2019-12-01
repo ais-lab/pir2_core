@@ -202,7 +202,7 @@ class TextfileController(object):
                 rospy.set_param("/textfile_controller/file_name", file)
                 break
 
-            elif command == "pan" or command == "tilt" or command == "yaw":
+            elif command == "pan" or command == "tilt" or command == "yaw" or command == "init":
                 result = self.make_head(command, float(command_param_set[1]), 0.3)
 
             elif command == "trace":
