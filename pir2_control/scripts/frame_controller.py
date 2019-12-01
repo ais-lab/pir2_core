@@ -205,6 +205,14 @@ class TextfileController(object):
             elif command == "pan" or command == "tilt" or command == "yaw":
                 result = self.make_head(command, float(command_param_set[1]), 0.3)
 
+            elif command == "trace":
+                frame = command_param_set[1]
+                if frame == "off" or frame == "none":
+                    rospy.set_param("/head_trace_server/flag", "none")
+                else:
+                    rospy.set_param("/head_trace_server/flag", frame)
+
+
 
             elif command == "navigation":
                 x = float(command_param_set[1])
@@ -265,7 +273,8 @@ class Move(TextfileController):
 
 
 def main():
-    rospy.sleep(3.)
+    print "***** Please wait (7 seconds) *****"
+    rospy.sleep(7.)
     rospy.init_node('frame_controller', anonymous=True)
     rospy.set_param("/textfile_controller/distance", 0)
     move = Move()

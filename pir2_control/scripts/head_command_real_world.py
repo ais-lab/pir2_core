@@ -66,6 +66,8 @@ class Subscribe(Publishers):
         # Declaration Service Server
         self.server = rospy.Service("/pir2_control/head", HeadCommand, self.service_callback)
 
+        self.init_make()
+
     ### callback function for amcl node (pose) ###
     def jsp_callback(self, msg):
         self.pan_rad = msg.position[0]

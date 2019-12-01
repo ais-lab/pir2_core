@@ -36,12 +36,19 @@ def checkTiltLimitPosition(pos):
 
     return pos
 
+def head_make(pan,tilt):
+    head_pub = rospy.Publisher('/dynamixel_workbench_head/joint_trajectory', JointTrajectory, queue_size=100)
+    head_msg = JointTrajectory()
+    jtp_msg = JointTrajectoryPoint()
+    head_msg.joint_names = [ "pan_joint", "tilt_joint", "yaw_joint" ]
+    head_msg.header.stamp = rospy.Time.now()
+    # jtp_msg.points.positions = [control_pan_pos,control_tilt_pos,control_yaw_pos]
 
-def head_make_gazebo(pan, tilt):
-    pan_pub = rospy.Publisher('/pir2/pan_controller/command', Float64, queue_size=10)
-    tilt_pub = rospy.Publisher('/pir2/tilt_controller/command', Float64, queue_size=10)
-    pan_pub.publish(pan)
-    tilt_pub.publish(tilt)
+    jtp_msg.positions = [pan,tilt,0.0]
+    jtp_msg.time_from_start = rospy.Duration.from_sec(0.00000002)
+
+    head_msg.points.append(jtp_msg)
+    head_pub.publish(head_msg)
 
 def get_distance(x, y):
     d = sqrt((x) ** 2 + (y) ** 2)
@@ -72,7 +79,7 @@ def cal(x, y, z):
     return pan, -tilt
 
 if __name__ == '__main__':
-    rospy.init_node('detect_person_server')
+    rospy.init_node('detect_person_server_real_world')
 
     rospy.set_param("/head_trace_server/flag", "none")
 
@@ -92,7 +99,7 @@ if __name__ == '__main__':
 
             pan, tilt = cal(trans[0], trans[1], trans[2])
             # print pan, tilt
-            head_make_gazebo(pan, tilt)
+            head_make(pan, tilt)
 
         elif flag == "none":
             pass

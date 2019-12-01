@@ -11,7 +11,7 @@
     <param name="pos_x" value="2.0" />
     <param name="pos_y" value="2.0" />
     <param name="pos_z" value="0.6" />
-    <param name="frame_name" value="/target" />
+    <param name="frame_name" value="/obstacle" />
   </node>
 
 </launch>
