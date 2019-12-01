@@ -139,13 +139,13 @@ class Subscribe(Publishsers):
         # print msg
 
         ### /cmd_vel ###
-        if msg.axes[1] > 0.1 and msg.axes[1] > self.last_lin:
+        if msg.axes[1] == 1.0 and msg.axes[1] > self.last_lin:
             self.target_linear_vel = self.checkLinearLimitVelocity(self.target_linear_vel + LIN_VEL_STEP_SIZE)
-        elif msg.axes[1] < -0.1 and msg.axes[1] < self.last_lin:
+        elif msg.axes[1] == -1.0 and msg.axes[1] < self.last_lin:
             self.target_linear_vel = self.checkLinearLimitVelocity(self.target_linear_vel - LIN_VEL_STEP_SIZE)
-        elif msg.axes[0] > 0.1 and msg.axes[0] > self.last_ang:
+        elif msg.axes[0] == 1.0 and msg.axes[0] > self.last_ang:
             self.target_angular_vel = self.checkAngularLimitVelocity(self.target_angular_vel - ANG_VEL_STEP_SIZE)
-        elif msg.axes[0] < -0.1 and msg.axes[0] < self.last_ang:
+        elif msg.axes[0] == -1.0 and msg.axes[0] < self.last_ang:
             self.target_angular_vel = self.checkAngularLimitVelocity(self.target_angular_vel + ANG_VEL_STEP_SIZE)
         else:
             pass
