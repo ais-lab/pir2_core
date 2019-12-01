@@ -176,13 +176,14 @@ class Server(Publishsers):
         target_right = 0.0
         acceleration = acceleration * self.rate_time
 
+        self.spt_pub(taregt_left, target_right)
         if self.left_velocity < target_left_velocity and self.right_velocity < target_right_velocity:
             while self.left_velocity < target_left_velocity or self.right_velocity < target_right_velocity:
                 if self.left_velocity < target_left_velocity:
                     taregt_left = self.left_velocity + acceleration
                 if self.right_velocity < target_right_velocity:
                     target_right = self.right_velocity + acceleration
-                self.spt_pub(taregt_left, target_right)
+                # self.spt_pub(taregt_left, target_right)
                 self.rate.sleep()
 
         elif self.left_velocity < target_left_velocity and self.right_velocity > target_right_velocity:
@@ -191,7 +192,7 @@ class Server(Publishsers):
                     target_left = self.left_velocity + acceleration
                 if self.right_velocity > target_right_velocity:
                     target_right = self.right_velocity - acceleration
-                self.spt_pub(target_left, target_right)
+                # self.spt_pub(target_left, target_right)
                 self.rate.sleep()
 
 
@@ -201,7 +202,7 @@ class Server(Publishsers):
                     target_left = self.left_velocity - acceleration
                 if self.right_velocity > target_right_velocity:
                     target_right = self.right_velocity - acceleration
-                self.spt_pub(target_left, target_right)
+                # self.spt_pub(target_left, target_right)
                 self.rate.sleep()
 
         else:  #left > target_left and right < target_right
@@ -210,7 +211,7 @@ class Server(Publishsers):
                     target_left = self.left_velocity - acceleration
                 if self.right_velocity < target_right_velocity:
                     target_right = self.right_velocity + acceleration
-                self.spt_pub(target_left, target_right)
+                # self.spt_pub(target_left, target_right)
                 self.rate.sleep()
 
     def get_distance(self, distance_x, distance_y):
@@ -264,13 +265,15 @@ class Server(Publishsers):
         self.constrain(velocity, velocity, self.MIN_WHEEL_VELOCITY, self.MAX_WHEEL_VELOCITY)
         self.set_speed(velocity, velocity, 0.4)
 
+        self.spt_pub(velocity, velocity)
+
         while( abs(current_distance) < abs(distance)):
 
             if self.lidar_flag == 1:
                 self.spt_pub(0.0,0.0)
                 return False
 
-            self.spt_pub(velocity, velocity)
+            # self.spt_pub(velocity, velocity)
             time += 0.01
             self.rate.sleep()
             (position, rotation) = self.get_odom()

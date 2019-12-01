@@ -65,11 +65,11 @@ def cal(x, y, z):
 
     distance = get_distance(x, y)
 
-    print z - 0.673
-    print distance
+    # print z - 0.673
+    # print distance
 
     tilt = atan2(z - 0.673, distance)
-    print degrees(tilt)
+    # print degrees(tilt)
     tilt = (tilt - rad30)
 
 
