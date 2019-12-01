@@ -1,17 +1,20 @@
 <launch>
 
   <arg name="use_trace"               default="false"/>
+  <arg name="use_image"               default="true"/>
 
   <group if="$(arg use_trace)">
     <include file="$(find pir2_control)/launch/tf_blank.launch" />
     <node pkg="pir2_control" name="head_trace_server" type="head_trace_server.py" />
   </group>
 
+  <group if="$(arg use_image)">
+    <node pkg="pir2_control" type="display_teleop_show" name="display_teleop_show"  output="screen" />
+  </group>
+
 
   <node pkg="pir2_teleop" name="pir2_teleop_joy" type="pir2_teleop_joy.py" />
 
-
   <node pkg="joy" name="joy_node" type="joy_node" />
-  <node pkg="pir2_control" type="display_teleop_show" name="display_teleop_show"  output="screen" />
 
 </launch>

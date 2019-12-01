@@ -83,6 +83,9 @@ class Subscribe(Publishsers):
 
         self.trace_frag = 0
 
+        self.last_lin = 0.0
+        self.last_ang = 0.0
+
     def vels(self, target_linear_vel, target_angular_vel, target_pan_pos, target_tilt_pos, target_yaw_pos):
         return "currently:\tlinear vel %s\t angular vel %s\t pan pos %s\t tilt pos %s\t yaw pos %s\t " % (target_linear_vel,target_angular_vel, target_pan_pos, target_tilt_pos, target_yaw_pos)
 
@@ -133,19 +136,22 @@ class Subscribe(Publishsers):
 
 
     def callback(self, msg):
-        print msg
+        # print msg
 
         ### /cmd_vel ###
-        if msg.axes[7] == 1.0:
+        if msg.axes[1] > 0.1 and msg.axes[1] > self.last_lin:
             self.target_linear_vel = self.checkLinearLimitVelocity(self.target_linear_vel + LIN_VEL_STEP_SIZE)
-        elif msg.axes[7] == -1.0:
+        elif msg.axes[1] < -0.1 and msg.axes[1] < self.last_lin:
             self.target_linear_vel = self.checkLinearLimitVelocity(self.target_linear_vel - LIN_VEL_STEP_SIZE)
-        elif msg.axes[6] == 1.0:
+        elif msg.axes[0] > 0.1 and msg.axes[0] > self.last_ang:
             self.target_angular_vel = self.checkAngularLimitVelocity(self.target_angular_vel + ANG_VEL_STEP_SIZE)
-        elif msg.axes[6] == -1.0:
+        elif msg.axes[0] < -0.1 and msg.axes[0] < self.last_ang:
             self.target_angular_vel = self.checkAngularLimitVelocity(self.target_angular_vel - ANG_VEL_STEP_SIZE)
         else:
             pass
+
+        self.last_ang = msg.axes[0]
+        self.last_lin = msg.axes[1]
 
         ### /cmd_vel = stop ###
         if msg.buttons[9] == 1.0:
@@ -186,22 +192,29 @@ class Subscribe(Publishsers):
 
         ### display show  ###
         if msg.buttons[0] == 1.0:
-            if msg.buttons[2] == 1.0:
-                self.image_num = 6
-            else:
-                self.image_num = 4
-
+            self.image_num = 6
         elif msg.buttons[1] == 1.0:
-            if msg.buttons[3] == 1.0:
-                self.image_num = 1
-            else:
-                self.image_num = 3
-
+            self.image_num = 1
         elif msg.buttons[2] == 1.0:
-            self.image_num = 2
-
+            self.image_num = 6
         elif msg.buttons[3] == 1.0:
+            self.image_num = 1
+        else:
+            pass
+
+        if msg.axes[6] == 1.0:
+            self.image_num = 2
+        elif msg.axes[6] == -1.0:
+            self.image_num = 3
+        else:
+            pass
+
+        # print msg.axes[7]
+
+        if msg.axes[7] == 1.0:
             self.image_num = 5
+        elif msg.axes[7] == -1.0:
+            self.image_num = 4
         else:
             pass
 
