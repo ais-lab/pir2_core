@@ -1,15 +1,12 @@
 pause 100
-image 4
-tilt -18
+image 1
+tilt -10
 acceleration 200 200
 forward 200 800
-image 1
+image 4
 slowstop 500
 pause 100
-pan 0
-pause 100
-tilt 10
-pause 100
+image 1
 trace human
 turning 200 500 500 right
 turning 200 1000 2100 left

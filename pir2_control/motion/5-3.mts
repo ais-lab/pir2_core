@@ -1,10 +1,9 @@
 pause 100
 image 1
 trace obstacle
-rotation -1.0 170
-pause 100
+rotation -0.8 170
 trace off
-pause 200
+pause 150
 pan 0
 pause 100
 acceleration 100 300

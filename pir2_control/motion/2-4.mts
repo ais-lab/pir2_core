@@ -1,5 +1,5 @@
 pause 100
-tilt 18
+tilt 5
 image 1
 acceleration 200 200
 forward 200 800
@@ -21,4 +21,3 @@ pause 100
 pan 0
 pause 100
 tilt -18
-
