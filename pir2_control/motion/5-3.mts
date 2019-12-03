@@ -3,7 +3,7 @@ image 1
 trace obstacle
 rotation -0.8 170
 trace off
-pause 150
+pause 100
 pan 0
 pause 100
 acceleration 100 300

@@ -2,10 +2,13 @@
 import sys
 import rospy
 import tf
-from std_msgs.msg import Float64, Int16
+from std_msgs.msg import Float64, Int16, Bool
 import time
 from pir2_msgs.srv import *
-from geometry_msgs.msg import Twist
+from geometry_msgs.msg import Twist,Point, Quaternion
+from math import radians, copysign, sqrt, pow, pi
+import PyKDL
+import numpy as np
 
 class Control():
     def __init__(self):
@@ -13,10 +16,19 @@ class Control():
         rospy.init_node('new_exp_control', anonymous=True)
 
         self.motor = rospy.ServiceProxy('/pir2_control/motor', MotorCommand)
-        self.cmd_pub = rospy.Publisher('/cmd_vel', Twist, queue_size=10)
+        self.spt_pub = rospy.Publisher('/spt_vel', Twist, queue_size=10)
         self.head = rospy.ServiceProxy('/pir2_control/head', HeadCommand)
         self.nav = rospy.ServiceProxy('/pir2_control/nav', NavCommand)
         self.img_pub = rospy.Publisher('/pir2_image', Int16, queue_size=10)
+
+        self.PI = 3.1415926535897
+        self.MAX_WHEEL_VELOCITY = 0.78
+        self.MIN_WHEEL_VELOCITY = -(0.78)
+        self.WHEEL_SEPARATION = 0.56
+        self.HALF_WHEEL_SEPARATION = 0.28
+        self.left_velocity = 0.0
+        self.right_velocity = 0.0
+        self.current_linear = 0.0
 
 
         self.tf_listener = tf.TransformListener()
@@ -43,7 +55,7 @@ class Control():
                 rospy.set_param("/head_trace_server/flag", "obstacle")
                 relative_angle = 170 * 2 * self.PI / 360
 
-                result.data = self.rotation(omega, relative_angle, 5)
+                result.data = self.rotation(0.8, relative_angle, 5)
                 self.motor_server("a",300,0,0,500)
                 self.motor_server("f",0,300,600,0)
                 self.motor_server("ss",200,0,0,0)
@@ -53,7 +65,7 @@ class Control():
                 rospy.set_param("/head_trace_server/flag", "obstacle")
                 relative_angle = 170 * 2 * self.PI / 360
 
-                result.data = self.rotation(omega, relative_angle, 5)
+                result.data = self.rotation(0.8, relative_angle, 5)
                 self.motor_server("a",300,0,0,500)
                 self.motor_server("f",0,300,600,0)
                 self.motor_server("ss",200,0,0,0)
@@ -80,6 +92,13 @@ class Control():
         while res < -pi:
             res += 2.0 * pi
         return res
+    def spt_pub(self, left, right):
+        spt_msg = Twist()
+
+        spt_msg.linear.y = left
+        spt_msg.angular.y = right
+
+        self.spt_pub.publish(spt_msg)
 
     def rotation(self, omega, relative_angle, delay_time):
         angular_tolerance = radians(2.5)
@@ -142,6 +161,18 @@ class Control():
         except rospy.ServiceException, e:
             print "Service call failed: %s"%e
 
+
+    def constrain(self, left_velocity, right_velocity, MIN_VELOCITY, MAX_VELOCITY):
+        if left_velocity <= MIN_VELOCITY:
+            left_velocity = MIN_VELOCITY
+        if left_velocity >= MAX_VELOCITY:
+            left_velocity = MAX_VELOCITY
+        if right_velocity <= MIN_VELOCITY:
+            right_velocity = MIN_VELOCITY
+        if right_velocity >= MAX_VELOCITY:
+            right_velocity = MAX_VELOCITY
+
+        return left_velocity, right_velocity
 
 
 
