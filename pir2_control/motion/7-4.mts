@@ -7,7 +7,7 @@ forward 300 700
 slowstop 300
 pause 500
 image 6
-acceleration -300 -300
+acceleration -200 -300
 forward -300 1000
 slowstop -200
 

@@ -12,6 +12,6 @@ pause 500
 tilt 28
 pause 100
 image 4
-acceleration -300 -300 
+acceleration -200 -300 
 forward -300 1000 
 slowstop -200  
