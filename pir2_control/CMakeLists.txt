@@ -172,6 +172,9 @@ target_link_libraries(tf_broadcaster ${catkin_LIBRARIES})
 add_executable(velocity_to_odom src/velocity_to_odom.cpp)
 target_link_libraries(velocity_to_odom ${catkin_LIBRARIES})
 
+add_executable(mimic_hz_joy src/mimic_hz_joy.cpp)
+target_link_libraries(mimic_hz_joy ${catkin_LIBRARIES})
+
 #############
 ## Install ##
 #############

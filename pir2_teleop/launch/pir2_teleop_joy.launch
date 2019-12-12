@@ -17,4 +17,6 @@
 
   <node pkg="joy" name="joy_node" type="joy_node" />
 
+  <node pkg="pir2_control" name="mimic_hz_joy" type="mimic_hz_joy" />
+
 </launch>
