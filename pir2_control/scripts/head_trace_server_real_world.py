@@ -10,8 +10,8 @@ from std_msgs.msg import Float64
 from trajectory_msgs.msg import JointTrajectory, JointTrajectoryPoint
 from geometry_msgs.msg import Quaternion
 
-MAX_PAN_POS = 3.4
-MIN_PAN_POS = -3.4
+MAX_PAN_POS = 2.7
+MIN_PAN_POS = -2.7
 
 MAX_TILT_POS = 0.30
 MIN_TILT_POS = -0.34

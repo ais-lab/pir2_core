@@ -1,7 +1,7 @@
 pause 100
-image 1
-pause 50
 trace human
+pause 50
+image 1
 acceleration 300 500 
 forward 500 2000 
 acceleration -300 300
