@@ -57,7 +57,7 @@ class Subscribe(Publishsers):
         self.head_pub = rospy.Publisher('/dynamixel_workbench_head/joint_trajectory', JointTrajectory, queue_size=100)
         self.image_pub = rospy.Publisher('/pir2_image', Int16, queue_size=10)
 
-        self.ptm_sub = rospy.Subscriber('joy', Joy, self.callback)
+        self.ptm_sub = rospy.Subscriber('/filtered_joy', Joy, self.callback)
 
         self.target_linear_vel   = 0.0
         self.target_angular_vel  = 0.0

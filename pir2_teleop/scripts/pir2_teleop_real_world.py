@@ -15,8 +15,13 @@ else:
 MAX_LIN_VEL = 0.74
 MAX_ANG_VEL = 2.56
 
+<<<<<<< HEAD
 MAX_PAN_POS = 3.14
 MIN_PAN_POS = -3.14
+=======
+MAX_PAN_POS = 2.618
+MIN_PAN_POS = -2.618
+>>>>>>> f1513b88c43d5a412eec96f5bafce154f5b3423d
 
 MAX_TILT_POS = 0.17
 MIN_TILT_POS = -0.34

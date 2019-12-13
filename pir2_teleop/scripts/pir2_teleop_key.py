@@ -12,18 +12,18 @@ else:
 MAX_LIN_VEL = 0.74
 MAX_ANG_VEL = 2.56
 
-MAX_PAN_POS = 1.3
-MIN_PAN_POS = -1.3
+MAX_PAN_POS = 2.618
+MIN_PAN_POS = -2.618
 
 MAX_TILT_POS = 0.17
 MIN_TILT_POS = -0.34
 
-MAX_YAW_POS = 1.3
-MIN_YAW_POS = -1.3
+MAX_YAW_POS = 3.14
+MIN_YAW_POS = -3.14
 
 LIN_VEL_STEP_SIZE = 0.01
 ANG_VEL_STEP_SIZE = 0.1
-POS_STEP_SIZE = 0.087
+POS_STEP_SIZE = 0.55
 
 msg = """
 ---------------------------
@@ -179,11 +179,11 @@ if __name__=="__main__":
                 status = status + 1
                 print vels(target_linear_vel,target_angular_vel, target_pan_pos, target_tilt_pos, target_yaw_pos)
             elif key == 'h' :
-                target_pan_pos = checkYawLimitPosition(target_pan_pos - POS_STEP_SIZE)
+                target_pan_pos = checkPanLimitPosition(target_pan_pos - POS_STEP_SIZE)
                 status = status + 1
                 print vels(target_linear_vel,target_angular_vel, target_pan_pos, target_tilt_pos, target_yaw_pos)
             elif key == 'k' :
-                target_pan_pos = checkYawLimitPosition(target_pan_pos + POS_STEP_SIZE)
+                target_pan_pos = checkPanLimitPosition(target_pan_pos + POS_STEP_SIZE)
                 status = status + 1
                 print vels(target_linear_vel,target_angular_vel, target_pan_pos, target_tilt_pos, target_yaw_pos)
             elif key == 't' :
