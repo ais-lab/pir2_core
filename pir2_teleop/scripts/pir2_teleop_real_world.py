@@ -15,13 +15,11 @@ else:
 MAX_LIN_VEL = 0.74
 MAX_ANG_VEL = 2.56
 
-<<<<<<< HEAD
 MAX_PAN_POS = 3.14
 MIN_PAN_POS = -3.14
-=======
+
 MAX_PAN_POS = 2.618
 MIN_PAN_POS = -2.618
->>>>>>> f1513b88c43d5a412eec96f5bafce154f5b3423d
 
 MAX_TILT_POS = 0.17
 MIN_TILT_POS = -0.34
@@ -42,9 +40,9 @@ Moving around:
 
 w/x : increase/decrease linear velocity ( ~ 0.74)
 a/d : increase/decrease angular velocity ( ~ 2.84)
-y/i : increase/decrease angular position (-1.3 ~ 1.3)
-u/m : increase/decrease angular position (-0.34 ~ 0.17)
-h/k : increase/decrease angular position (-1.3 ~ 1.3)
+y/i : increase/decrease yaw position (-3.14 ~ 3.14)
+u/m : increase/decrease tilt position (-0.34 ~ 0.17)
+h/k : increase/decrease pan position (-2.618 ~ 2.618)
 
 space key, s, j : force stop
 

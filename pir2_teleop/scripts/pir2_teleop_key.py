@@ -34,9 +34,9 @@ Moving around:
 
 w/x : increase/decrease linear velocity ( ~ 0.74)
 a/d : increase/decrease angular velocity ( ~ 2.84)
-y/i : increase/decrease angular position (-1.3 ~ 1.3)
-u/m : increase/decrease angular position (-0.34 ~ 0.17)
-h/k : increase/decrease angular position (-1.3 ~ 1.3)
+y/i : increase/decrease yaw position (-3.14 ~ 3.14)
+u/m : increase/decrease tilt position (-0.34 ~ 0.17)
+h/k : increase/decrease pan position (-2.618 ~ 2.618)
 
 space key, s, j : force stop
 
