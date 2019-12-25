@@ -122,6 +122,7 @@ if __name__=="__main__":
 
 
     status = 0
+    flag = 0
     target_linear_vel   = 0.0
     target_angular_vel  = 0.0
     control_linear_vel  = 0.0
@@ -188,8 +189,10 @@ if __name__=="__main__":
                 print vels(target_linear_vel,target_angular_vel, target_pan_pos, target_tilt_pos, target_yaw_pos)
             elif key == 't' :
                 rospy.set_param("/head_trace_server/flag", "human")
+                flag = 1
             elif key == 'f' :
                 rospy.set_param("/head_trace_server/flag", "none")
+                flag = 0
             elif key == 'j':
                 target_linear_vel   = 0.0
                 control_linear_vel  = 0.0
@@ -243,8 +246,9 @@ if __name__=="__main__":
             yaw_msg.data = control_yaw_pos
 
             pub.publish(twist)
-            pan_pub.publish(pan_msg)
-            tilt_pub.publish(tilt_msg)
+            if flag == 0:
+                pan_pub.publish(pan_msg)
+                tilt_pub.publish(tilt_msg)
             yaw_pub.publish(yaw_msg)
 
 

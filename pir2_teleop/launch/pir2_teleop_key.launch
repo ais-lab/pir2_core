@@ -4,13 +4,16 @@
   <arg name="use_display"               default="false"/>
   <arg name="use_trace"               default="true"/>
 
+  <include file="$(find pir2_control)/launch/tf_blank.launch" />
 
   <group if="$(arg use_gazebo)">
+    <node pkg="pir2_control" name="head_trace_server" type="head_trace_server.py" />
     <node pkg="pir2_teleop" type="pir2_teleop_key.py" name="pir2_teleop_key"  output="screen">
     </node>
   </group>
 
   <group unless="$(arg use_gazebo)">
+    <node pkg="pir2_control" name="head_trace_server" type="head_trace_server_real_world.py" />
     <node pkg="pir2_teleop" type="pir2_teleop_real_world.py" name="pir2_teleop_key"  output="screen">
     </node>
   </group>
@@ -19,9 +22,5 @@
     <node pkg="pir2_control" type="display_teleop_show" name="display_teleop_show"  output="screen" />
   </group>
 
-  <group if="$(arg use_trace)">
-    <include file="$(find pir2_control)/launch/tf_blank.launch" />
-    <node pkg="pir2_control" name="head_trace_server" type="head_trace_server_real_world.py" />
-  </group>
 
 </launch>
