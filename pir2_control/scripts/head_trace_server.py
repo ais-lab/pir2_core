@@ -10,8 +10,8 @@ from std_msgs.msg import Float64
 from trajectory_msgs.msg import JointTrajectory, JointTrajectoryPoint
 from geometry_msgs.msg import Quaternion
 
-MAX_PAN_POS = 3.4
-MIN_PAN_POS = -3.4
+MAX_PAN_POS = 2.7
+MIN_PAN_POS = -2.7
 
 MAX_TILT_POS = 0.30
 MIN_TILT_POS = -0.34
@@ -58,11 +58,11 @@ def cal(x, y, z):
 
     distance = get_distance(x, y)
 
-    print z - 0.673
-    print distance
+    # print z - 0.673
+    # print distance
 
     tilt = atan2(z - 0.673, distance)
-    print degrees(tilt)
+    # print degrees(tilt)
     tilt = (tilt - rad30)
 
 
@@ -84,7 +84,7 @@ if __name__ == '__main__':
     while not rospy.is_shutdown():
         flag = rospy.get_param("/head_trace_server/flag")
 
-        if flag == "human":
+        if flag == "human" or flag == "obstacle":
             try:
                 (trans,rot) = listener.lookupTransform('/base_link', flag, rospy.Time(0))
             except (tf.LookupException, tf.ConnectivityException, tf.ExtrapolationException):

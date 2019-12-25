@@ -164,7 +164,7 @@ class TextfileController(object):
 
                 result = self.motor(req)
                 self.result = result.result.data
-                print("_____ pause ______")
+                # print("_____ pause ______")
 
 
             elif command == "stop":
@@ -173,7 +173,7 @@ class TextfileController(object):
 
                 result = self.motor(req)
                 self.result = result.result.data
-                print("===== stop ======")
+                # print("===== stop ======")
 
             elif command == 'slowstop':
 
@@ -184,7 +184,7 @@ class TextfileController(object):
 
                 result = self.motor(req)
                 self.result = result.result.data
-                print("===== stop =====")
+                # print("===== stop =====")
 
 
 

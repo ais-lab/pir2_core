@@ -5,6 +5,7 @@ import numpy as np
 from math import radians, copysign, sqrt, pow, pi
 import time
 import PyKDL
+import decimal
 
 import tf
 
@@ -36,6 +37,7 @@ class Server(Publishsers):
         self.right_velocity = 0.0
         self.current_linear = 0.0
         self.rate = rospy.Rate(10) # 100hz
+        self.pause_rate = rospy.Rate(1000)
         self.rate_time = 0.1
         self.tf_listener = tf.TransformListener()
         self.odom_frame = '/odom'
@@ -150,8 +152,7 @@ class Server(Publishsers):
             print("===== stop ======")
 
         elif order == "p":
-            time = req.time.data
-            pause_time = time / 1000.0
+            pause_time = req.time.data / 1000.0
             result.data = self.pause(pause_time)
         else:
             print "else"
@@ -259,7 +260,7 @@ class Server(Publishsers):
         return True
 
     def forward(self, velocity, distance, x_start, y_start):
-        time = 0.0
+        timeval = 0.0
         current_distance = 0.0
 
         self.constrain(velocity, velocity, self.MIN_WHEEL_VELOCITY, self.MAX_WHEEL_VELOCITY)
@@ -274,7 +275,7 @@ class Server(Publishsers):
                 return False
 
             # self.spt_pub(velocity, velocity)
-            time += 0.01
+            timeval += 0.01
             self.rate.sleep()
             (position, rotation) = self.get_odom()
             current_distance = sqrt(pow((position.x - x_start), 2) + pow((position.y - y_start), 2))
@@ -319,7 +320,7 @@ class Server(Publishsers):
 
     def turning(self, speed, radius, distance, direction):
         # print "turinig"
-        time = 0.0
+        timeval = 0.0
         current_distance = 0.0
 
         if direction == 'left' or direction == 'right':
@@ -422,17 +423,19 @@ class Server(Publishsers):
         return True
 
     def pause(self, pause_time):
-        time = 0.0
+        timeval = 0.0
         self.spt_pub(0.0,0.0)
-        while time < pause_time:
+        t1 = time.time()
+        while timeval < pause_time:
 
             if self.lidar_flag == 1:
                 return False
 
-            time += 0.01
-            self.rate.sleep()
-
-        print("_____ pause ______")
+            timeval += 0.001
+            self.pause_rate.sleep()
+        t2 = time.time()
+        elapsed_time = (t2-t1)
+        print ("pause : " + str(round(elapsed_time)) + "(sec)")
         return True
 
 
