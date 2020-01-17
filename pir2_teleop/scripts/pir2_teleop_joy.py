@@ -219,7 +219,7 @@ class Subscribe(Publishsers):
             pass
 
         if msg.buttons[6] == 1.0:
-            rospy.set_param("/head_trace_server/flag", "human")
+            rospy.set_param("/head_trace_server/flag", "openvino_on")
             self.trace_frag = 1
         elif msg.buttons[7] == 1.0:
             rospy.set_param("/head_trace_server/flag", "none")
