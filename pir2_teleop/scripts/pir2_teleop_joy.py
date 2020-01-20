@@ -230,17 +230,18 @@ class Subscribe(Publishsers):
 
         self.image_make(self.image_num)
 
-        self.control_linear_vel = self.makeSimpleProfile(self.control_linear_vel, self.target_linear_vel, (LIN_VEL_STEP_SIZE/2.0))
-        self.control_angular_vel = self.makeSimpleProfile(self.control_angular_vel, self.target_angular_vel, (ANG_VEL_STEP_SIZE/2.0))
-
-        self.cmd_make(self.control_linear_vel, self.control_angular_vel)
-
         if self.trace_frag == 0:
             self.control_pan_pos = self.makeSimpleProfile(self.control_pan_pos, self.target_pan_pos, (POS_STEP_SIZE/2.0))
             self.control_tilt_pos = self.makeSimpleProfile(self.control_tilt_pos, self.target_tilt_pos, (POS_STEP_SIZE/2.0))
             self.control_yaw_pos = self.makeSimpleProfile(self.control_yaw_pos, self.target_yaw_pos, (YAW_POS_STEP_SIZE/2.0))
 
             self.head_make(self.control_pan_pos, self.control_tilt_pos, self.control_yaw_pos)
+
+            self.control_linear_vel = self.makeSimpleProfile(self.control_linear_vel, self.target_linear_vel, (LIN_VEL_STEP_SIZE/2.0))
+            self.control_angular_vel = self.makeSimpleProfile(self.control_angular_vel, self.target_angular_vel, (ANG_VEL_STEP_SIZE/2.0))
+
+            self.cmd_make(self.control_linear_vel, self.control_angular_vel)
+
         else:
             pass
 
