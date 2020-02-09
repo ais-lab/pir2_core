@@ -1,12 +1,6 @@
-pan 20
-pause 500
+pan 20 0.5
 pan -20
-pause 500
 tilt 20
-pause 500
 tilt -20
-pause 500
-yaw 10
-pause 500
-yaw -10
-init
+yaw 30
+yaw -30 1.0

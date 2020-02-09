@@ -203,7 +203,14 @@ class TextfileController(object):
                 break
 
             elif command == "pan" or command == "tilt" or command == "yaw" or command == "init":
-                result = self.make_head(command, float(command_param_set[1]), 0.3)
+                num = len(command_param_set)
+                if num == 3:
+                    result = self.make_head(command, float(command_param_set[1]), 0.3)
+                elif num == 2:
+                    result = self.make_head(command, 0.0, 0.0)
+                else:
+                    result = self.make_head(command, float(command_param_set[1]),float(command_param_set[2]))
+
 
             elif command == "trace":
                 frame = command_param_set[1]
