@@ -192,11 +192,11 @@ class Subscribe(Publishsers):
 
         ### display show  ###
         if msg.buttons[0] == 1.0:
-            self.image_num = 6
+            self.image_num = 4
         elif msg.buttons[1] == 1.0:
-            self.image_num = 1
+            self.image_num = 3
         elif msg.buttons[2] == 1.0:
-            self.image_num = 6
+            self.image_num = 2
         elif msg.buttons[3] == 1.0:
             self.image_num = 1
         else:
