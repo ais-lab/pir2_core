@@ -36,7 +36,7 @@ class Publishers():
         self.head_pub.publish(head_msg)
 
 
-    def head_make(self,joint_name, rad):
+    def head_make(self,joint_name, rad, vel, time):
         head_msg = JointTrajectory()
         jtp_msg = JointTrajectoryPoint()
         head_msg.joint_names = [joint_name]
@@ -44,7 +44,9 @@ class Publishers():
         # jtp_msg.points.positions = [control_pan_pos,control_tilt_pos,control_yaw_pos]
 
         jtp_msg.positions = [rad]
-        jtp_msg.time_from_start = rospy.Duration.from_sec(0.00000002)
+        jtp_msg.velocities = [vel]
+        jtp_msg.time_from_start = rospy.Duration.from_sec(time)
+        # print jtp_msg
 
         head_msg.points.append(jtp_msg)
         self.head_pub.publish(head_msg)
@@ -77,32 +79,36 @@ class Subscribe(Publishers):
     def service_callback(self, req):
         name = str(req.name.data)
         angle = float(req.angle.data)
+        vel =  float(req.speed.data)
 
         target_rad = math.radians(angle)
         joint_name = ""
 
         if name == "pan":
+            time = abs(target_rad - self.pan_rad) / vel
             joint_name = "pan_joint"
             target_rad = self.checkPanLimitPosition(target_rad)
-            self.head_make(joint_name, target_rad)
+            self.head_make(joint_name, target_rad, vel, time)
             print "Pan moving .. "
             while True:
                 # print "*"
                 if (self.pan_rad > target_rad - self.offset) and (self.pan_rad < target_rad + self.offset):
                     break
         elif name == "tilt":
+            time = abs(target_rad - self.tilt_rad) / vel
             joint_name = "tilt_joint"
             target_rad = self.checkTiltLimitPosition(target_rad)
-            self.head_make(joint_name, target_rad)
+            self.head_make(joint_name, target_rad, vel, time)
             print "Tilt moving .. "
             while True:
                 # print "*"
                 if (self.tilt_rad > target_rad - self.offset) and (self.tilt_rad < target_rad + self.offset):
                     break
         elif name == "yaw":
+            time = abs(target_rad - self.yaw_rad) / vel
             joint_name = "yaw_joint"
             target_rad = self.checkYawLimitPosition(target_rad)
-            self.head_make(joint_name, target_rad)
+            self.head_make(joint_name, target_rad, vel, time)
             print "Yaw moving .. "
             while True:
                 # print "*"
