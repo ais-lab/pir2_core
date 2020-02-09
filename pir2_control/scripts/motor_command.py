@@ -52,7 +52,7 @@ class Server(Publishsers):
                 self.base_frame = 'base_link'
             except(tf.Exception, tf.ConnectivityException, tf.LookupException):
                 rospy.loginfo("Cannot find transform between /odom and /base_link or /base_footprint")
-                rospy.signal_shutdown("tf Exception")
+                # rospy.signal_shutdown("tf Exception")
 
         self.spt_publisher = rospy.Publisher('/spt_vel', Twist, queue_size=10)
 

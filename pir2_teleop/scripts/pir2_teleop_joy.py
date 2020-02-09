@@ -20,7 +20,8 @@ MIN_YAW_POS = -1.3
 
 LIN_VEL_STEP_SIZE = 0.01
 ANG_VEL_STEP_SIZE = 0.1
-POS_STEP_SIZE = 0.087
+PAN_POS_STEP_SIZE = 0.4
+TILT_POS_STEP_SIZE = 0.2
 YAW_POS_STEP_SIZE = 0.43
 
 class Publishsers():
@@ -170,16 +171,16 @@ class Subscribe(Publishsers):
 
 
         if msg.axes[4] > 0.5:
-            self.target_tilt_pos = self.checkTiltLimitPosition(self.target_tilt_pos - (POS_STEP_SIZE))
+            self.target_tilt_pos = self.checkTiltLimitPosition(self.target_tilt_pos - (TILT_POS_STEP_SIZE))
         elif msg.axes[4] <  -0.5:
-            self.target_tilt_pos = self.checkTiltLimitPosition(self.target_tilt_pos + (POS_STEP_SIZE))
+            self.target_tilt_pos = self.checkTiltLimitPosition(self.target_tilt_pos + (TILT_POS_STEP_SIZE))
         else:
             pass
 
         if msg.axes[3] > 0.5:
-            self.target_pan_pos = self.checkPanLimitPosition(self.target_pan_pos + (POS_STEP_SIZE))
+            self.target_pan_pos = self.checkPanLimitPosition(self.target_pan_pos + (PAN_POS_STEP_SIZE))
         elif msg.axes[3] <  -0.5:
-            self.target_pan_pos = self.checkPanLimitPosition(self.target_pan_pos - (POS_STEP_SIZE))
+            self.target_pan_pos = self.checkPanLimitPosition(self.target_pan_pos - (PAN_POS_STEP_SIZE))
         else:
             pass
 
@@ -231,8 +232,8 @@ class Subscribe(Publishsers):
         self.image_make(self.image_num)
 
         if self.trace_frag == 0:
-            self.control_pan_pos = self.makeSimpleProfile(self.control_pan_pos, self.target_pan_pos, (POS_STEP_SIZE/2.0))
-            self.control_tilt_pos = self.makeSimpleProfile(self.control_tilt_pos, self.target_tilt_pos, (POS_STEP_SIZE/2.0))
+            self.control_pan_pos = self.makeSimpleProfile(self.control_pan_pos, self.target_pan_pos, (PAN_POS_STEP_SIZE/2.0))
+            self.control_tilt_pos = self.makeSimpleProfile(self.control_tilt_pos, self.target_tilt_pos, (TILT_POS_STEP_SIZE/2.0))
             self.control_yaw_pos = self.makeSimpleProfile(self.control_yaw_pos, self.target_yaw_pos, (YAW_POS_STEP_SIZE/2.0))
 
             self.head_make(self.control_pan_pos, self.control_tilt_pos, self.control_yaw_pos)

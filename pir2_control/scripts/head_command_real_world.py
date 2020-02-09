@@ -44,7 +44,7 @@ class Publishers():
         # jtp_msg.points.positions = [control_pan_pos,control_tilt_pos,control_yaw_pos]
 
         jtp_msg.positions = [rad]
-        jtp_msg.velocities = [vel]
+        # jtp_msg.velocities = [vel]
         jtp_msg.time_from_start = rospy.Duration.from_sec(time)
         # print jtp_msg
 
