@@ -9,8 +9,8 @@ from trajectory_msgs.msg import JointTrajectory, JointTrajectoryPoint
 MAX_LIN_VEL = 0.74
 MAX_ANG_VEL = 2.56
 
-MAX_PAN_POS = 1.3
-MIN_PAN_POS = -1.3
+MAX_PAN_POS = 2.618
+MIN_PAN_POS = -2.618
 
 MAX_TILT_POS = 0.30
 MIN_TILT_POS = -0.34
