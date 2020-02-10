@@ -209,7 +209,7 @@ class TextfileController(object):
                 elif num == 2:
                     result = self.make_head(command, 0.0, 0.0)
                 else:
-                    result = self.make_head(command, float(command_param_set[1]),float(command_param_set[2]))
+                    result = self.make_head(command, float(command_param_set[2]),float(command_param_set[1]))
 
 
             elif command == "trace":

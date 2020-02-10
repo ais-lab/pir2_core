@@ -1,23 +1,23 @@
-pan 0 0.5
+pan 0.5 0
 pause 100
-pan -30 1.0
+pan 1.0 -30
 pause 100
-pan 0 0.3
+pan 0.3 0
 pause 100
-pan 30 0.8
+pan 0.8 30
 pause 100
-pan 0 0.5
+pan 0.5 0
 pause 100
-tilt -20 1.0
+tilt 1.0 -20
 pause 100
-tilt 10 0.1
+tilt 0.1 10
 pause 100
-tilt 0 0.5
+tilt 0.5 0
 pause 100
-yaw 0 1.0
+yaw 1.0 0
 pause 100
-yaw -30 0.2
+yaw 0.2 -30
 pause 100
-yaw 30 0.5
+yaw 0.5 30
 pause 100
-yaw 0 0.7
+yaw 0.7 0
