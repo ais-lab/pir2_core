@@ -435,7 +435,7 @@ class Server(Publishsers):
             self.pause_rate.sleep()
         t2 = time.time()
         elapsed_time = (t2-t1)
-        print ("pause : " + str(round(elapsed_time)) + "(sec)")
+        print ("pause : " + str(round(elapsed_time, 2)) + "(sec)")
         return True
 
 
